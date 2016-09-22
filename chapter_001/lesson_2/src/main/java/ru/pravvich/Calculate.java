@@ -4,20 +4,22 @@ package ru.pravvich;
 *Supports repeated using previous calculation.
 */
 public class Calculate {
-	double resoult;
+	double result;
 
+    public double getResult() {
+        return this.result;
+    }
+	
 	public static void main(String[] args) {
 	
-	}
 	
-
 /**
 *The add operations.
 *@param first - first argument, second - second argument
 */ 
 
 	public void add(double first, double second) {
-	this.resoult = first + second;
+	this.result = first + second;
 	
 	}
 
@@ -28,7 +30,7 @@ public class Calculate {
 */ 
 
 	public void substract(double first, double second) {
-	this.resoult = first - second;
+	this.result = first - second;
 	
 	}
 
@@ -39,7 +41,7 @@ public class Calculate {
 */ 
 
 	public void mult(double first, double second) {
-	this.resoult = first * second;
+	this.result = first * second;
 	
 	}
 
@@ -51,11 +53,11 @@ public class Calculate {
 
 	public void div(double first, double second) {
 	
-	if (second != 0) {
-	this.resoult = first / second;
-	} else {
+		if (second != 0) {
+		this.result = first / second;
+		} else {
 		System.out.println("Делить на ноль нельз¤!");
-	}
+		}
 	
 	}
 
@@ -65,3 +67,4 @@ public class Calculate {
 
 
 
+}
