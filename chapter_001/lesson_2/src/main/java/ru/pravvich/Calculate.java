@@ -12,11 +12,11 @@ public class Calculate {
 	
 	public static void main(String[] args) {
 	
-	
-/**
-*The add operations.
-*@param first - first argument, second - second argument
-*/ 
+	}
+	/**
+	*The add operations.
+	*@param first - first argument, second - second argument
+	*/ 
 
 	public void add(double first, double second) {
 	this.result = first + second;
@@ -24,10 +24,10 @@ public class Calculate {
 	}
 
 
-/**
-*substract operation.	
-*@param first - first argument, second - second argument
-*/ 
+	/**
+	*substract operation.	
+	*@param first - first argument, second - second argument
+	*/ 
 
 	public void substract(double first, double second) {
 	this.result = first - second;
@@ -35,10 +35,10 @@ public class Calculate {
 	}
 
 
-/**
-*Mult operation.
-*@param first - first argument, second - second argument
-*/ 
+	/**
+	*Mult operation.
+	*@param first - first argument, second - second argument
+	*/ 
 
 	public void mult(double first, double second) {
 	this.result = first * second;
@@ -46,10 +46,10 @@ public class Calculate {
 	}
 
 
-/**
-*Division operation.
-*@param first - first argument, second - second argument
-*/ 
+	/**
+	*Division operation.
+	*@param first - first argument, second - second argument
+	*/ 
 
 	public void div(double first, double second) {
 	
@@ -67,4 +67,3 @@ public class Calculate {
 
 
 
-}
