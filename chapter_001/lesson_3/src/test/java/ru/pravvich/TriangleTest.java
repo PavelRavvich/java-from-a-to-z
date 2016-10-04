@@ -4,18 +4,18 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class PointTest {	
+public class TriangleTest {	
 	@Test
-	public void wthenSetPointThenResultDistanceBetweenPoint() {
-			Point a = new Point(2, 1);
-			Point b = new Point(2, 5);
-			double result = a.distanceTo(b); 						
-			assertThat(result, is(4));
+	public void wthenSetPointsThenResultAreaTriangle() {
+			Triangle triangle = new Triangle();
+			Point a = new Point(0,0);
+			Point b = new Point(0,3);
+			Point c = new Point(4,0);
+
+			double result = triangle.area(a, b, c); 						
+			assertThat(result, is(6d));
 	
 	}
-	
-	
-
 }
 
 
