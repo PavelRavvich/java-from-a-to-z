@@ -1,4 +1,4 @@
-package pravvich;
+package ru.pravvich;
 
 public class Point {
 	public double x;
@@ -9,9 +9,20 @@ public class Point {
 		this.y = y;
 	}
 		
-	public double distanceTo(Point that) {//принимает объект типа Point и называет that
-		//calculate distance between two points
+	public double distanceTo(Point that) {
+		double thatX, thatY, thisX, thisY;
+		
+		thisX = this.x;
+		thisY = this.y;
+		thatX = that.x;
+		thatY = that.y;
+		
+		double distancePre;
+		distancePre = Math.pow((thatY - thisY), 2) + Math.pow((thatX - thisX), 2);
+		
 		double distance;
-		return distance = Math.sqrt((Math.pow(that.y - this.y), 2) + (Math.pow(that.x - this.x), 2));
+		distance = Math.sqrt(distancePre);
+		
+		return distance;
 		}
 }
