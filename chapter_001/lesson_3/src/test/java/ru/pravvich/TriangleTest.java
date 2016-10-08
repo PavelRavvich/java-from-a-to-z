@@ -7,11 +7,12 @@ import static org.junit.Assert.*;
 public class TriangleTest {	
 	@Test
 	public void wthenSetPointsThenResultAreaTriangle() {
-			Triangle triangle = new Triangle();
 			Point a = new Point(0,0);
 			Point b = new Point(0,3);
 			Point c = new Point(4,0);
-
+			
+			Triangle triangle = new Triangle(a, b, c);
+			
 			double result = triangle.area(a, b, c); 						
 			assertThat(result, is(6d));
 	
