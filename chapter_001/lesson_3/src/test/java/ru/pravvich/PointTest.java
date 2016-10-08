@@ -10,7 +10,7 @@ public class PointTest {
 			Point a = new Point(0, 0);
 			Point b = new Point(0, 4);
 			double result = a.distanceTo(b); 						
-			assertThat(result, is(4));
+			assertThat(result, is(4D));
 	
 	}
 	
