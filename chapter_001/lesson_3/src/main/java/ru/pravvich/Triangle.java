@@ -1,12 +1,11 @@
-package pravvich;
+package ru.pravvich;
 
 public class Triangle {
 	public Point a;
 	public Point b;
 	public Point c;
 
-	public Triangle(Point a, Point b, Point c) 
-	{
+	public Triangle(Point a, Point b, Point c) {
 		this.a = a;
 		this.b = b;
 		this.c = c;
@@ -14,11 +13,15 @@ public class Triangle {
 
 		
 	//calculate the triangle area
-	public double area(Point a, Point b, Point c) 
-	{
-		double result;
-		double semiper = ((a.distanseTo(b))*(a.distanseTo(c))*(b.distanseTo(c)) )/2;
-		result = Math.sqrt( semiper*(semiper - a.distanseTo(b))*(semiper - a.distanseTo(c))*(semiper - b.distanseTo(c) ));
+	public double area(Point a, Point b, Point c) {
+		double result, semiper, distanseAB, distanseAC, distanseBC;
+		
+		distanseAB = a.distanceTo(b);
+		distanseAC = a.distanceTo(c);
+		distanseBC = b.distanceTo(c);
+
+		semiper = (distanseAB + distanseAC + distanseBC)/2;
+		result = Math.sqrt(semiper * (semiper - distanseAB) * (semiper - distanseAC) * (semiper - distanseBC));
 		return result;
 	}
 }
