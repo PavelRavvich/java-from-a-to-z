@@ -1,43 +1,33 @@
 package ru.pravvich;
 
 public class Maximum {
-
-    private String biggestSide;
-
-    public void setBiggestSide(String biggestSide) {
-        this.biggestSide = biggestSide;
-    }
-
-    public String getBiggestSide() {
-        return biggestSide;
-    }
-
-    public String detectionBiggestSideTriangle(Point a, Point b, Point c) {
+ 
+    /*
+    Вычисляет большую из сторон геометрической фигуры
+    Принимает объекты типа класса Point это точки на двухмерной оси координат, 
+    объекты хранят две координаты по осям "х" и "у".
+    Применяет к ним метод distanceTo для вычисления расстояния между точками из 
+    класса Point.
+    Сравнивает стороны в поисках самой большой и возвращает значение большей стороны
+    В случае если треугольник равнобедренный возвращает -1
+    В случае если треугольник равносторонний возвращает -2 
+    */
+    public double detectionBiggestSideTriangle(Point a, Point b, Point c) {
 
         double distanceAB = a.distanceTo(b);
         double distanceAC = a.distanceTo(c);
         double distanceBC = b.distanceTo(c);
 
         if (distanceAB > distanceAC && distanceAB > distanceBC) {
-            String distanceBetweenAB = "Сторона между точками А и В самая большая.";
-            setBiggestSide(distanceBetweenAB);
-            return distanceBetweenAB;
+            return distanceAB;
         } else if (distanceAC > distanceAB && distanceAC > distanceBC) {
-            String distanceBetweenAC = "Сторона между точками А и С самая большая.";
-            setBiggestSide(distanceBetweenAC);
-            return distanceBetweenAC;
+            return distanceAC;
         } else if (distanceBC > distanceAB && distanceBC > distanceAC) {
-            String distanceBetweenBС = "Сторона между точками B и С самая большая.";
-            setBiggestSide(distanceBetweenBС);
-            return distanceBetweenBС;
+            return distanceBC;
         } else if (distanceBC == distanceAB || distanceBC == distanceAC || distanceAB == distanceAC) {
-            String isoscelesTriangle = "Это равнобедренный треугольник.";
-            setBiggestSide(isoscelesTriangle);
-            return isoscelesTriangle;
+            return -1; // равнобедренный
         } else {
-            String equilateralTriangle = "Это равносторонний треугольник.";
-            setBiggestSide(equilateralTriangle);
-            return equilateralTriangle;
+            return -2; //равносторонний треугольник
         } //else if
     }//method
 }
