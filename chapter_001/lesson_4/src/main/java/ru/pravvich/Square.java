@@ -18,13 +18,22 @@ public class Square {
         this.b = b;
         this.c = c;
     }
-
+    
+    /*
+    Вычисляет значение функции(y = a * x + b * x + c)
+    Принимает "х" из метода show
+    */
     float calculate(float x) {
-        float y;
-        y = a * x + b * x + c;
+        float y = a * x + b * x + c;
         return y;
     }
 
+    /*
+    Зацикливат вычисление значения функции из метода 
+    calculate посылая в него значения "х" при каждой итерации.
+    step это интервал на котрый увеличивается "х". 
+    start, finish это минимальное и максимальное значения "х".
+    */
     void show(float start, float finish, float step) {
         for (float x = start; x >= start && x <= finish; x += step) {
             float result;
