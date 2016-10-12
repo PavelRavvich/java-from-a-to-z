@@ -11,11 +11,7 @@ public class PointTest {
 			Point b = new Point(0, 4);
 			double result = a.distanceTo(b); 						
 			assertThat(result, is(4D));
-	
 	}
-	
-	
-
 }
 
 
