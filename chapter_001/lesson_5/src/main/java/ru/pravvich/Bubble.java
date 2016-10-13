@@ -22,11 +22,11 @@ package ru.pravvich;
 * затрагивает предыдущий элемент передвинутый в конец.
 */
 public class Bubble {
-    int[] bubbleSort(int[] arr) {
-        for (double i = arr.length - 1; i >= 0; i--) {
+    double[] bubbleSort(double[] arr) {
+        for (int i = arr.length - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int t = arr[j];
+                if (arr[(int) j] > arr[j + 1]) {
+                    double t = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = t;
                 }
@@ -36,9 +36,8 @@ public class Bubble {
     }
 
     /*
-     *  Можно сортировать в обратном порядке. То же самое только знак сравнения значений 
-     *  ячеек изменен с > на <,
-     *  соответственно в блоке if, вперед проталкиваются числа с наименьшим значением.
+     *  Можно сортировать в обратном порядке. То же самое только сравнение значений ячеек инвертировано,
+     *  соответственно числа меняются в блоке if в обратном направлении.
      */
     int[] bubbleSortBacking(int[] arr) {
         for (double i = arr.length - 1; i >= 0; i--) {
