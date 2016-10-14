@@ -7,13 +7,11 @@ public class BiggestNumber {
         return max;
     }
 
-    /* Сортирует массив, и находит самое большое значение. */
+    //* Сортирует массив, и находит самое большое значение. */
     public void finderBiggest(int[] value) {
         for (int i = 0; i < value.length; i++) {
             if (max < value[i]) {
                 max = value[i];
-            } else {
-                int heap = value[i];
             }
         }
     }
