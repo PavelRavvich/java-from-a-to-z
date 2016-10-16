@@ -6,7 +6,10 @@ import static org.junit.Assert.assertThat;
 
 public class ArrTurnTest {
 
-    /* Поворот матрицы по часовой стрелке */
+    /** 
+     * Поворот матрицы по часовой стрелке 
+     * {@link ArrTurn#arrTurningClockwise проверяемый метод}
+     * */
     @Test
     public void whenArrInThenArrTurningOnNinetyDegreesClockwise() {
         int[][] arr = {{1, 1, 1, 1},
@@ -22,7 +25,10 @@ public class ArrTurnTest {
         assertThat(result, is(arr1));
     }
 
-    /* Поворот матрицы против часовой стрелки */
+    /** 
+     * Поворот матрицы против часовой стрелки 
+     * {@link ArrTurn#arrTurningAnticlockwise проверяемый метод}
+     * */
     @Test
     public void whenArrInThenArrTurningOnNinetyDegreesAnticlockwise() {
         int[][] arr = {{1, 1, 1, 1},
@@ -38,7 +44,10 @@ public class ArrTurnTest {
         assertThat(result, is(arr1));
     }
 
-    /* Транспонироание матрицы */
+    /** 
+     * Транспонироание матрицы 
+     * {@link ArrTurn#transpositionMatrix проверяемый метод}
+     * */
     @Test
     public void whenArrInThenOutArrayTranspositionMatrix() {
         ArrTurn array = new ArrTurn();
@@ -54,7 +63,10 @@ public class ArrTurnTest {
         assertThat(result, is(arr1));
     }
 
-    /* Реверс строк */
+    /** 
+     * Проверка инверсии строк
+     * {@link ArrTurn#rowsInversion проверяемый метод}
+     */
     @Test
     public void whenArrInThenRowsRevers() {
         ArrTurn array = new ArrTurn();
