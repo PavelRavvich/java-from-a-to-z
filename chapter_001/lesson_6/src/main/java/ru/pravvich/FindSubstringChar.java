@@ -19,10 +19,9 @@ public class FindSubstringChar {
      * @see FindSubstringCharTest#WhenSetStringAndSubstringThenFindSubstringInString()
      * */
     public boolean contain(String origin, String sub) {
+        if (origin.length() < sub.length()) { return false; }
         char[] arrOrigin = origin.toCharArray();
         char[] arrSub = sub.toCharArray();
-        boolean result = false;
-        if (arrOrigin.length < arrSub.length) { return false; }
         for (int i = 0; i <= arrOrigin.length - arrSub.length; i++) {
             if (arrSub[0] == arrOrigin[i]) {
                 char[] forEqual = new char[arrSub.length];
@@ -32,6 +31,6 @@ public class FindSubstringChar {
                 }
             }
         }
-        return result;
+        return false;
     }
 }
