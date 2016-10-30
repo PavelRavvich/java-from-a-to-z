@@ -6,6 +6,6 @@
 	<version>1.0</version>
 
 	<modules>
-		<module></module>
+		<module>tracker</module>
 	</modules>
 </project>
