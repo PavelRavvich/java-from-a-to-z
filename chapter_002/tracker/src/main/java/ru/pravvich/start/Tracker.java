@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
  * @see #addCommit(String, String) - Addition commit
- * @see #editionCommit(String, String) 
+ * @see #editionCommit(String, String)
  * @see #deleteCommit(String)
  * @see #findById(int)
  * @see #add(Item) addition new Item
@@ -25,6 +25,8 @@ public class Tracker {
     int position = 0;
     public Item[] items = new Item[100];
     private static final Random RN = new Random();
+    // for messages
+    private String message;
 
     /**
      * Addition commit by header
@@ -85,6 +87,8 @@ public class Tracker {
             if (item != null && item.getId() == id) {
                 result = item;
                 break;
+            } else {
+                initMessageNothingFound();
             }
         }
         return result;
@@ -98,9 +102,20 @@ public class Tracker {
         for (Item item : this.items) {
             if (item != null && item.getHeader().equals(header)) {
                 result = item;
+            } else {
+                initMessageNothingFound();
             }
         }
         return result;
+    }
+
+    /**
+     * message if Nothing found. Use:
+     * @see #findByHeader(String)
+     * @see #findById(int)
+     */
+    private void initMessageNothingFound() {
+        this.message = "Nothing found./nPlease try again.";
     }
 
     /**
@@ -122,8 +137,7 @@ public class Tracker {
         return RN.nextInt() + ((int) System.currentTimeMillis());
     }
 
-    // for messages
-    private String message;
+
 
     /**
      * @see TrackerTest#whenAddMethodWorkAndInItemEqualsNullThenGetMessageInitMessage() test
