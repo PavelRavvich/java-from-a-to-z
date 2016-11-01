@@ -107,6 +107,23 @@ public class TrackerTest {
     }
 
     /**
+     * @see Tracker#findByHeader(String)
+     * @see Tracker#initMessageNothingFound()
+     */
+    @Test
+    public void WhenThen() {
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.description = "description";
+        item.header = "header";
+        tracker.add(item);
+        String header = "head";
+        tracker.findByHeader(header);
+        String result = tracker.getMessage();
+        assertThat(result, is("Nothing found./nPlease try again."));
+    }
+
+    /**
      * @see Tracker#add(Item) test method
      */
     @Test
