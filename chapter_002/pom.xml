@@ -5,7 +5,7 @@
 	<packaging>pom</packaging>
 	<version>1.0</version>
 
-	<modules>
+<!-- 	<modules>
 		<module>tracker</module>
-	</modules>
+	</modules> -->
 </project>
