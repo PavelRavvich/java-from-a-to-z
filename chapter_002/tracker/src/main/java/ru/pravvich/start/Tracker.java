@@ -8,6 +8,9 @@ import java.util.Random;
  * Users class
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
+ * @see #addHeader(String)
+ * @see #addDescription(String, String)
+ * @see #addUsername(String, String)
  * @see #addCommit(String, String) - Addition commit
  * @see #editionCommit(String, String)
  * @see #deleteCommit(String)
@@ -27,6 +30,59 @@ public class Tracker {
     private static final Random RN = new Random();
     // for messages
     private String message;
+
+    /**
+     * @see TrackerTest#whenStringInThenHeaderInit() test
+     */
+    public void addHeader(String header) {
+        Item item = new Item(header);
+        add(item);
+    }
+
+    /**
+     * Addition item in items array
+     * @see TrackerTest#whenObjectTypeItemInThenInArrayItemsInitOneCell() test
+     * @param item new item for init in array
+     */
+    public void add(Item item) {
+        if (!(item == null)) {
+            item.setId(generateId());
+            this.items[this.position] = item;
+            this.position++;
+        } else {
+            initMessageAboutHeader();
+        }
+    }
+
+    /**
+     * @see TrackerTest#thenDescriptionAndHeaderInThenFindItemWithThisHeaderAndAddDescription()
+     */
+    public void addDescription(String header, String description) {
+        if (description != null) {
+            for (int i = 0; i != this.position; i++) {
+                if (this.items[i].getHeader().equals(header)) {
+                    this.items[i].setDescription(description);
+                }
+            }
+        } else {
+            this.message = "Enter description";
+        }
+    }
+
+    /**
+     * @see TrackerTest#thenStringInWhenUsernameInit() test
+     */
+    public void addUsername(String header, String username) {
+        if (username != null) {
+            for (int i = 0; i != this.position; i++) {
+                if (this.items[i].getHeader().equals(header)) {
+                    this.items[i].setNameUser(username);
+                }
+            }
+        } else {
+            this.message = "Enter you name";
+        }
+    }
 
     /**
      * Addition commit by header
@@ -118,20 +174,7 @@ public class Tracker {
         this.message = "Nothing found./nPlease try again.";
     }
 
-    /**
-     * Addition item in items array
-     * @see TrackerTest#whenObjectTypeItemInThenInArrayItemsInitOneCell() test
-     * @param item new item for init in array
-     */
-    public void add(Item item) {
-        if (!(item == null)) {
-            item.setId(generateId());
-            this.items[this.position] = item;
-            this.position++;
-        } else {
-            initMessageAboutHeader();
-        }
-    }
+
 
     int generateId() {
         return RN.nextInt() + ((int) System.currentTimeMillis());
