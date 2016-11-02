@@ -13,7 +13,11 @@ public class Item {
     public Item() {
     }
 
-    public Item(String nameUser, long create, String header, 
+    public Item(String header) {
+        this.header = header;
+    }
+
+    public Item(String nameUser, long create, String header,
                 String description, int id, ArrayList<String> commit) {
         this.nameUser = nameUser;
         this.create = create;
