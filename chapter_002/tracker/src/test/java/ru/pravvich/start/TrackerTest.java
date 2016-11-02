@@ -9,6 +9,45 @@ import ru.pravvich.models.Item;
 public class TrackerTest {
 
     /**
+     * @see Tracker#addHeader(String)
+     */
+    @Test
+    public void whenStringInThenHeaderInit() {
+        Tracker tracker = new Tracker();
+        tracker.addHeader("header");
+        String result = tracker.items[0].getHeader();
+        assertThat(result, is("header"));
+    }
+
+    /**
+     * @see Tracker#addDescription(String, String)
+     */
+    @Test
+    public void thenDescriptionAndHeaderInThenFindItemWithThisHeaderAndAddDescription() {
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("header task");
+        tracker.add(item);
+        tracker.addDescription("header task", "description");
+        String result = tracker.items[0].getDescription();
+        assertThat(result, is("description"));
+    }
+
+    /**
+     * @see Tracker#addUsername(String, String)
+     */
+    @Test
+    public void thenStringInWhenUsernameInit() {
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("header task");
+        tracker.add(item);
+        tracker.addUsername("header task", "Django");
+        String result = tracker.items[0].getNameUser();
+        assertThat(result, is("Django"));
+    }
+
+    /**
      * @see Tracker#addCommit(String, String)
      */
     @Test
