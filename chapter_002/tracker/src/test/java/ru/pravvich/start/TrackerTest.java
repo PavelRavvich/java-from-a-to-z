@@ -9,70 +9,35 @@ import ru.pravvich.models.Item;
 public class TrackerTest {
 
     /**
-     * @see Tracker#addHeader(String)
+     *
      */
     @Test
-    public void whenStringInThenHeaderInit() {
-        Tracker tracker = new Tracker();
-        tracker.addHeader("header");
-        String result = tracker.items[0].getHeader();
-        assertThat(result, is("header"));
-    }
-
-    /**
-     * @see Tracker#addOrEditDescription(String, String)
-     */
-    @Test
-    public void thenDescriptionAndHeaderInThenFindItemWithThisHeaderAndAddDescription() {
+    public void whenItemInThenItemUpdate() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.setHeader("header task");
+        Item item1 = new Item();
         tracker.add(item);
-        tracker.addOrEditDescription("header task", "description");
-        String result = tracker.items[0].getDescription();
-        assertThat(result, is("description"));
+        tracker.add(item1);
+        Item result = new Item();
+        result.setHeader("header");
+        result.setId(item.getId());
+        tracker.updateItem(result);
+        assertThat(result, is(tracker.items[0]));
     }
 
-    /**
-     * @see Tracker#addUsername(String, String)
-     */
-    @Test
-    public void thenStringInWhenUsernameInit() {
-        Tracker tracker = new Tracker();
-        Item item = new Item();
-        item.setHeader("header task");
-        tracker.add(item);
-        tracker.addUsername("header task", "Django");
-        String result = tracker.items[0].getNameUser();
-        assertThat(result, is("Django"));
-    }
+
 
     /**
-     * @see Tracker#addCommit(String, String)
+     * @see Tracker#addCommit(Item, String)
      */
     @Test
     public void whenCommitAddThenCommitAddInLists() {
         Tracker tracker = new Tracker();
-        // add first obj
         Item item = new Item();
-        item.header = "0";
         tracker.add(item);
-        // add second obj
-        Item itemSecond = new Item();
-        itemSecond.header = "1";
-        tracker.add(itemSecond);
-        //use method for first item
-        tracker.addCommit("0", "commit - 0");
-        tracker.addCommit("0", "commit - 1");
-        //use method for second item
-        tracker.addCommit("1", "commit(1) - 0");
-        String resultForSecondItem = tracker.items[1].getCommits().get(0);
-        //check
-        String resultFirstCommitForFirstItem = tracker.items[0].getCommits().get(0);
-        String resultSecondCommitForFirstItem = tracker.items[0].getCommits().get(1);
-        assertThat(resultFirstCommitForFirstItem, is("commit - 0"));
-        assertThat(resultSecondCommitForFirstItem, is("commit - 1"));
-        assertThat(resultForSecondItem, is("commit(1) - 0"));
+        tracker.addCommit(item, "commit");
+        String result = item.getCommits().get(0);
+        assertThat(result, is("commit"));
     }
 
     /**
@@ -82,12 +47,11 @@ public class TrackerTest {
     public void whenNewCommitAndOldCommitInThenMethodFindCommitByOldCommitAndReplaceCommit() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.header = "0";
         tracker.add(item);
-        tracker.addCommit("0","commit - 0");
-        tracker.addCommit("0", "commit - 1");
+        tracker.addCommit(item,"commit_01");
+        tracker.addCommit(item, "commit_02");
         //use method
-        tracker.editionCommit("commit - 1", "update commit");
+        tracker.editionCommit("commit_02", "update commit");
         String result = tracker.items[0].getCommits().get(1);
         assertThat(result, is("update commit"));
     }
@@ -98,15 +62,13 @@ public class TrackerTest {
     @Test
     public void whenCommitOfStringInThenThisCommitDelete() {
         Tracker tracker = new Tracker();
-        // add first obj
         Item item = new Item();
         item.header = "0";
         tracker.add(item);
-        //use method for first item
-        tracker.addCommit("0","commit - 0");
-        tracker.addCommit("0", "commit - 1");
+        tracker.addCommit(item,"commit_01");
+        tracker.addCommit(item, "commit_02");
         //check size commits list
-        tracker.deleteCommit("commit - 0");
+        tracker.deleteCommit("commit_01");
         int result = tracker.items[0].getCommits().size();
         assertThat(result, is(1));
     }
@@ -171,43 +133,16 @@ public class TrackerTest {
     }
 
     /**
-     * @see Tracker#getMessage() test method
-     */
-    @Test
-    public void whenAddMethodWorkAndInItemEqualsNullThenGetMessageInitMessage() {
-        Tracker tracker = new Tracker();
-        Item item = null;
-        tracker.add(item);
-        String result = tracker.getMessage();
-        String check = "Please header enter.";
-        assertThat(result, is(check));
-    }
-
-    /**
-     * @see Tracker#delete(String) checking method
+     * @see Tracker#delete(Item) checking method
      */
     @Test
     public void whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray() {
         Tracker tracker = new Tracker();
         // init and add first Item
-        Item itemFirst = new Item();
-        itemFirst.description = "description";
-        itemFirst.header = "header";
-        tracker.add(itemFirst);
-        // init and add second Item
-        Item itemSecond = new Item();
-        itemSecond.description = "description two";
-        itemSecond.header = "header two";
-        tracker.add(itemSecond);
-        //check method
-        tracker.delete("header");
-        // init result
-        Item result = tracker.items[0];
-        assertThat(result, is(itemSecond));
-        // test message about delete
-        String messageResult = tracker.getMessage();
-        String check = "Task have been deleted.";
-        assertThat(messageResult, is(check));
+        Item item = new Item();
+        tracker.add(item);
+        tracker.delete(item);
+        assertThat(tracker.position, is(0));
     }
 
     /**
