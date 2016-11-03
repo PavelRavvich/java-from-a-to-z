@@ -145,7 +145,7 @@ public class TrackerTest {
      * @see Tracker#findByHeader(String)
      */
     @Test
-    public void WhenThen() {
+    public void WhenItemWithThisHeaderNotExistThenVariableMassageInit() {
         Tracker tracker = new Tracker();
         Item item = new Item();
         item.description = "description";
@@ -154,7 +154,7 @@ public class TrackerTest {
         String header = "head";
         tracker.findByHeader(header);
         String result = tracker.getMessage();
-        assertThat(result, is("Nothing found./nPlease try again."));
+        assertThat(result, is("The task with header does not exist. Please try again."));
     }
 
     /**
