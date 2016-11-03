@@ -20,7 +20,7 @@ public class TrackerTest {
     }
 
     /**
-     * @see Tracker#addDescription(String, String)
+     * @see Tracker#addOrEditDescription(String, String)
      */
     @Test
     public void thenDescriptionAndHeaderInThenFindItemWithThisHeaderAndAddDescription() {
@@ -28,7 +28,7 @@ public class TrackerTest {
         Item item = new Item();
         item.setHeader("header task");
         tracker.add(item);
-        tracker.addDescription("header task", "description");
+        tracker.addOrEditDescription("header task", "description");
         String result = tracker.items[0].getDescription();
         assertThat(result, is("description"));
     }
@@ -62,10 +62,10 @@ public class TrackerTest {
         itemSecond.header = "1";
         tracker.add(itemSecond);
         //use method for first item
-        tracker.addCommit("commit - 0", "0");
-        tracker.addCommit("commit - 1", "0");
+        tracker.addCommit("0", "commit - 0");
+        tracker.addCommit("0", "commit - 1");
         //use method for second item
-        tracker.addCommit("commit(1) - 0", "1");
+        tracker.addCommit("1", "commit(1) - 0");
         String resultForSecondItem = tracker.items[1].getCommits().get(0);
         //check
         String resultFirstCommitForFirstItem = tracker.items[0].getCommits().get(0);
@@ -84,12 +84,12 @@ public class TrackerTest {
         Item item = new Item();
         item.header = "0";
         tracker.add(item);
-        tracker.addCommit("commit - 0", "0");
-        tracker.addCommit("commit - 1", "0");
+        tracker.addCommit("0","commit - 0");
+        tracker.addCommit("0", "commit - 1");
         //use method
-        tracker.editionCommit("commit - 0", "Replace");
-        String result = tracker.items[0].getCommits().get(0);
-        assertThat(result, is("Replace"));
+        tracker.editionCommit("commit - 1", "update commit");
+        String result = tracker.items[0].getCommits().get(1);
+        assertThat(result, is("update commit"));
     }
 
     /**
@@ -102,13 +102,9 @@ public class TrackerTest {
         Item item = new Item();
         item.header = "0";
         tracker.add(item);
-        // add second obj
-        Item itemSecond = new Item();
-        itemSecond.header = "1";
-        tracker.add(itemSecond);
         //use method for first item
-        tracker.addCommit("commit - 0", "0");
-        tracker.addCommit("commit - 1", "0");
+        tracker.addCommit("0","commit - 0");
+        tracker.addCommit("0", "commit - 1");
         //check size commits list
         tracker.deleteCommit("commit - 0");
         int result = tracker.items[0].getCommits().size();
@@ -147,7 +143,6 @@ public class TrackerTest {
 
     /**
      * @see Tracker#findByHeader(String)
-     * @see Tracker#initMessageNothingFound()
      */
     @Test
     public void WhenThen() {
@@ -185,41 +180,6 @@ public class TrackerTest {
         tracker.add(item);
         String result = tracker.getMessage();
         String check = "Please header enter.";
-        assertThat(result, is(check));
-    }
-
-    /**
-     * @see Tracker#edition(String, String) method
-     */
-    @Test
-    public void whenHeaderAndDescriptionInThenOldDescriptionReplacement() {
-        Tracker tracker = new Tracker();
-        // init and add Item
-        Item item = new Item();
-        item.description = "description";
-        item.header = "header";
-        tracker.add(item);
-        // test method
-        tracker.edition("header", "This is new description");
-        String result = tracker.items[0].description;
-        assertThat(result, is("This is new description"));
-    }
-
-    /**
-     * @see Tracker#edition(String, String) method(if new description == null)
-     */
-    @Test
-    public void whenDescriptionForReplacementEqualsNullThenInitMessage() {
-        Tracker tracker = new Tracker();
-        // init and add Item
-        Item item = new Item();
-        item.description = "description";
-        item.header = "header";
-        tracker.add(item);
-        // test method
-        tracker.edition("header", null);
-        String result = tracker.getMessage();
-        String check = "New description enter require.";
         assertThat(result, is(check));
     }
 
