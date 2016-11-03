@@ -49,6 +49,7 @@ public class Tracker {
             item.setId(generateId());
             this.items[this.position] = item;
             this.position++;
+            this.message = "Task / header successfully added";
         } else {
             this.message = "Please header enter.";
         }
@@ -67,6 +68,7 @@ public class Tracker {
         if (description != null) {
             findItemByHeader(header);
             this.bufferItem.setDescription(description);
+            this.message = "Description successfully added";
         } else {
             this.message = "You can't enter a blank description.";
         }
@@ -91,7 +93,8 @@ public class Tracker {
         if (username != null) {
             findItemByHeader(header);
             this.bufferItem.setNameUser(username);
-            } else {
+            this.message = "You name successfully added";
+        } else {
             this.message = "You can't enter a blank Username.";
         }
     }
@@ -106,6 +109,7 @@ public class Tracker {
         if (commit != null) {
             findItemByHeader(header);
             this.bufferItem.getCommits().add(commit);
+            this.message = "Commit successfully added";
         } else {
             this.message = "You can't enter a blank commit.";
         }
@@ -124,6 +128,8 @@ public class Tracker {
                 if (oldCommit.equals(commit)) {
                     this.items[i].getCommits().remove(j);
                     this.items[i].getCommits().add(j, newCommit);
+                    this.message = "«" + oldCommit + "»" + " " + (char) 27 + "[35msuccessfully "
+                            + "replace on " + (char)27 + "[0m" + "«" + newCommit + "»";
                 }
             }
         }
@@ -138,6 +144,7 @@ public class Tracker {
             for (int j = 0; j != this.items[i].getCommits().size(); j++) {
                 if (commit.equals(this.items[i].getCommits().get(j))) {
                     this.items[i].getCommits().remove(j);
+                    this.message = "Commit successfully delete.";
                 }
             }
         }
@@ -155,7 +162,7 @@ public class Tracker {
                 result = item;
                 break;
             } else {
-                this.message = "Nothing found. Please try again.";
+                this.message = "The task with Id does not exist. Please try again.";
             }
         }
         return result;
@@ -163,6 +170,7 @@ public class Tracker {
 
     /**
      * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
+     * @see TrackerTest#WhenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
      */
     protected Item findByHeader(String header) {
         Item result = null;
@@ -170,7 +178,7 @@ public class Tracker {
             if (item != null && item.getHeader().equals(header)) {
                 result = item;
             } else {
-                this.message = "Nothing found./nPlease try again.";
+                this.message = "The task with header does not exist. Please try again.";
             }
         }
         return result;
@@ -209,6 +217,8 @@ public class Tracker {
                 nullPushInEnd();
                 this.position--;
                 this.message = "Task have been deleted.";
+            } else {
+                this.message = "The task with header does not exist. Please try again.";
             }
         }
     }
@@ -232,13 +242,14 @@ public class Tracker {
      */
     public Item[] getPrintArray() {
         initArrPrint();
+        this.message = "We found " + this.arrPrint.length + " tasks";
         return this.arrPrint;
     }
 
-    // Array save all headers(without null).
+    // Array save all items(without null).
     private Item[] arrPrint = new Item[0];
 
-    // recording values in arrHeaders without nulls
+    // recording values in arrPrint without nulls
     private void initArrPrint() {
         Item[] arrPrint = new Item[this.position];
         for (int i = 0; i != arrPrint.length; i++) {
@@ -250,7 +261,7 @@ public class Tracker {
     /**
      * Filter Reverse Order
      * @see TrackerTest#whenMethodWorkThenReturnListHeadersInReverseOrder()
-     * @return header list for out to User with Reverse Order
+     * @return Item list for out to User with Reverse Order
      */
     public Item[] getArrPrintFilter() {
         initArrPrint();
@@ -259,6 +270,7 @@ public class Tracker {
              (i != arrPrintFilter.length) && (j != -1); i++, j--) {
             arrPrintFilter[i] = this.arrPrint[j];
         }
+        this.message = "Reverse order filter. We found " + this.arrPrint.length + " tasks";
         return arrPrintFilter;
     }
 }
