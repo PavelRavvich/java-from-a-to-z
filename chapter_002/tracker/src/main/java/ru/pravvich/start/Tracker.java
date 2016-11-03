@@ -9,8 +9,9 @@ import java.util.Random;
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
  * @see #addHeader(String)
- * @see #addDescription(String, String)
- * @see #addUsername(String, String)
+ * @see #addOrEditDescription(String, String) +
+ * @see #findItemByHeader(String) for work with fields
+ * @see #addUsername(String, String) +
  * @see #addCommit(String, String) - Addition commit
  * @see #editionCommit(String, String)
  * @see #deleteCommit(String)
@@ -19,7 +20,6 @@ import java.util.Random;
  * @see #findByHeader(String)
  * @see #generateId()
  * @see #getMessage()
- * @see #edition(String, String) edition description
  * @see #delete(String) delete Item
  * @see #getPrintArray() array Item for print for user
  * @see #getArrPrintFilter() print with filter revers order
@@ -44,28 +44,43 @@ public class Tracker {
      * @see TrackerTest#whenObjectTypeItemInThenInArrayItemsInitOneCell() test
      * @param item new item for init in array
      */
-    public void add(Item item) {
+    protected void add(Item item) {
         if (!(item == null)) {
             item.setId(generateId());
             this.items[this.position] = item;
             this.position++;
         } else {
-            initMessageAboutHeader();
+            this.message = "Please header enter.";
         }
     }
 
     /**
+     * a temporary copy Item for the working methods:
+     * @see #findItemByHeader(String)
+     */
+    private Item bufferItem;
+
+    /**
      * @see TrackerTest#thenDescriptionAndHeaderInThenFindItemWithThisHeaderAndAddDescription()
      */
-    public void addDescription(String header, String description) {
+    public void addOrEditDescription(String header, String description) {
         if (description != null) {
-            for (int i = 0; i != this.position; i++) {
-                if (this.items[i].getHeader().equals(header)) {
-                    this.items[i].setDescription(description);
-                }
-            }
+            findItemByHeader(header);
+            this.bufferItem.setDescription(description);
         } else {
-            this.message = "Enter description";
+            this.message = "You can't enter a blank description.";
+        }
+    }
+
+    // find need item for add/edition String fields of item. Init bufferItem
+    private void findItemByHeader(String header) {
+        for (int i = 0; i != this.position; i++) {
+            if (this.items[i].getHeader().equals(header)) {
+                this.bufferItem = this.items[i];
+            }
+            else {
+                this.message = "The task with such a header can't be found.";
+            }
         }
     }
 
@@ -74,29 +89,25 @@ public class Tracker {
      */
     public void addUsername(String header, String username) {
         if (username != null) {
-            for (int i = 0; i != this.position; i++) {
-                if (this.items[i].getHeader().equals(header)) {
-                    this.items[i].setNameUser(username);
-                }
-            }
-        } else {
-            this.message = "Enter you name";
+            findItemByHeader(header);
+            this.bufferItem.setNameUser(username);
+            } else {
+            this.message = "You can't enter a blank Username.";
         }
     }
 
     /**
      * Addition commit by header
      * @see TrackerTest#whenCommitAddThenCommitAddInLists() test
-     * @param commit - commit for add
      * @param header for find needed item
+     * @param commit - commit for add
      */
-    public void addCommit(String commit, String header) {
-        for (int i = 0; i != this.position; i++) {
-            String findHeader = this.items[i].getHeader();
-            if (findHeader.equals(header)) {
-                this.items[i].getCommits().add(commit);
-                break;
-            }
+    public void addCommit(String header, String commit) {
+        if (commit != null) {
+            findItemByHeader(header);
+            this.bufferItem.getCommits().add(commit);
+        } else {
+            this.message = "You can't enter a blank commit.";
         }
     }
 
@@ -144,7 +155,7 @@ public class Tracker {
                 result = item;
                 break;
             } else {
-                initMessageNothingFound();
+                this.message = "Nothing found. Please try again.";
             }
         }
         return result;
@@ -159,23 +170,15 @@ public class Tracker {
             if (item != null && item.getHeader().equals(header)) {
                 result = item;
             } else {
-                initMessageNothingFound();
+                this.message = "Nothing found./nPlease try again.";
             }
         }
         return result;
     }
 
     /**
-     * message if Nothing found. Use:
-     * @see #findByHeader(String)
-     * @see #findById(int)
+     * @return unique id
      */
-    private void initMessageNothingFound() {
-        this.message = "Nothing found./nPlease try again.";
-    }
-
-
-
     int generateId() {
         return RN.nextInt() + ((int) System.currentTimeMillis());
     }
@@ -190,48 +193,7 @@ public class Tracker {
         return this.message;
     }
 
-    // init message for User if header == null
-    private void initMessageAboutHeader() {
-        this.message = "Please header enter.";
 
-    }
-
-    /**
-     * Use header for find need object, and replacement her description field.
-     * @see TrackerTest#whenHeaderAndDescriptionInThenOldDescriptionReplacement test
-     * @param header - for finder task
-     * @param newDesc - new description for this task
-     * If description for replacement == null then:
-     * @see #initMessageAboutDescription() use
-     * @see TrackerTest#whenDescriptionForReplacementEqualsNullThenInitMessage() test
-     */
-    public void edition(String header, String newDesc) {
-        for (int i = 0; i < this.position; i++) {
-            String getHeader = this.items[i].getHeader();
-            if (getHeader.equals(header)) {
-                setNewDescription(newDesc);
-                this.items[i].description = this.newDescription;
-            }
-        }
-    }
-
-    // save new description
-    private String newDescription;
-
-    // setter for newDescription (with check isn't null)
-    private void setNewDescription(String newDesc) {
-        if (newDesc == null) {
-            initMessageAboutDescription();
-        } else {
-            this.newDescription = newDesc;
-        }
-    }
-
-
-    // init message for User if description == null
-    private void initMessageAboutDescription() {
-        this.message = "New description enter require.";
-    }
 
     /**
      * Delete task (null replacement)
@@ -241,20 +203,17 @@ public class Tracker {
      * @see TrackerTest#whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray()
      */
     public void delete(String header) {
-        for (int i = 0; i < position; i++) {
-            if (this.items[i].header.equals(header)) {
+        for (int i = 0; i < this.position; i++) {
+            if (this.items[i].getHeader().equals(header)) {
                 items[i] = null;
                 nullPushInEnd();
-                initMessageAboutDelete();
                 this.position--;
+                this.message = "Task have been deleted.";
             }
         }
     }
 
-    // init message for User : Item delete success
-    private void initMessageAboutDelete() {
-        this.message = "Task have been deleted.";
-    }
+
 
     // Pushes nulls at the end of the array, (after null replacement)
     private void nullPushInEnd() {
@@ -281,7 +240,7 @@ public class Tracker {
 
     // recording values in arrHeaders without nulls
     private void initArrPrint() {
-        Item[] arrPrint = new Item[position];
+        Item[] arrPrint = new Item[this.position];
         for (int i = 0; i != arrPrint.length; i++) {
             arrPrint[i] = this.items[i];
         }
