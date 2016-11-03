@@ -8,11 +8,7 @@ import java.util.Random;
  * Users class
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
- * @see #addHeader(String)
- * @see #addOrEditDescription(String, String) +
- * @see #findItemByHeader(String) for work with fields
- * @see #addUsername(String, String) +
- * @see #addCommit(String, String) - Addition commit
+ * @see #addCommit(Item, String) - Addition commit
  * @see #editionCommit(String, String)
  * @see #deleteCommit(String)
  * @see #findById(int)
@@ -20,7 +16,7 @@ import java.util.Random;
  * @see #findByHeader(String)
  * @see #generateId()
  * @see #getMessage()
- * @see #delete(String) delete Item
+ * @see #delete(Item) delete Item
  * @see #getPrintArray() array Item for print for user
  * @see #getArrPrintFilter() print with filter revers order
  */
@@ -31,12 +27,31 @@ public class Tracker {
     // for messages
     private String message;
 
+    public void updateItem(Item item) {
+        for (int i = 0; i != this.position; i++) {
+            if (this.items[i].getId() == item.getId() && item != null) {
+                this.items[i] = item;
+                break;
+            }
+        }
+    }
+
     /**
-     * @see TrackerTest#whenStringInThenHeaderInit() test
+     * Delete task (null replacement)
+     * @param item - for deleted object
+     * @see #nullPushInEnd() - using SWAP for new null
+     * test:
+     * @see TrackerTest#whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray()
      */
-    public void addHeader(String header) {
-        Item item = new Item(header);
-        add(item);
+    public void delete(Item item) {
+        for (int i = 0; i < this.position; i++) {
+            if (this.items[i].getId() == item.getId()) {
+                items[i] = null;
+                nullPushInEnd();
+                this.position--;
+                this.message = "Task have been deleted.";
+            }
+        }
     }
 
     /**
@@ -45,73 +60,46 @@ public class Tracker {
      * @param item new item for init in array
      */
     protected void add(Item item) {
-        if (!(item == null)) {
+        if (item != null) {
             item.setId(generateId());
             this.items[this.position] = item;
             this.position++;
-            this.message = "Task / header successfully added";
+            this.message = "Task successfully added";
         } else {
-            this.message = "Please header enter.";
+            this.message = "Fail";
         }
     }
 
-    /**
-     * a temporary copy Item for the working methods:
-     * @see #findItemByHeader(String)
-     */
-    private Item bufferItem;
+
 
     /**
-     * @see TrackerTest#thenDescriptionAndHeaderInThenFindItemWithThisHeaderAndAddDescription()
+     * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
+     * @see TrackerTest#WhenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
      */
-    public void addOrEditDescription(String header, String description) {
-        if (description != null) {
-            findItemByHeader(header);
-            this.bufferItem.setDescription(description);
-            this.message = "Description successfully added";
-        } else {
-            this.message = "You can't enter a blank description.";
-        }
-    }
-
-    // find need item for add/edition String fields of item. Init bufferItem
-    private void findItemByHeader(String header) {
-        for (int i = 0; i != this.position; i++) {
-            if (this.items[i].getHeader().equals(header)) {
-                this.bufferItem = this.items[i];
-            }
-            else {
-                this.message = "The task with such a header can't be found.";
+    protected Item findByHeader(String header) {
+        Item result = null;
+        for (Item item : this.items) {
+            if (item != null && item.getHeader().equals(header)) {
+                result = item;
+            } else {
+                this.message = "The task with header does not exist. Please try again.";
             }
         }
+        return result;
     }
 
     /**
-     * @see TrackerTest#thenStringInWhenUsernameInit() test
-     */
-    public void addUsername(String header, String username) {
-        if (username != null) {
-            findItemByHeader(header);
-            this.bufferItem.setNameUser(username);
-            this.message = "You name successfully added";
-        } else {
-            this.message = "You can't enter a blank Username.";
-        }
-    }
-
-    /**
-     * Addition commit by header
+     * Addition commit in ArrayList commits
      * @see TrackerTest#whenCommitAddThenCommitAddInLists() test
-     * @param header for find needed item
+     * @param item for find needed item
      * @param commit - commit for add
      */
-    public void addCommit(String header, String commit) {
-        if (commit != null) {
-            findItemByHeader(header);
-            this.bufferItem.getCommits().add(commit);
-            this.message = "Commit successfully added";
-        } else {
-            this.message = "You can't enter a blank commit.";
+    public void addCommit(Item item, String commit) {
+        for (int i = 0; i != this.position; i++) {
+            if (this.items[i].getId() == item.getId() && commit != null) {
+                item.getCommits().add(commit);
+                this.message = "Commit successfully added";
+            }
         }
     }
 
@@ -168,21 +156,6 @@ public class Tracker {
         return result;
     }
 
-    /**
-     * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
-     * @see TrackerTest#WhenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
-     */
-    protected Item findByHeader(String header) {
-        Item result = null;
-        for (Item item : this.items) {
-            if (item != null && item.getHeader().equals(header)) {
-                result = item;
-            } else {
-                this.message = "The task with header does not exist. Please try again.";
-            }
-        }
-        return result;
-    }
 
     /**
      * @return unique id
@@ -194,8 +167,7 @@ public class Tracker {
 
 
     /**
-     * @see TrackerTest#whenAddMethodWorkAndInItemEqualsNullThenGetMessageInitMessage() test
-     * @return - message for user
+     * @return - init message for user
      */
     public String getMessage() {
         return this.message;
@@ -203,25 +175,7 @@ public class Tracker {
 
 
 
-    /**
-     * Delete task (null replacement)
-     * @param header - flag for deleted object
-     * @see #nullPushInEnd() - using SWAP for new null
-     * test:
-     * @see TrackerTest#whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray()
-     */
-    public void delete(String header) {
-        for (int i = 0; i < this.position; i++) {
-            if (this.items[i].getHeader().equals(header)) {
-                items[i] = null;
-                nullPushInEnd();
-                this.position--;
-                this.message = "Task have been deleted.";
-            } else {
-                this.message = "The task with header does not exist. Please try again.";
-            }
-        }
-    }
+
 
 
 
