@@ -8,6 +8,7 @@ import java.util.Random;
  * Users class
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
+ * @see #updateItem(Item)
  * @see #addCommit(Item, String) - Addition commit
  * @see #editionCommit(String, String)
  * @see #deleteCommit(String)
@@ -27,6 +28,10 @@ public class Tracker {
     // for messages
     private String message;
 
+    /**
+     * @see TrackerTest#whenItemInThenItemUpdate() test
+     * @param item - item for update
+     */
     public void updateItem(Item item) {
         for (int i = 0; i != this.position; i++) {
             if (this.items[i].getId() == item.getId() && item != null) {
@@ -106,8 +111,6 @@ public class Tracker {
     /**
      * Replace oldCommit on newCommit
      * @see TrackerTest#whenNewCommitAndOldCommitInThenMethodFindCommitByOldCommitAndReplaceCommit() test
-     * @param oldCommit
-     * @param newCommit
      */
     public void editionCommit(String oldCommit, String newCommit) {
         for (int i = 0; i != this.position; i++) {
@@ -156,7 +159,6 @@ public class Tracker {
         return result;
     }
 
-
     /**
      * @return unique id
      */
@@ -164,20 +166,12 @@ public class Tracker {
         return RN.nextInt() + ((int) System.currentTimeMillis());
     }
 
-
-
     /**
      * @return - init message for user
      */
     public String getMessage() {
         return this.message;
     }
-
-
-
-
-
-
 
     // Pushes nulls at the end of the array, (after null replacement)
     private void nullPushInEnd() {
