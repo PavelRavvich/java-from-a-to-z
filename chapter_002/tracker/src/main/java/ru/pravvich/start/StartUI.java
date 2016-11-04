@@ -4,8 +4,9 @@ import ru.pravvich.models.*;
 
 public class StartUI {
     public static void main(String[] args) {
-    	System.out.println("Программа запущена");
+        ConsoleInput input = new ConsoleInput();
+        String header = input.ask("Please enter the task name");
         Tracker tracker = new Tracker();
-        tracker.add(new Task("Pavel", 25));
+        tracker.add(new Task(header));
     }
 }
