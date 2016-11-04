@@ -9,7 +9,7 @@ import ru.pravvich.models.Item;
 public class TrackerTest {
 
     /**
-     *
+     * @see Tracker#updateItem(Item) method
      */
     @Test
     public void whenItemInThenItemUpdate() {
