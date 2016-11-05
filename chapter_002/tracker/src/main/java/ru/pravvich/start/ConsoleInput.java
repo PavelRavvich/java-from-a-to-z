@@ -2,9 +2,6 @@ package ru.pravvich.start;
 
 import java.util.Scanner;
 
-/**
- * Created by pavel on 04.11.16.
- */
 public class ConsoleInput implements Input {
 
     Scanner scanner= new Scanner(System.in);
@@ -13,5 +10,16 @@ public class ConsoleInput implements Input {
     public String ask(String question) {
         System.out.println(question);
         return this.scanner.nextLine();
+    }
+
+    @Override
+    public int askInt(String question) {
+        System.out.println(question);
+        String forParse = this.scanner.nextLine();
+        if (forParse.length() != 0 && !(forParse.contains(" ")) && forParse.matches("[0-9]+")) {
+            int ask = Integer.parseInt(forParse);
+            return ask;
+        }
+        return 0;
     }
 }
