@@ -15,7 +15,9 @@ public class TrackerTest {
     public void whenItemInThenItemUpdate() {
         Tracker tracker = new Tracker();
         Item item = new Item();
+        item.setHeader("header");
         Item item1 = new Item();
+        item1.setHeader("header");
         tracker.add(item);
         tracker.add(item1);
         Item result = new Item();
@@ -34,6 +36,7 @@ public class TrackerTest {
     public void whenCommitAddThenCommitAddInLists() {
         Tracker tracker = new Tracker();
         Item item = new Item();
+        item.setHeader("header");
         tracker.add(item);
         tracker.addCommit(item, "commit");
         String result = item.getCommits().get(0);
@@ -47,6 +50,7 @@ public class TrackerTest {
     public void whenNewCommitAndOldCommitInThenMethodFindCommitByOldCommitAndReplaceCommit() {
         Tracker tracker = new Tracker();
         Item item = new Item();
+        item.setHeader("header");
         tracker.add(item);
         tracker.addCommit(item,"commit_01");
         tracker.addCommit(item, "commit_02");
@@ -63,7 +67,7 @@ public class TrackerTest {
     public void whenCommitOfStringInThenThisCommitDelete() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.header = "0";
+        item.header = "header";
         tracker.add(item);
         tracker.addCommit(item,"commit_01");
         tracker.addCommit(item, "commit_02");
@@ -116,7 +120,7 @@ public class TrackerTest {
         String header = "head";
         tracker.findByHeader(header);
         String result = tracker.getMessage();
-        assertThat(result, is("The task with header does not exist. Please try again."));
+        assertThat(result, is("The task does not exist. Please try again."));
     }
 
     /**
@@ -140,6 +144,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         // init and add first Item
         Item item = new Item();
+        item.setHeader("header");
         tracker.add(item);
         tracker.delete(item);
         assertThat(tracker.position, is(0));
