@@ -8,10 +8,10 @@ import java.util.Random;
  * Users class
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
- * @see #updateItem(Item)
+ * @see #updateItem(Item) +
  * @see #addCommit(Item, String) - Addition commit
  * @see #editionCommit(String, String)
- * @see #deleteCommit(String)
+ * @see #deleteCommit(String) +
  * @see #findById(int)
  * @see #add(Item) addition new Item
  * @see #findByHeader(String)
@@ -35,8 +35,12 @@ public class Tracker {
     public void updateItem(Item item) {
         for (int i = 0; i != this.position; i++) {
             if (this.items[i].getId() == item.getId() && item != null) {
+                String oldName = this.items[i].getHeader();
                 this.items[i] = item;
+                this.message = "Update " + oldName + " on " + this.items[i].getHeader() + " success";
                 break;
+            } else {
+                this.message = "The task with Id does not exist.";
             }
         }
     }
@@ -49,12 +53,13 @@ public class Tracker {
      * @see TrackerTest#whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray()
      */
     public void delete(Item item) {
-        for (int i = 0; i < this.position; i++) {
+        for (int i = 0; i != this.position; i++) {
             if (this.items[i].getId() == item.getId()) {
                 items[i] = null;
                 nullPushInEnd();
                 this.position--;
                 this.message = "Task have been deleted.";
+                break;
             }
         }
     }
@@ -65,29 +70,34 @@ public class Tracker {
      * @param item new item for init in array
      */
     protected void add(Item item) {
-        if (item != null) {
+        if (item != null && !(item.getHeader().equals("")) && item.getHeader().length() > 0) {
             item.setId(generateId());
             this.items[this.position] = item;
             this.position++;
-            this.message = "Task successfully added";
+            this.message = item.getHeader() + " ID is " + item.getId();
         } else {
-            this.message = "Fail";
+            this.message = "Add fail. Enter name task require";
         }
     }
-
-
 
     /**
      * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
      * @see TrackerTest#WhenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
      */
     protected Item findByHeader(String header) {
-        Item result = null;
+        Item result = new Item();
+        result.setHeader("does not exist");
         for (Item item : this.items) {
             if (item != null && item.getHeader().equals(header)) {
                 result = item;
+                if (result.getDescription() == null) {
+                    result.setDescription("Does not description");
+                }
+                this.message = ("Find: " + "\n" + "Task name:" + item.getHeader() + "\n"
+                        + "ID: " + item.getId() + "\n" + "Description: " + item.getDescription());
+                break;
             } else {
-                this.message = "The task with header does not exist. Please try again.";
+                this.message = "The task does not exist. Please try again.";
             }
         }
         return result;
@@ -120,7 +130,8 @@ public class Tracker {
                     this.items[i].getCommits().remove(j);
                     this.items[i].getCommits().add(j, newCommit);
                     this.message = "«" + oldCommit + "»" + " " + (char) 27 + "[35msuccessfully "
-                            + "replace on " + (char)27 + "[0m" + "«" + newCommit + "»";
+                            + "replace on " + (char)27 + "[0m" + "«" + newCommit + "»" + "\n" + "For: " +
+                            this.items[i].getHeader() + " ID " + this.items[i].getId();
                 }
             }
         }
@@ -148,9 +159,11 @@ public class Tracker {
      */
     protected Item findById(int id) {
         Item result = new Item();
+        result.setHeader("does not exist");
         for (Item item : this.items) {
             if (item != null && item.getId() == id) {
                 result = item;
+                this.message = "Find: " + "\n";
                 break;
             } else {
                 this.message = "The task with Id does not exist. Please try again.";
@@ -163,7 +176,11 @@ public class Tracker {
      * @return unique id
      */
     int generateId() {
-        return RN.nextInt() + ((int) System.currentTimeMillis());
+        int result = RN.nextInt() + ((int) System.currentTimeMillis());
+        if (result < 0) {
+            result *= -1;
+        }
+        return result;
     }
 
     /**
@@ -220,5 +237,9 @@ public class Tracker {
         }
         this.message = "Reverse order filter. We found " + this.arrPrint.length + " tasks";
         return arrPrintFilter;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
