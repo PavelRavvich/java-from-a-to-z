@@ -13,6 +13,11 @@ public class Item {
     public Item() {
     }
 
+    public Item(String header, int id) {
+        this.header = header;
+        this.id = id;
+    }
+
     public Item(String header) {
         this.header = header;
     }
