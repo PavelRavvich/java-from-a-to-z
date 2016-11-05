@@ -100,43 +100,41 @@ public class StartUI {
             System.out.println("=========================================================");
         }
     }
-    
+
     public static void main(String[] args) {
         Input input = new ConsoleInput();
         StartUI startUI = new StartUI(input);
-        //startUI.add();
-        //startUI.viewAllTasks();
-        //startUI.addCommit();
-        //startUI.editionCommit();
-        //startUI.updateItem();
-        //startUI.findById();
-        //startUI.findByHeader();
-        //startUI.deleteTask();
-        
+
         //MENU
-        System.out.println("Welcome to task manager!" + "\n" + "Menu: " + " \n" + "1. Add task: n -t" + "\n"
-        + "2. View all tasks: v" + "\n" + "3. Add comment: n -c" + "\n" + "4. Edition comment: e -c" + "\n" +
-        "5. Edition task: e -t" + "\n" + "6. Find bi ID: f -id" + "\n" + "7. Find by header: f -h" + "\n" +
-        "8. Delete task: d -t");
-        String answer = input.ask("Please select an action:");
-        if (answer.equals("n -t")) {
-            startUI.add();
-        } else if (answer.equals("v")) {
-            startUI.viewAllTasks();
-        } else if (answer.equals("n -c")) {
-            startUI.addCommit();
-        } else if (answer.equals("e -c")) {
-            startUI.editionCommit();
-        } else if (answer.equals("e -t")) {
-            startUI.updateItem();
-        } else if (answer.equals("f -id")) {
-            startUI.findById();
-        } else if (answer.equals("f -h")) {
-            startUI.findByHeader();
-        } else if (answer.equals("d -t")) {
-            startUI.deleteTask();
-        } else {
-            System.out.println("command not found");
+        boolean start = true;
+        while (start) {
+            System.out.println("Welcome to task manager!" + "\n" + "Menu: " + " \n" + "1. Add task: n -t" + "\n"
+                    + "2. View all tasks: v" + "\n" + "3. Add comment: n -c" + "\n" + "4. Edition comment: e -c" + "\n" +
+                    "5. Edition task: e -t" + "\n" + "6. Find bi ID: f -id" + "\n" + "7. Find by header: f -h" + "\n" +
+                    "8. Delete task: d -t" + "\n" + "9. Quit: q");
+            String answer = input.ask("Please select an action:");
+            if (answer.equals("n -t")) {
+                startUI.add();
+            } else if (answer.equals("v")) {
+                startUI.viewAllTasks();
+            } else if (answer.equals("n -c")) {
+                startUI.addCommit();
+            } else if (answer.equals("e -c")) {
+                startUI.editionCommit();
+            } else if (answer.equals("e -t")) {
+                startUI.updateItem();
+            } else if (answer.equals("f -id")) {
+                startUI.findById();
+            } else if (answer.equals("f -h")) {
+                startUI.findByHeader();
+            } else if (answer.equals("d -t")) {
+                startUI.deleteTask();
+            } else if (answer.equals("q")) {
+                start = false;
+            } else {
+                System.out.println("command not found");
+            }
         }
+
     }
 }
