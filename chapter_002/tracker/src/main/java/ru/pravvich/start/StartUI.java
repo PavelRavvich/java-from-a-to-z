@@ -58,7 +58,7 @@ public class StartUI {
     public void findById () {
         int id = this.input.askInt("Enter ID number");
         Item item = this.tracker.findById(id);
-        System.out.println(tracker.getMessage() +  ": " + item.getHeader());
+        System.out.println(tracker.getMessage() + item.getHeader());
         System.out.println("=========================================================");
     }
 
@@ -79,20 +79,20 @@ public class StartUI {
     }
 
     public void viewAllTasks() {
-        String answer = this.input.ask("View all tasks : view -a" + "\n" +
-                "View all tasks with revers filter : view -f");
+        String answer = this.input.ask(String.format("%s\n%s","View all tasks : view -a",
+                "View all tasks with revers filter : view -f"));
         if (answer.equals("view -a")) {
             Item[] print = this.tracker.getPrintArray();
             System.out.println(this.tracker.getMessage());
             for (Item item : print) {
-                System.out.println(item.getHeader() + "  ID: " + item.getId());
+                System.out.println(String.format("%s %s %s",item.getHeader(),"ID:",item.getId()));
             }
             System.out.println("=========================================================");
         } else if (answer.equals("view -f")) {
             Item[] print = this.tracker.getArrPrintFilter();
             System.out.println(this.tracker.getMessage());
             for (Item item : print) {
-                System.out.println(item.getHeader() + "  ID: " + item.getId());
+                System.out.println(String.format("%s %s %s",item.getHeader(),"ID:",item.getId()));
             }
             System.out.println("=========================================================");
         } else {
@@ -135,14 +135,22 @@ public class StartUI {
     private boolean start = true;
 
     public void viewMenu() {
-        System.out.println("It supports the possibility: " + " \n" + "1. Add task: n -t" + "\n"
-                + "2. View all tasks: v" + "\n" + "3. Add comment: n -c" + "\n" + "4. Edition comment: e -c" + "\n" +
-                "5. Edition task: e -t" + "\n" + "6. Find bi ID: f -id" + "\n" + "7. Find by header: f -h" + "\n" +
-                "8. Delete task: d -t" + "\n" + "9. Quit: q");
+        System.out.println("It supports the possibility: ");
+        System.out.printf("%-40s%-1s%n","1. Add task:","n -t");
+        System.out.printf("%-40s%-1s%n","2. View all tasks:","v");
+        System.out.printf("%-40s%-1s%n","3. Add comment:","n -c");
+        System.out.printf("%-40s%-1s%n","4. Edition comment:","e -c");
+        System.out.printf("%-40s%-1s%n","5. Edition task:","e -t");
+        System.out.printf("%-40s%-1s%n","6. Find by ID:","f -id");
+        System.out.printf("%-40s%-1s%n","7. Find by header:","f -h");
+        System.out.printf("%-40s%-1s%n","8. Delete task:","d -t");
+        System.out.printf("%-40s%-1s%n","9. Quit:","q");
+
     }
 
     public static void main(String[] args) {
-        System.out.println("Welcome to task manager! " + "\n" + "For view manual enter: help");
+
+        System.out.println("Welcome to task manager! \nFor view manual enter: help");
         Input input = new ConsoleInput();
         StartUI startUI = new StartUI(input);
         startUI.startApp();
