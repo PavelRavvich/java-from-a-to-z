@@ -101,40 +101,50 @@ public class StartUI {
         }
     }
 
-    public static void main(String[] args) {
-        Input input = new ConsoleInput();
-        StartUI startUI = new StartUI(input);
+    public void startApp() {
+        viewMenu();
+        while (this.start) {
+            String answer = this.input.ask("Enter the command: ");
 
-        //MENU
-        boolean start = true;
-        while (start) {
-            System.out.println("Welcome to task manager!" + "\n" + "Menu: " + " \n" + "1. Add task: n -t" + "\n"
-                    + "2. View all tasks: v" + "\n" + "3. Add comment: n -c" + "\n" + "4. Edition comment: e -c" + "\n" +
-                    "5. Edition task: e -t" + "\n" + "6. Find bi ID: f -id" + "\n" + "7. Find by header: f -h" + "\n" +
-                    "8. Delete task: d -t" + "\n" + "9. Quit: q");
-            String answer = input.ask("Please select an action:");
             if (answer.equals("n -t")) {
-                startUI.add();
+                add();
             } else if (answer.equals("v")) {
-                startUI.viewAllTasks();
+                viewAllTasks();
             } else if (answer.equals("n -c")) {
-                startUI.addCommit();
+                addCommit();
             } else if (answer.equals("e -c")) {
-                startUI.editionCommit();
+                editionCommit();
             } else if (answer.equals("e -t")) {
-                startUI.updateItem();
+                updateItem();
             } else if (answer.equals("f -id")) {
-                startUI.findById();
+                findById();
             } else if (answer.equals("f -h")) {
-                startUI.findByHeader();
+                findByHeader();
             } else if (answer.equals("d -t")) {
-                startUI.deleteTask();
+                deleteTask();
             } else if (answer.equals("q")) {
-                start = false;
+                this.start = false;
+            } else if (answer.equals("help")) {
+                viewMenu();
             } else {
                 System.out.println("command not found");
             }
         }
+    }
 
+    private boolean start = true;
+
+    public void viewMenu() {
+        System.out.println("It supports the possibility: " + " \n" + "1. Add task: n -t" + "\n"
+                + "2. View all tasks: v" + "\n" + "3. Add comment: n -c" + "\n" + "4. Edition comment: e -c" + "\n" +
+                "5. Edition task: e -t" + "\n" + "6. Find bi ID: f -id" + "\n" + "7. Find by header: f -h" + "\n" +
+                "8. Delete task: d -t" + "\n" + "9. Quit: q");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to task manager! " + "\n" + "For view manual enter: help");
+        Input input = new ConsoleInput();
+        StartUI startUI = new StartUI(input);
+        startUI.startApp();
     }
 }
