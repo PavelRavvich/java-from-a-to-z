@@ -8,6 +8,7 @@ import java.util.Random;
  * Users class
  * @author Pavel Ravvich 01.11.2016
  * @author version 1.0
+ * @see #addDescription(int, String)
  * @see #updateItem(Item) +
  * @see #addCommit(Item, String) - Addition commit
  * @see #editionCommit(String, String)
@@ -27,6 +28,25 @@ public class Tracker {
     private static final Random RN = new Random();
     // for messages
     private String message;
+
+    /**
+     * add description in item
+     * @param id need item
+     * @see TrackerTest#WhenIdAndDescriptionInThenItemAddDescription() test
+     */
+    public void addDescription(int id, String description) {
+        if (description.length() != 0) {
+            for (Item item : this.items) {
+                if (item != null && item.getId() == id) {
+                    item.setDescription(description);
+                    this.message = String.format("%s %s %s %s %s", "Description:", description, "add in",
+                            item.getHeader(), "success.");
+                }
+            }
+        } else {
+            this.message = "Fail. Description empty.";
+        }
+    }
 
     /**
      * @see TrackerTest#whenItemInThenItemUpdate() test
@@ -164,8 +184,15 @@ public class Tracker {
         for (Item item : this.items) {
             if (item != null && item.getId() == id) {
                 result = item;
-                this.message = String.format("%s\n", "Find: ");
-                break;
+                if (item.getDescription() != null) {
+                    this.message = String.format("%s\n%s\n%s %s", "Find: ",
+                            item.getHeader(),"Description:",item.getDescription());
+                    break;
+                } else {
+                    this.message = String.format("%s\n%s\n%s %s", "Find: ",
+                            item.getHeader(),"Description:","Description is empty.");
+                    break;
+                }
             } else {
                 this.message = "The task with Id does not exist. Please try again.";
             }

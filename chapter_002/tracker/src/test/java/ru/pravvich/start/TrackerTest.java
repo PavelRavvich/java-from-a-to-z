@@ -8,6 +8,24 @@ import ru.pravvich.models.Item;
 
 public class TrackerTest {
 
+
+
+    /**
+     * @see Tracker#addDescription(int, String)
+     */
+    @Test
+    public void WhenIdAndDescriptionInThenItemAddDescription() {
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("header");
+        tracker.add(item);
+        int  id = tracker.items[0].getId();
+        tracker.addDescription(id, "desc");
+        String result = tracker.items[0].getDescription();
+        assertThat(result, is("desc"));
+    }
+
+
     /**
      * @see Tracker#updateItem(Item) method
      */

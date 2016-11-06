@@ -13,6 +13,7 @@ import ru.pravvich.models.*;
  * @see #addCommit()
  * @see #editionCommit()
  * @see #viewAllTasks()
+ * @see #addDescription() 
  */
 public class StartUI {
     private Input input;
@@ -22,17 +23,25 @@ public class StartUI {
         this.input = input;
     }
 
+    public void addDescription() {
+        int id = this.input.askInt("Enter Id need task:");
+        String description = this.input.ask("Enter description");
+        this.tracker.addDescription(id, description);
+        System.out.println(this.tracker.getMessage());
+        System.out.println("=========================================================");
+    }
+
     public void editionCommit() {
-        String oldCommit = input.ask("Enter old commit for edit");
-        String newCommit = input.ask("Enter new commit");
+        String oldCommit = this.input.ask("Enter old commit for edit");
+        String newCommit = this.input.ask("Enter new commit");
         this.tracker.editionCommit(oldCommit, newCommit);
         System.out.println(this.tracker.getMessage());
         System.out.println("=========================================================");
     }
 
     public void addCommit() {
-        int id = input.askInt("Enter ID task for commit.");
-        String commit = input.ask("Enter commit for this task.");
+        int id = this.input.askInt("Enter ID task for commit.");
+        String commit = this.input.ask("Enter commit for this task.");
         this.tracker.addCommit(this.tracker.findById(id), commit);
         System.out.println(this.tracker.getMessage());
         System.out.println("=========================================================");
@@ -58,7 +67,7 @@ public class StartUI {
     public void findById () {
         int id = this.input.askInt("Enter ID number");
         Item item = this.tracker.findById(id);
-        System.out.println(tracker.getMessage() + item.getHeader());
+        System.out.println(tracker.getMessage());
         System.out.println("=========================================================");
     }
 
@@ -122,7 +131,9 @@ public class StartUI {
                 findByHeader();
             } else if (answer.equals("d -t")) {
                 deleteTask();
-            } else if (answer.equals("q")) {
+            } else if (answer.equals("n -d")) {
+                addDescription();
+            }else if (answer.equals("q")) {
                 this.start = false;
             } else if (answer.equals("help")) {
                 viewMenu();
@@ -143,9 +154,9 @@ public class StartUI {
         System.out.printf("%-40s%-1s%n","5. Edition task:","e -t");
         System.out.printf("%-40s%-1s%n","6. Find by ID:","f -id");
         System.out.printf("%-40s%-1s%n","7. Find by header:","f -h");
-        System.out.printf("%-40s%-1s%n","8. Delete task:","d -t");
-        System.out.printf("%-40s%-1s%n","9. Quit:","q");
-
+        System.out.printf("%-40s%-1s%n","8. Add description:","n -d");
+        System.out.printf("%-40s%-1s%n","9. Delete task:","d -t");
+        System.out.printf("%-40s%-1s%n","10. Quit:","q");
     }
 
     public static void main(String[] args) {
