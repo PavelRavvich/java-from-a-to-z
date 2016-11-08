@@ -274,4 +274,8 @@ public class Tracker {
     public Item[] getItems() {
         return this.items;
     }
+
+    public int getPosition() {
+        return this.position;
+    }
 }

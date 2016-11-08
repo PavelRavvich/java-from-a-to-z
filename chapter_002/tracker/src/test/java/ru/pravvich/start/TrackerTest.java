@@ -17,7 +17,7 @@ public class TrackerTest {
         Item item = new Item();
         item.setHeader("header");
         tracker.add(item);
-        int  id = tracker.items[0].getId();
+        int  id = tracker.getItems()[0].getId();
         tracker.addDescription(id, "desc");
         String result = tracker.items[0].getDescription();
         assertThat(result, is("desc"));
@@ -40,7 +40,7 @@ public class TrackerTest {
         result.setHeader("header");
         result.setId(item.getId());
         tracker.updateItem(result);
-        assertThat(result, is(tracker.items[0]));
+        assertThat(result, is(tracker.getItems()[0]));
     }
 
     /**
@@ -70,7 +70,7 @@ public class TrackerTest {
         tracker.addCommit(item, "commit_02");
         //use method
         tracker.editionCommit("commit_02", "update commit");
-        String result = tracker.items[0].getCommits().get(1);
+        String result = tracker.getItems()[0].getCommits().get(1);
         assertThat(result, is("update commit"));
     }
 
@@ -81,13 +81,13 @@ public class TrackerTest {
     public void whenCommitOfStringInThenThisCommitDelete() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.header = "header";
+        item.setHeader("header");
         tracker.add(item);
         tracker.addCommit(item,"commit_01");
         tracker.addCommit(item, "commit_02");
         //check size commits list
         tracker.deleteCommit("commit_01");
-        int result = tracker.items[0].getCommits().size();
+        int result = tracker.getItems()[0].getCommits().size();
         assertThat(result, is(1));
     }
 
@@ -98,8 +98,8 @@ public class TrackerTest {
     public void whenIdInThenItemWithThisIdOut() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.description = "description";
-        item.header = "header";
+        item.setDescription("description");
+        item.setHeader("header");
         tracker.add(item);
         int id = item.getId();
         Item result = tracker.findById(id);
@@ -113,8 +113,8 @@ public class TrackerTest {
     public void whenHeaderInThenItemWithThisHeaderOut() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.description = "description";
-        item.header = "header";
+        item.setDescription("description");
+        item.setHeader("header");
         tracker.add(item);
         String header = "header";
         Item result = tracker.findByHeader(header);
@@ -128,8 +128,8 @@ public class TrackerTest {
     public void whenItemWithThisHeaderNotExistThenVariableMassageInit() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.description = "description";
-        item.header = "header";
+        item.setDescription("description");
+        item.setHeader("header");
         tracker.add(item);
         String header = "head";
         tracker.findByHeader(header);
@@ -144,10 +144,10 @@ public class TrackerTest {
     public void whenObjectTypeItemInThenInArrayItemsInitOneCell() {
         Tracker tracker = new Tracker();
         Item item = new Item();
-        item.description = "description";
-        item.header = "header";
+        item.setDescription("description");
+        item.setHeader("header");
         tracker.add(item);
-        assertThat(tracker.items[0], is(item));
+        assertThat(tracker.getItems()[0], is(item));
     }
 
     /**
@@ -161,7 +161,7 @@ public class TrackerTest {
         item.setHeader("header");
         tracker.add(item);
         tracker.delete(item);
-        assertThat(tracker.position, is(0));
+        assertThat(tracker.getPosition(), is(0));
     }
 
     /**
@@ -172,13 +172,13 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         // init and add first Item
         Item itemFirst = new Item();
-        itemFirst.description = "description";
-        itemFirst.header = "header";
+        itemFirst.setDescription("description");
+        itemFirst.setHeader("header");
         tracker.add(itemFirst);
         // init and add second Item
         Item itemSecond = new Item();
-        itemSecond.description = "description two";
-        itemSecond.header = "header two";
+        itemSecond.setDescription("description two");
+        itemSecond.setHeader("header two");
         tracker.add(itemSecond);
         //check method
         Item[] result = tracker.getPrintArray();
@@ -194,13 +194,13 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         // init and add first Item
         Item itemFirst = new Item();
-        itemFirst.description = "description";
-        itemFirst.header = "header";
+        itemFirst.setDescription("description");
+        itemFirst.setHeader("header");
         tracker.add(itemFirst);
         // init and add second Item
         Item itemSecond = new Item();
-        itemSecond.description = "description two";
-        itemSecond.header = "header two";
+        itemSecond.setDescription("description two");
+        itemSecond.setHeader("header two");
         tracker.add(itemSecond);
         //check method
         Item[] result = tracker.getArrPrintFilter();
