@@ -8,13 +8,11 @@ import ru.pravvich.models.Item;
 
 public class TrackerTest {
 
-
-
     /**
      * @see Tracker#addDescription(int, String)
      */
     @Test
-    public void WhenIdAndDescriptionInThenItemAddDescription() {
+    public void whenIdAndDescriptionInThenItemAddDescription() {
         Tracker tracker = new Tracker();
         Item item = new Item();
         item.setHeader("header");
@@ -44,8 +42,6 @@ public class TrackerTest {
         tracker.updateItem(result);
         assertThat(result, is(tracker.items[0]));
     }
-
-
 
     /**
      * @see Tracker#addCommit(Item, String)
@@ -129,7 +125,7 @@ public class TrackerTest {
      * @see Tracker#findByHeader(String)
      */
     @Test
-    public void WhenItemWithThisHeaderNotExistThenVariableMassageInit() {
+    public void whenItemWithThisHeaderNotExistThenVariableMassageInit() {
         Tracker tracker = new Tracker();
         Item item = new Item();
         item.description = "description";

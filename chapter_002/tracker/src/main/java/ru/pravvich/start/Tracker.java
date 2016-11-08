@@ -32,15 +32,15 @@ public class Tracker {
     /**
      * add description in item
      * @param id need item
-     * @see TrackerTest#WhenIdAndDescriptionInThenItemAddDescription() test
+     * @see TrackerTest#whenIdAndDescriptionInThenItemAddDescription() test
      */
     public void addDescription(int id, String description) {
         if (description.length() != 0) {
             for (Item item : this.items) {
                 if (item != null && item.getId() == id) {
                     item.setDescription(description);
-                    this.message = String.format("%s %s %s %s %s", "Description:", description, "add in",
-                            item.getHeader(), "success.");
+                    this.message = String.format("%s %s %s %s %s", "Description:",
+                            description, "add in", item.getHeader(), "success.");
                 }
             }
         } else {
@@ -103,7 +103,7 @@ public class Tracker {
 
     /**
      * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
-     * @see TrackerTest#WhenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
+     * @see TrackerTest#whenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
      */
     protected Item findByHeader(String header) {
         Item result = new Item();
