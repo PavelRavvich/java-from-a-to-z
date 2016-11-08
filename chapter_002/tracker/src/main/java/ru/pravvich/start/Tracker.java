@@ -270,4 +270,8 @@ public class Tracker {
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public Item[] getItems() {
+        return this.items;
+    }
 }
