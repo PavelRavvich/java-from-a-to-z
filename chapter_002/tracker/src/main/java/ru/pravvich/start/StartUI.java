@@ -5,19 +5,28 @@ import ru.pravvich.models.*;
 /**
  * @since Pavel Ravvich
  * @since 04.11.2016
- * @see #add() addition task
- * @see #updateItem() replace task on new
- * @see #findByHeader()
- * @see #findById()
- * @see #deleteTask()
- * @see #addCommit()
+ * @see #add() addition task 
+ * @see #updateItem() replace task on new 
+ * @see #findByHeader() 
+ * @see #findById() 
+ * @see #deleteTask() 
+ * @see #addCommit() 
  * @see #editionCommit()
- * @see #viewAllTasks()
+ * @see #viewAllTasks() 
  * @see #addDescription() 
  */
 public class StartUI {
     private Input input;
     private Tracker tracker = new Tracker();
+
+    // only for tests!
+    public void setInput(Input input) {
+        this.input = input;
+    }
+
+    public Tracker getTracker() {
+        return this.tracker;
+    }
 
     public StartUI(Input input) {
         this.input = input;
@@ -66,7 +75,7 @@ public class StartUI {
 
     public void findById () {
         int id = this.input.askInt("Enter ID number");
-        Item item = this.tracker.findById(id);
+        this.tracker.findById(id);
         System.out.println(tracker.getMessage());
         System.out.println("=========================================================");
     }
