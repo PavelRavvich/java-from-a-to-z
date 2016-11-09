@@ -154,6 +154,10 @@ public class StartUI {
 
     private boolean start = true;
 
+    public boolean getStart() {
+        return this.start;
+    }
+
     public void viewMenu() {
         System.out.println("It supports the possibility: ");
         System.out.printf("%-40s%-1s%n","1. Add task:","n -t");
