@@ -11,6 +11,18 @@ import static org.junit.Assert.*;
 public class StartUITest {
 
     /**
+     * @see StartUI#add()
+     * @see StartUI#startApp() 
+     */
+    @Test
+    public void whenAddWorkThenStartUppAddTaskQuit() {
+        String[] answers = {"n -t","task","q"};
+        Input input = new StubInput(answers);
+        StartUI startUI = new StartUI(input);
+        startUI.startApp();
+    }
+
+    /**
      * @see StartUI#editionCommit()
      */
     @Test
@@ -131,18 +143,6 @@ public class StartUITest {
         assertThat(result, is("task"));
     }
 
-    /**
-     * @see StartUI#add()
-     */
-    @Test
-    public void whenAddWorkThenItemAdd() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
-        StartUI startUI = new StartUI(input);
-        startUI.add();
-        String result = startUI.getTracker().getItems()[0].getHeader();
-        assertThat(result,is("task"));
-    }
 
     /**
      * @see StartUI#deleteTask()
