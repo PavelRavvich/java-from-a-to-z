@@ -8,6 +8,15 @@ public class StartUI {
     private Input input;
     private Tracker tracker = new Tracker();
 
+    // only for tests
+    public void setInput(Input input) {
+        this.input = input;
+    }
+
+    public Tracker getTracker() {
+        return this.tracker;
+    }
+
     public StartUI(Input input) {
         this.input = input;
     }
