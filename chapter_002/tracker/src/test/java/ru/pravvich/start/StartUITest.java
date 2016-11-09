@@ -12,7 +12,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#add()
-     * @see StartUI#startApp() 
+     * @see StartUI#startApp()
      */
     @Test
     public void whenAddWorkThenStartUppAddTaskQuit() {
@@ -20,6 +20,15 @@ public class StartUITest {
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
         startUI.startApp();
+        Tracker tracker = startUI.getTracker();
+        boolean resultHaveItem = (tracker.getItems()[0] != null);
+        assertThat(resultHaveItem,is(true));
+        Integer id = tracker.getItems()[0].getId();
+        boolean resultHaveId = (id != null && id != 0);
+        assertThat(resultHaveId, is(true));
+        assertThat(tracker.getItems()[0].getHeader(), is("task"));
+        assertThat(startUI.getStart(),is(false));
+        // ну я уж не знаю что тут еще сочинить то )))))))))
     }
 
     /**
