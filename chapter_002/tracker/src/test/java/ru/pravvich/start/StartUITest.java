@@ -21,14 +21,10 @@ public class StartUITest {
         StartUI startUI = new StartUI(input);
         startUI.startApp();
         Tracker tracker = startUI.getTracker();
-        boolean resultHaveItem = (tracker.getItems()[0] != null);
-        assertThat(resultHaveItem,is(true));
-        Integer id = tracker.getItems()[0].getId();
-        boolean resultHaveId = (id != null && id != 0);
-        assertThat(resultHaveId, is(true));
+        assertNotNull(tracker.getItems()[0]);
+        assertNotNull(tracker.getItems()[0].getId());
         assertThat(tracker.getItems()[0].getHeader(), is("task"));
         assertThat(startUI.getStart(),is(false));
-        // ну я уж не знаю что тут еще сочинить то )))))))))
     }
 
     /**
@@ -41,11 +37,12 @@ public class StartUITest {
         StartUI startUI = new StartUI(input);
         startUI.add();
         Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {id.toString(), "NewTASK"}));
+        startUI.setInput(new StubInput(new String[] {id.toString(), "COMMIT"}));
         startUI.addCommit();
         // check replace
-        startUI.setInput(new StubInput(new String[] {"NewTASK", "REPLACE"}));
+        startUI.setInput(new StubInput(new String[] {"COMMIT", "REPLACE_COMMIT"}));
         startUI.editionCommit();
+        assertThat(startUI.getTracker().getItems()[0].getCommits().get(0),is("REPLACE_COMMIT"));
     }
 
     /**
@@ -73,8 +70,14 @@ public class StartUITest {
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
         startUI.add();
+        startUI.setInput(new StubInput(new String[] {"task_1"}));
+        startUI.add();
         startUI.setInput(new StubInput(new String[] {"view -a"}));
         startUI.viewAllTasks();
+        int resultId = startUI.getTracker().getPrintArray()[0].getId();
+        assertThat(resultId,is(startUI.getTracker().getItems()[0].getId()));
+        int resultIdTask1 = startUI.getTracker().getPrintArray()[1].getId();
+        assertThat(resultIdTask1,is(startUI.getTracker().getItems()[1].getId()));
     }
 
     /**
@@ -87,8 +90,14 @@ public class StartUITest {
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
         startUI.add();
+        startUI.setInput(new StubInput(new String[] {"task_1"}));
+        startUI.add();
         startUI.setInput(new StubInput(new String[] {"view -f"}));
         startUI.viewAllTasks();
+        int resultIdTask = startUI.getTracker().getArrPrintFilter()[0].getId();
+        assertThat(resultIdTask,is(startUI.getTracker().getItems()[1].getId()));
+        int resultIdTask1 = startUI.getTracker().getArrPrintFilter()[1].getId();
+        assertThat(resultIdTask1,is(startUI.getTracker().getItems()[0].getId()));
     }
 
     /**
