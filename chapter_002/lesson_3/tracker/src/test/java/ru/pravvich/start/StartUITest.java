@@ -11,6 +11,18 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
+     */
+    @Test
+    public void whenParamInThenMoreOneMethodWorkInOneSetApp() {
+        String[] args = {"0","NAME","DESCRIPTION","n","0","name","desc", "y"};
+        Input input = new StubInput(args);
+        StartUI startUI = new StartUI(input);
+        startUI.startUpp();
+        assertThat(startUI.getTracker().getPrintArray().length,is(2));
+    }
+
+    /**
+     * @see StartUI#startUpp()
      * @see MenuTracker.AddItem
      */
     @Test
