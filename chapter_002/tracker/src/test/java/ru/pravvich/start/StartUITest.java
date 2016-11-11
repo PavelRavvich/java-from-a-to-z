@@ -28,37 +28,37 @@ public class StartUITest {
     }
 
     /**
-     * @see StartUI#editionCommit()
-     */
-    @Test
-    public void whenOldCommitAndNewCommitInThenOldCommitReplaceOnNewCommit() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
-        StartUI startUI = new StartUI(input);
-        startUI.add();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {id.toString(), "COMMIT"}));
-        startUI.addCommit();
-        // check replace
-        startUI.setInput(new StubInput(new String[] {"COMMIT", "REPLACE_COMMIT"}));
-        startUI.editionCommit();
-        assertThat(startUI.getTracker().getItems()[0].getCommits().get(0),is("REPLACE_COMMIT"));
-    }
-
-    /**
      * @see StartUI#addCommit()
      */
     @Test
     public void whenIdAndStringInThenItemWithIdAddCommit() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("TaskName");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[] {id.toString(), "Commit"});
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {id.toString(), "NewTASK"}));
+        startUI.setTracker(tracker);
         startUI.addCommit();
         String result = startUI.getTracker().getItems()[0].getCommits().get(0);
-        assertThat(result, is("NewTASK"));
+        assertThat(result, is("Commit"));
+    }
+
+    /**
+     * @see StartUI#editionCommit()
+     */
+    @Test
+    public void whenOldCommitAndNewCommitInThenOldCommitReplaceOnNewCommit() {
+        Item item = new Item();
+        item.setHeader("Task");
+        StartUI startUI = new StartUI(new StubInput(new String[] {"COMMIT", "REPLACE_COMMIT"}));
+        Tracker tracker = startUI.getTracker();
+        tracker.add(item);
+        tracker.addCommit(item, "COMMIT");
+        // check replace commit
+        startUI.editionCommit();
+        assertThat(startUI.getTracker().getItems()[0].getCommits().get(0),is("REPLACE_COMMIT"));
     }
 
     /**
@@ -66,18 +66,22 @@ public class StartUITest {
      */
     @Test
     public void whenThenAllTasksWithoutFilterOutPrint() {
-        String[] answers = {"task"};
+        Tracker tracker = new Tracker();
+        Item taskFirst = new Item();
+        taskFirst.setHeader("Task_01");
+        tracker.add(taskFirst);
+        Item taskSecond = new Item();
+        taskSecond.setHeader("Task_02");
+        tracker.add(taskSecond);
+        String[] answers = {"view -a"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        startUI.setInput(new StubInput(new String[] {"task_1"}));
-        startUI.add();
-        startUI.setInput(new StubInput(new String[] {"view -a"}));
+        startUI.setTracker(tracker);
         startUI.viewAllTasks();
-        int resultId = startUI.getTracker().getPrintArray()[0].getId();
-        assertThat(resultId,is(startUI.getTracker().getItems()[0].getId()));
-        int resultIdTask1 = startUI.getTracker().getPrintArray()[1].getId();
-        assertThat(resultIdTask1,is(startUI.getTracker().getItems()[1].getId()));
+        int resultIdTaskFirst = startUI.getTracker().getPrintArray()[0].getId();
+        assertThat(resultIdTaskFirst,is(startUI.getTracker().getItems()[0].getId()));
+        int resultIdTaskSecond = startUI.getTracker().getPrintArray()[1].getId();
+        assertThat(resultIdTaskSecond,is(startUI.getTracker().getItems()[1].getId()));
     }
 
     /**
@@ -86,18 +90,22 @@ public class StartUITest {
     @Test
     public void whenThenAllTasksWithFilterReversOutPrint() {
         // if user want filter
-        String[] answers = {"task"};
+        Tracker tracker = new Tracker();
+        Item taskFirst = new Item();
+        taskFirst.setHeader("Task_01");
+        tracker.add(taskFirst);
+        Item taskSecond = new Item();
+        taskSecond.setHeader("Task_02");
+        tracker.add(taskSecond);
+        String[] answers = {"view -f"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        startUI.setInput(new StubInput(new String[] {"task_1"}));
-        startUI.add();
-        startUI.setInput(new StubInput(new String[] {"view -f"}));
+        startUI.setTracker(tracker);
         startUI.viewAllTasks();
-        int resultIdTask = startUI.getTracker().getArrPrintFilter()[0].getId();
-        assertThat(resultIdTask,is(startUI.getTracker().getItems()[1].getId()));
-        int resultIdTask1 = startUI.getTracker().getArrPrintFilter()[1].getId();
-        assertThat(resultIdTask1,is(startUI.getTracker().getItems()[0].getId()));
+        int resultIdTaskFirst = startUI.getTracker().getArrPrintFilter()[0].getId();
+        assertThat(resultIdTaskFirst,is(startUI.getTracker().getItems()[1].getId()));
+        int resultIdTaskSecond = startUI.getTracker().getArrPrintFilter()[1].getId();
+        assertThat(resultIdTaskSecond,is(startUI.getTracker().getItems()[0].getId()));
     }
 
     /**
@@ -105,14 +113,17 @@ public class StartUITest {
      */
     @Test
     public void whenUpdateItemWorkThenOldItemReplaceOnNewItem() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("Task_01");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        String[] answer = {"UpdateTask",id.toString()};
+        Input input = new StubInput(answer);
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {"new Name", id.toString()}));
+        startUI.setTracker(tracker);
         startUI.updateItem();
-        assertThat(startUI.getTracker().getItems()[0].getHeader(),is("new Name"));
+        assertThat(startUI.getTracker().getItems()[0].getHeader(),is("UpdateTask"));
     }
 
     /**
@@ -120,15 +131,16 @@ public class StartUITest {
      */
     @Test
     public void whenIdAndDescriptionInThenAddDescriptionInItem() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("Task");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[] {id.toString(),"NewDescription"});
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        input = new StubInput(new String[] {id.toString(), "my description"});
-        startUI.setInput(input);
+        startUI.setTracker(tracker);
         startUI.addDescription();
-        assertThat(startUI.getTracker().getItems()[0].getDescription(),is("my description"));
+        assertThat(startUI.getTracker().getItems()[0].getDescription(),is("NewDescription"));
     }
 
     /**
@@ -136,13 +148,17 @@ public class StartUITest {
      */
     @Test
     public void whenHeaderInThenFindByHeader() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("TaskName");
+        tracker.add(item);
+        Input input = new StubInput(new String[] {"TaskName"});
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        startUI.setInput(new StubInput(new String[] {"task"}));
+        startUI.setTracker(tracker);
         startUI.findByHeader();
-        assertThat(startUI.getTracker().getItems()[0].getHeader(), is("task"));
+        int id = tracker.getItems()[0].getId();
+        int result = startUI.getTracker().getItems()[0].getId();
+        assertThat(result, is(id));
     }
 
     /**
@@ -150,29 +166,33 @@ public class StartUITest {
      */
     @Test
     public void whenIdInThenItemFindById() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("Task");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[] {id.toString()});
         StartUI startUI = new StartUI(input);
-        startUI.add();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {id.toString(),"task"}));
+        startUI.setTracker(tracker);
         startUI.findById();
-        String result = startUI.getTracker().getItems()[0].getHeader();
-        assertThat(result, is("task"));
+        Integer result = startUI.getTracker().getItems()[0].getId();
+        assertThat(result,is(id));
     }
-
 
     /**
      * @see StartUI#deleteTask()
      */
     @Test
     public void whenThenItemBecomeNull() {
-        String[] answers = {"task"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("TaskName");
+        tracker.add(item);
+        Input input = new StubInput(new String[] {"TaskName"});
         StartUI startUI = new StartUI(input);
-        startUI.add();
+        startUI.setTracker(tracker);
+        assertNotNull(startUI.getTracker().getItems()[0]);
         // delete
-        startUI.setInput(new StubInput(new String[] {"task"}));
         startUI.deleteTask();
         Item result = startUI.getTracker().getItems()[0];
         assertThat(result,is(nullValue(null)));
