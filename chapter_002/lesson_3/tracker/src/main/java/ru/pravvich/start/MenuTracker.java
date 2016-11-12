@@ -31,12 +31,14 @@ public class MenuTracker {
     }
 
     public void select(int key) {
-        if (key != -1) {
+        try {
             this.userAction[key].execute(this.input, this.tracker);
-        } else {
-            System.out.println("Error! Command not found!");
+        } catch (Exception ex) {
+            ex = new MenuIndexException("Such menu item doesn't exist. \nEnter valid value!");
+            System.out.println(ex.getMessage());
+            /* Можно было без MenuIndexException вообще обойтисть просто на любой Exception делать System.out
+            типа вы что-то не товвели но это так... не говнокода ради а полиморфизма для ))) */
         }
-
     }
 
     public void showMenu() {
@@ -111,7 +113,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(),"Create description.");
+            return String.format("%s. %s", this.key(),"Edit description.");
         }
     }
 
