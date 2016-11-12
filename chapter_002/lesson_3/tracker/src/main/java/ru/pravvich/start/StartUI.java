@@ -9,8 +9,8 @@ public class StartUI {
     private Tracker tracker = new Tracker();
 
     // only for tests
-    public void setInput(Input input) {
-        this.input = input;
+    public void setTracker(Tracker tracker) {
+        this.tracker = tracker;
     }
 
     public Tracker getTracker() {
