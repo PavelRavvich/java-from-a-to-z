@@ -31,8 +31,7 @@ public class StartUITest {
         Input input = new StubInput(args);
         StartUI startUI = new StartUI(input);
         startUI.startUpp();
-        boolean result = (startUI.getTracker().getItems()[0] != null);
-        assertThat(result,is(true));
+        assertNotNull(startUI.getTracker().getItems()[0]);
     }
 
     /**
@@ -41,14 +40,15 @@ public class StartUITest {
      */
     @Test
     public void whenThenItemBecomeNull() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESCRIPTION");
+        tracker.add(item);
+        Integer id  = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[]{"8", id.toString(), "y"});
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        String[] answersForDelete = {"8" , id.toString(),"y"};
-        Input inputForDelete = new StubInput(answersForDelete);
-        startUI.setInput(inputForDelete);
+        startUI.setTracker(tracker);
         startUI.startUpp();
         Item result = startUI.getTracker().getItems()[0];
         assertThat(result,is(nullValue(null)));
@@ -64,6 +64,10 @@ public class StartUITest {
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
         startUI.startUpp();
+        /**
+         * не знаю как тут assertThat применить у меня сообщение об ошибке сразу через System.out выводится
+         * @see MenuTracker#select(int) вот тут. Может его тут вообще не надо логирование работает и ок...
+         */
     }
 
     /**
@@ -72,15 +76,19 @@ public class StartUITest {
      */
     @Test
     public void whenIdInThenFindById() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
-        StartUI startUI = new StartUI(input);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESC");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[]{"6",id.toString(),"y"});
+        StartUI startUI =  new StartUI(input);
+        startUI.setTracker(tracker);
         startUI.startUpp();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {"6" ,id.toString(),"y"}));
-        startUI.startUpp();
-        String result = startUI.getTracker().getItems()[0].getHeader();
-        assertThat(result, is("NAME"));
+        int check = tracker.getItems()[0].getId();
+        int result = startUI.getTracker().getItems()[0].getId();
+        assertThat(result, is(check));
     }
 
     /**
@@ -89,14 +97,17 @@ public class StartUITest {
      */
     @Test
     public void whenUpdateItemWorkThenOldItemReplaceOnNewItem() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESC");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[]{"1", id.toString(), "newName", "y"});
         StartUI startUI = new StartUI(input);
+        startUI.setTracker(tracker);
         startUI.startUpp();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {"1", id.toString(), "new Name", "y"}));
-        startUI.startUpp();
-        assertThat(startUI.getTracker().getItems()[0].getHeader(),is("new Name"));
+        assertThat(startUI.getTracker().getItems()[0].getHeader(),is("newName"));
     }
 
     /**
@@ -105,12 +116,15 @@ public class StartUITest {
      */
     @Test
     public void whenIdAndDescriptionInThenAddDescriptionInItem() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESC");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[]{"2", id.toString(), "my description", "y"});
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {"2", id.toString(), "my description", "y"}));
+        startUI.setTracker(tracker);
         startUI.startUpp();
         assertThat(startUI.getTracker().getItems()[0].getDescription(),is("my description"));
     }
@@ -121,16 +135,19 @@ public class StartUITest {
      */
     @Test
     public void whenThenAllTasksWithoutFilterOutPrint() {
-        String[] answers = {"0","NAME_01","DESCRIPTION_01","y"};
+        Tracker tracker = new Tracker();
+        Item itemFirst = new Item();
+        itemFirst.setHeader("NAME_01");
+        itemFirst.setDescription("DESCRIPTION_01");
+        tracker.add(itemFirst);
+        Item itemSecond = new Item();
+        itemSecond.setHeader("NAME_02");
+        itemSecond.setDescription("DESCRIPTION_02");
+        tracker.add(itemSecond);
+        String[] answers = {"9","y"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
-        String[] answers1 = {"0","NAME_02","DESCRIPTION_02","y"};
-        Input inputSecond = new StubInput(answers1);
-        startUI.setInput(inputSecond);
-        startUI.startUpp();
-        // check
-        startUI.setInput(new StubInput(new String[] {"9","y"}));
+        startUI.setTracker(tracker);
         startUI.startUpp();
         assertThat(startUI.getTracker().getItems()[0].getHeader(),is("NAME_01"));
         assertThat(startUI.getTracker().getItems()[1].getHeader(),is("NAME_02"));
@@ -142,16 +159,19 @@ public class StartUITest {
      */
     @Test
     public void whenThenAllTasksWithFilterOutPrint() {
-        String[] answers = {"0","NAME_01","DESCRIPTION_01","y"};
+        Tracker tracker = new Tracker();
+        Item itemFirst = new Item();
+        itemFirst.setHeader("NAME_01");
+        itemFirst.setDescription("DESCRIPTION_01");
+        tracker.add(itemFirst);
+        Item itemSecond = new Item();
+        itemSecond.setHeader("NAME_02");
+        itemSecond.setDescription("DESCRIPTION_02");
+        tracker.add(itemSecond);
+        String[] answers = {"10","y"};
         Input input = new StubInput(answers);
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
-        String[] answers1 = {"0","NAME_02","DESCRIPTION_02","y"};
-        Input inputSecond = new StubInput(answers1);
-        startUI.setInput(inputSecond);
-        startUI.startUpp();
-        // check
-        startUI.setInput(new StubInput(new String[] {"10","y"}));
+        startUI.setTracker(tracker);
         startUI.startUpp();
         assertThat(startUI.getTracker().getArrPrintFilter()[0].getHeader(),is("NAME_02"));
         assertThat(startUI.getTracker().getArrPrintFilter()[1].getHeader(),is("NAME_01"));
@@ -163,14 +183,17 @@ public class StartUITest {
      */
     @Test
     public void whenHeaderInThenFindByHeader() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESC");
+        tracker.add(item);
+        Input input = new StubInput(new String[]{"7","NAME","y"});
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
-        startUI.setInput(new StubInput(new String[] {"7","NAME","y"}));
+        startUI.setTracker(tracker);
         startUI.startUpp();
         assertThat(startUI.getTracker().getItems()[0].getHeader(), is("NAME"));
-        assertThat(startUI.getTracker().getItems()[0].getDescription(), is("DESCRIPTION"));
+        assertThat(startUI.getTracker().getItems()[0].getDescription(), is("DESC"));
     }
 
     /**
@@ -179,13 +202,16 @@ public class StartUITest {
      */
     @Test
     public void whenIdAndStringInThenItemWithIdAddCommit() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESC");
+        tracker.add(item);
+        Integer id = tracker.getItems()[0].getId();
+        Input input = new StubInput(new String[]{"3",id.toString(), "COMMIT","y"});
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
+        startUI.setTracker(tracker);
         // check
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {"3",id.toString(), "COMMIT","y"}));
         startUI.startUpp();
         String result = startUI.getTracker().getItems()[0].getCommits().get(0);
         assertThat(result, is("COMMIT"));
@@ -197,16 +223,16 @@ public class StartUITest {
      */
     @Test
     public void whenOldCommitAndNewCommitInThenOldCommitReplaceOnNewCommit() {
-        String[] answers = {"0","NAME","DESCRIPTION","y"};
-        Input input = new StubInput(answers);
+        Tracker tracker = new Tracker();
+        Item item = new Item();
+        item.setHeader("NAME");
+        item.setDescription("DESC");
+        tracker.add(item);
+        tracker.addCommit(tracker.getItems()[0],"COMMIT");
+        Input input = new StubInput(new String[]{"4","COMMIT", "NEW_COMMIT","y"});
         StartUI startUI = new StartUI(input);
-        startUI.startUpp();
-        // add commit
-        Integer id = startUI.getTracker().getItems()[0].getId();
-        startUI.setInput(new StubInput(new String[] {"3",id.toString(), "COMMIT","y"}));
-        startUI.startUpp();
+        startUI.setTracker(tracker);
         // check replace
-        startUI.setInput(new StubInput(new String[] {"4","COMMIT", "NEW_COMMIT","y"}));
         startUI.startUpp();
         assertThat(startUI.getTracker().getItems()[0].getCommits().get(0),is("NEW_COMMIT"));
     }
