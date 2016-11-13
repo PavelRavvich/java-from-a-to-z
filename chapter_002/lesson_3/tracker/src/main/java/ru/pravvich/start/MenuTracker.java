@@ -30,15 +30,8 @@ public class MenuTracker {
         this.userAction[10] = new ShowReplaceFilter();
     }
 
-    public void select(int key) {
-        try {
+    public void select(int key) throws IndexOutOfBoundsException {
             this.userAction[key].execute(this.input, this.tracker);
-        } catch (Exception ex) {
-            ex = new MenuIndexException("Such menu item doesn't exist. \nEnter valid value!");
-            System.out.println(ex.getMessage());
-            /* Можно было без MenuIndexException вообще обойтисть просто на любой Exception делать System.out
-            типа вы что-то не товвели но это так... не говнокода ради а полиморфизма для ))) */
-        }
     }
 
     public void showMenu() {

@@ -21,6 +21,15 @@ public class StartUI {
         this.input = input;
     }
 
+    public void validateSelect(MenuTracker menuTracker, int key) {
+        try {
+            menuTracker.select(key);
+        } catch (Exception ex) {
+            ex = new MenuIndexException("Invalid value. Enter valid value!");
+            System.err.println(ex.getMessage());
+        }
+    }
+
     // init new task
     public void startUpp() {
         MenuTracker menuTracker = new MenuTracker(this.input,this.tracker);
@@ -28,13 +37,12 @@ public class StartUI {
         menuTracker.showMenu();
         do {
             int key = this.input.askInt("Select action: ");
-            menuTracker.select(key);
+            validateSelect(menuTracker, key);
             menuTracker.showMenu();
         } while (!("y").equals(this.input.ask("For quit enter (y) : ")));
     }
 
     public static void main(String[] args) {
-
         System.out.println("Welcome to task manager!");
         Input input = new ConsoleInput();
         StartUI startUI = new StartUI(input);
