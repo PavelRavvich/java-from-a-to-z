@@ -92,7 +92,7 @@ public class Tracker {
      * @see TrackerTest#whenObjectTypeItemInThenInArrayItemsInitOneCell() test
      * @param item new item for init in array
      */
-    protected void add(Item item) {
+    public void add(Item item) {
         if (item != null && !(item.getHeader().equals("")) && item.getHeader().length() > 1) {
             item.setId(generateId());
             this.items[this.position] = item;
@@ -107,7 +107,7 @@ public class Tracker {
      * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
      * @see TrackerTest#whenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
      */
-    protected Item findByHeader(String header) {
+    public Item findByHeader(String header) {
         Item result = new Item();
         result.setHeader("does not exist");
         for (Item item : this.items) {
@@ -183,7 +183,7 @@ public class Tracker {
      * @param id - id on which we look for an item
      * @return - found by id item
      */
-    protected Item findById(int id) {
+    public Item findById(int id) {
         Item result = new Item();
         result.setHeader("does not exist");
         for (Item item : this.items) {
