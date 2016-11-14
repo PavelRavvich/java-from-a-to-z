@@ -23,7 +23,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.AddItem
+     * @see BaseAction.AddTask
      */
     @Test
     public void whenAddWorkThenStartUppAddTaskQuit() {
@@ -36,7 +36,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.DeleteTask
+     * @see BaseAction.DeleteTask
      */
     @Test
     public void whenThenItemBecomeNull() {
@@ -72,7 +72,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.FindById
+     * @see BaseAction.FindById
      */
     @Test
     public void whenIdInThenFindById() {
@@ -93,7 +93,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.UpdateItem
+     * @see BaseAction.UpdateTask
      */
     @Test
     public void whenUpdateItemWorkThenOldItemReplaceOnNewItem() {
@@ -112,7 +112,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.EditDescription
+     * @see BaseAction.EditDescription
      */
     @Test
     public void whenIdAndDescriptionInThenAddDescriptionInItem() {
@@ -131,7 +131,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.ShowAll
+     * @see BaseAction.ViewAllTasks
      */
     @Test
     public void whenThenAllTasksWithoutFilterOutPrint() {
@@ -155,7 +155,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.ShowReplaceFilter
+     * @see BaseAction#initActions() там класс ананимный прямо в методе объявлен
      */
     @Test
     public void whenThenAllTasksWithFilterOutPrint() {
@@ -179,7 +179,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.FindByHeader
+     * @see BaseAction.FindByHeader
      */
     @Test
     public void whenHeaderInThenFindByHeader() {
@@ -198,7 +198,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.AddCommit
+     * @see BaseAction.AddCommit
      */
     @Test
     public void whenIdAndStringInThenItemWithIdAddCommit() {
@@ -219,7 +219,7 @@ public class StartUITest {
 
     /**
      * @see StartUI#startUpp()
-     * @see MenuTracker.DeleteCommit
+     * @see BaseAction.DeleteCommit
      */
     @Test
     public void whenOldCommitAndNewCommitInThenOldCommitReplaceOnNewCommit() {
