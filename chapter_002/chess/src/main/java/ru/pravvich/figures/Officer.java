@@ -1,7 +1,6 @@
 package ru.pravvich.figures;
 
 import java.util.Arrays;
-
 import static ru.pravvich.Board.*;
 
 public class Officer extends Figure {
@@ -29,6 +28,8 @@ public class Officer extends Figure {
             } else {
                 throw new IllegalArgumentException();
             }
+            this.positionY = newPosition[0];
+            this.positionX = newPosition[1];
         } catch (ArrayIndexOutOfBoundsException ex) {
             System.err.println("Such place on a board doesn't exist!");
         } catch (IllegalArgumentException ex) {
@@ -36,6 +37,10 @@ public class Officer extends Figure {
         }
     }
 
+    /**
+     * @see OfficerTest#thenRoadIsEmptyThenFigureMoveDownLeftAndOldLocationReplaceOnPlaceType()
+     * @see OfficerTest#thenMoveLeftDownAndKillThenVictimReplaceOnOfficerAndBaseOfficerInstanceOfNewPlace() kill
+     */
     private void moveLeftDown(int[] newPosition) throws ArrayIndexOutOfBoundsException {
         for (int i = 1; i != 8; i++) {
             if (newPosition[0] == (this.positionY - i) && newPosition[1] == (this.positionX + i) &&
@@ -48,7 +53,7 @@ public class Officer extends Figure {
                     !(desc[(this.positionY - i)][(this.positionX + i)] instanceof Place) &&
                     !(desc[(this.positionY - i)][(this.positionX + i)].getColor().equals(
                             desc[this.positionY][this.positionX].getColor()))) {
-                deathFigures[indexDeath++] = desc[(this.positionY - i)][(this.positionX + i)];
+                deathFigures.add(desc[(this.positionY - i)][(this.positionX + i)]);
                 desc[(this.positionY - i)][(this.positionX + i)] = desc[this.positionY][this.positionX];
                 desc[this.positionY][this.positionX] = new Place(this.positionY,this.positionX);
                 break;
@@ -56,6 +61,10 @@ public class Officer extends Figure {
         }
     }
 
+    /**
+     * @see OfficerTest#whenRoadIsEmptyThenFigureMoveUpLeftAndOldLocationReplaceOnPlaceType()
+     * @see OfficerTest#whenMoveLeftUpAndKillThenVictimReplaceOnOfficerAndBaseOfficerInstanceOfNewPlace() kill
+     */
     private void moveLeftUp(int[] newPosition) throws ArrayIndexOutOfBoundsException {
         for (int i = 1; i != 8; i++) {
             if (newPosition[0] == (this.positionY - i) && newPosition[1] == (this.positionX - i) &&
@@ -68,7 +77,7 @@ public class Officer extends Figure {
                     !(desc[(this.positionY - i)][(this.positionX - i)] instanceof Place) &&
                     !(desc[(this.positionY - i)][(this.positionX - i)].getColor().equals(
                             desc[this.positionY][this.positionX].getColor()))) {
-                deathFigures[indexDeath++] = desc[(this.positionY - i)][(this.positionX - i)];
+                deathFigures.add(desc[(this.positionY - i)][(this.positionX - i)]);
                 desc[(this.positionY - i)][(this.positionX - i)] = desc[this.positionY][this.positionX];
                 desc[this.positionY][this.positionX] = new Place(this.positionY,this.positionX);
                 break;
@@ -76,6 +85,10 @@ public class Officer extends Figure {
         }
     }
 
+    /**
+     * @see OfficerTest#thenRoadIsEmptyThenFigureMoveDownRightAndOldLocationReplaceOnPlaceType()
+     * @see OfficerTest#thenMoveRightDownAndKillThenVictimReplaceOnOfficerAndBaseOfficerInstanceOfNewPlace() kill
+     */
     private void moveRightDown(int[] newPosition) throws ArrayIndexOutOfBoundsException {
         for (int i = 1; i != 8; i++) {
             if (newPosition[0] == (this.positionY + i) && newPosition[1] == (this.positionX + i) &&
@@ -88,7 +101,7 @@ public class Officer extends Figure {
                     !(desc[(this.positionY + i)][(this.positionX + i)] instanceof Place) &&
                     !(desc[(this.positionY + i)][(this.positionX + i)].getColor().equals(
                             desc[this.positionY][this.positionX].getColor()))) {
-                deathFigures[indexDeath++] = desc[(this.positionY + i)][(this.positionX + i)];
+                deathFigures.add(desc[(this.positionY + i)][(this.positionX + i)]);
                 desc[(this.positionY + i)][(this.positionX + i)] = desc[this.positionY][this.positionX];
                 desc[this.positionY][this.positionX] = new Place(this.positionY,this.positionX);
                 break;
@@ -96,6 +109,10 @@ public class Officer extends Figure {
         }
     }
 
+    /**
+     * @see OfficerTest#whenRoadIsEmptyThenFigureMoveUpRightAndOldLocationReplaceOnPlaceType() normal
+     * @see OfficerTest#whenMoveRightUpAndKillThenVictimReplaceOnOfficerAndBaseOfficerLocationInstanceOfNewPlace() kill
+     */
     private void moveRightUp(int[] newPosition) throws ArrayIndexOutOfBoundsException {
         for (int i = 1; i != 8; i++) {
             if (newPosition[0] == (this.positionY + i) && newPosition[1] == (this.positionX - i) &&
@@ -108,7 +125,7 @@ public class Officer extends Figure {
                     !(desc[(this.positionY + i)][(this.positionX - i)] instanceof Place) &&
                     !(desc[(this.positionY + i)][(this.positionX - i)].getColor().equals(
                             desc[this.positionY][this.positionX].getColor()))) {
-                deathFigures[indexDeath++] = desc[(this.positionY + i)][(this.positionX - i)];
+                deathFigures.add(desc[(this.positionY + i)][(this.positionX - i)]);
                 desc[(this.positionY + i)][(this.positionX - i)] = desc[this.positionY][this.positionX];
                 desc[this.positionY][this.positionX] = new Place(this.positionY,this.positionX);
                 break;
