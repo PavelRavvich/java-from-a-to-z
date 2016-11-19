@@ -8,5 +8,6 @@
 	<modules>
 		<module>tracker</module>
 		<module>lesson_3</module>
+		<module>chess</module>
 	</modules>
 </project>
