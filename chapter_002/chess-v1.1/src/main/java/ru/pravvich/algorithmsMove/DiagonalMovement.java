@@ -7,7 +7,7 @@ public class DiagonalMovement extends Movement {
 
     private boolean checkRoad = true;
 
-    // проверяет идет ли фигура ровно по диаганали
+    // проверяет идет ли фигура ровно по диаганали.
     private boolean checkDiagonal(Figure figure, Cell position) {
         boolean result = false;
         int checkX = position.getX() - figure.getPosition().getX();
