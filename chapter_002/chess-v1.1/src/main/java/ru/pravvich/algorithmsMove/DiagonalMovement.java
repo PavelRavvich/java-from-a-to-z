@@ -1,7 +1,10 @@
 package ru.pravvich.algorithmsMove;
 
-import ru.pravvich.*;
-import ru.pravvich.figures.*;
+import ru.pravvich.Board;
+import ru.pravvich.Cell;
+import ru.pravvich.ImposableMoveException;
+import ru.pravvich.figures.Figure;
+import ru.pravvich.figures.Place;
 
 public class DiagonalMovement extends Movement {
 
@@ -37,17 +40,17 @@ public class DiagonalMovement extends Movement {
         if (this.checkDiagonal(figure, position) &&
                 figure.getPosition().getX() < position.getX() &&
                 figure.getPosition().getY() < position.getY()) {
-            return this.moveRightDown(figure,position);
+            return this.moveRightDown(figure, position);
         } else {
             throw new ImposableMoveException("Invalid move");
         }
     }
 
     private Cell[] moveRightDown(Figure figure, Cell position) throws ImposableMoveException {
-        Cell[] cell = this.checkRoad(figure,position); //!!!
+        Cell[] cell = this.checkRoad(figure, position);
         if (this.checkRoad && (
                 Board.desc[position.getY()][position.getX()] instanceof Place ||
-                !figure.getColor().equals(Board.desc[position.getY()][position.getX()].getColor()))
+                        !figure.getColor().equals(Board.desc[position.getY()][position.getX()].getColor()))
                 ) {
             return cell;
         } else {
