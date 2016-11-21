@@ -6,11 +6,11 @@ import ru.pravvich.algorithmsMove.DiagonalMovement;
 
 public class Officer extends Figure {
 
+    private DiagonalMovement diagonal = new DiagonalMovement();
+
     public Officer(Cell position, String color) {
         super(position, color);
     }
-
-    private DiagonalMovement diagonal = new DiagonalMovement();
 
     @Override
     public Cell[] move(Cell position) {
