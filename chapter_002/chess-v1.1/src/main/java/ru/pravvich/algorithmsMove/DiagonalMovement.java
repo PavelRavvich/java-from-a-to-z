@@ -21,7 +21,7 @@ public class DiagonalMovement extends Movement {
         return result;
     }
 
-    // проверяет свободены ли ячейки до цели(не включая ячейку самой цели) и наполняет массив пути
+    // проверяет свободены ли ячейки до цели(не включая ячейку самой цели) и наполняет массив пути.
     private Cell[] checkRoad(Figure figure, Cell position) {
         Cell[] cell = new Cell[position.getY() - figure.getPosition().getY() - 1];
         int index = 0;
