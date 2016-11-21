@@ -1,5 +1,7 @@
 package ru.pravvich;
 
+import ru.pravvich.figures.Figure;
+
 public class Board {
-    static Figure[][] desc = new Figure[8][8];
+    public static Figure[][] desc = new Figure[8][8];
 }

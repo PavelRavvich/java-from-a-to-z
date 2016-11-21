@@ -1,6 +1,8 @@
-package ru.pravvich;
+package ru.pravvich.figures;
 
 import org.junit.Test;
+import ru.pravvich.Board;
+import ru.pravvich.Cell;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
@@ -32,7 +34,7 @@ public class OfficerTest {
         Cell cell = new Cell(2,5);
         Board.desc[2][5] = new Officer(cell,"white");
         Board.desc[2][5].move(new Cell(3,7));
-        assertThat(Board.desc[2][5].position,is(cell));
+        assertThat(Board.desc[2][5].getPosition(),is(cell));
     }
 
 }
