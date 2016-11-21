@@ -5,7 +5,8 @@ import ru.pravvich.figures.*;
 
 public class LineMovement extends Movement {
     @Override
-    void move(Figure figure, Cell position) {
+    Cell[] move(Figure figure, Cell position) {
 
+        return new Cell[0];
     }
 }

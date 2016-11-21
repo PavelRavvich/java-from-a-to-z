@@ -5,8 +5,10 @@ import ru.pravvich.figures.*;
 
 public class DiagonalMovement extends Movement {
 
+    private boolean checkRoad = true;
+
     // проверяет идет ли фигура ровно по диаганали
-    public boolean checkDiagonal(Figure figure, Cell position) {
+    private boolean checkDiagonal(Figure figure, Cell position) {
         boolean result = false;
         int checkX = position.getX() - figure.getPosition().getX();
         int checkY = position.getY() - figure.getPosition().getY();
@@ -16,34 +18,38 @@ public class DiagonalMovement extends Movement {
         return result;
     }
 
+    // проверяет свободены ли ячейки до цели(не включая ячейку самой цели) и наполняет массив пути
+    private Cell[] checkRoad(Figure figure, Cell position) {
+        Cell[] cell = new Cell[position.getY() - figure.getPosition().getY() - 1];
+        int index = 0;
+        for (int i = figure.getPosition().getY() + 1, j = figure.getPosition().getX() + 1;
+             i < position.getY() && j < position.getX(); i++, j++) {
+            cell[index++] = Board.desc[i][j].getPosition();
+            if (!(Board.desc[i][j] instanceof Place)) {
+                this.checkRoad = false;
+            }
+        }
+        return cell;
+    }
+
     @Override
-    public void move(Figure figure, Cell position) throws ImposableMoveException {
+    public Cell[] move(Figure figure, Cell position) throws ImposableMoveException {
         if (this.checkDiagonal(figure, position) &&
                 figure.getPosition().getX() < position.getX() &&
                 figure.getPosition().getY() < position.getY()) {
-            this.moveRightDown(figure,position);
-        } // и так далее... потом можно будет использовать для всех кто ходит подиаганали
+            return this.moveRightDown(figure,position);
+        } else {
+            throw new ImposableMoveException("Invalid move");
+        }
     }
 
-    private void moveRightDown(Figure figure, Cell position) throws ImposableMoveException {
-        //check road
-        boolean checkRoad = true;
-        for (int i = figure.getPosition().getY() + 1, j = figure.getPosition().getX() + 1;
-             i < position.getY() && j < position.getX(); i++, j++) {
-            if (Board.desc[i][j] != null) {
-                checkRoad = false;
-            }
-        }
-
-        if (checkRoad && Board.desc[position.getY()][position.getX()] == null) {
-            Board.desc[position.getY()][position.getX()] = new Officer(
-                    new Cell(position.getY(), position.getX()),figure.getColor());
-            Board.desc[figure.getPosition().getY()][figure.getPosition().getX()] = null;
-        } else if (Board.desc[position.getY()][position.getX()] != null &&
-                !(figure.getColor().equals(Board.desc[position.getY()][position.getX()].getColor()))) {
-            Board.desc[position.getY()][position.getX()] = new Officer(
-                    new Cell(position.getY(), position.getX()),figure.getColor());
-            Board.desc[figure.getPosition().getY()][figure.getPosition().getX()] = null;
+    private Cell[] moveRightDown(Figure figure, Cell position) throws ImposableMoveException {
+        Cell[] cell = this.checkRoad(figure,position); //!!!
+        if (this.checkRoad && (
+                Board.desc[position.getY()][position.getX()] instanceof Place ||
+                !figure.getColor().equals(Board.desc[position.getY()][position.getX()].getColor()))
+                ) {
+            return cell;
         } else {
             throw new ImposableMoveException("Invalid move!");
         }

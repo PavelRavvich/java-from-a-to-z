@@ -1,6 +1,7 @@
 package ru.pravvich.figures;
 
 import ru.pravvich.Cell;
+import ru.pravvich.ImposableMoveException;
 
 public abstract class Figure {
     final Cell position;
@@ -20,5 +21,5 @@ public abstract class Figure {
         this.color = color;
     }
 
-    abstract void move(Cell position);
+    abstract Cell[] move(Cell position) throws ImposableMoveException;
 }

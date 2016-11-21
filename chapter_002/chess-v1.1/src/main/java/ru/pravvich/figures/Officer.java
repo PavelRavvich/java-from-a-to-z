@@ -13,11 +13,12 @@ public class Officer extends Figure {
     private DiagonalMovement diagonal = new DiagonalMovement();
 
     @Override
-    public void move(Cell position) {
+    public Cell[] move(Cell position) {
         try {
-            this.diagonal.move(this, position);
+            return this.diagonal.move(this, position);
         } catch (ImposableMoveException ex) {
-            System.out.println(ex);
+            System.err.println(ex.getMessage());
         }
+        return new Cell[0];
     }
 }
