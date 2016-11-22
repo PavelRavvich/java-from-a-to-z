@@ -4,7 +4,7 @@ import ru.pravvich.Cell;
 import ru.pravvich.ImposableMoveException;
 
 public abstract class Figure {
-    final Cell position;
+    private final Cell position;
 
     public Cell getPosition() {
         return this.position;
@@ -14,12 +14,12 @@ public abstract class Figure {
         return color;
     }
 
-    final String color;
+    private final String color;
 
-    protected Figure(Cell position, String color) {
+    Figure(Cell position, String color) {
         this.position = position;
         this.color = color;
     }
 
-    abstract Cell[] move(Cell position) throws ImposableMoveException;
+    public abstract Cell[] move(Cell position) throws ImposableMoveException;
 }
