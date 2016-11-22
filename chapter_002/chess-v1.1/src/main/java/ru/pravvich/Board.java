@@ -13,7 +13,7 @@ public class Board {
     }
 
     public void move(Cell position, Cell newPosition) throws ImposableMoveException {
-
+        //
         boolean existence = false;
         if (!(desc[position.getY()][position.getX()] instanceof Place)) {
             existence = true;
