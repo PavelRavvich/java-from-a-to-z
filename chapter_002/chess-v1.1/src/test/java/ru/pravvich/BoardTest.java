@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class BoardTest {
     @Test
-    public void whenThen() throws ImposableMoveException {
+    public void whenFigureMoveThenNewPositionEqualsOldPositionAndOldPositionInstanceOfPlace() throws ImposableMoveException {
         for (int i = 0; i != Board.desc.length; i++) {
             Board.desc[i][i] = new Place(new Cell(i, i), "");
         }
@@ -24,5 +24,6 @@ public class BoardTest {
         board.move(new Cell(0, 0), cell);
         assertThat(Board.desc[5][5],instanceOf(Officer.class));
         assertThat(Board.desc[5][5].getColor(),is("white"));
+        assertThat(Board.desc[0][0],instanceOf(Place.class));
     }
 }
