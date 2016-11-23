@@ -17,6 +17,7 @@ public class OfficerTest {
                 desc[i][j] = new Place(new Cell(i, i), "");
             }
         }
+
         desc[4][4] = new Officer(new Cell(4, 4), "white");
         desc[4][4].move(new Cell(5, 7));
         assertThat(desc[4][4].getColor(), is("white"));
