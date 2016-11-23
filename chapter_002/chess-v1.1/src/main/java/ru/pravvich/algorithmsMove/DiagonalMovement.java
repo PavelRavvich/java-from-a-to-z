@@ -28,7 +28,7 @@ public class DiagonalMovement extends Movement {
         return result;
     }
 
-    // наполняет массив пути.
+    // наполняет массив пути новыми Cell
     private Cell[] checkRoadRightDown(Figure figure, Cell position) {
         Cell[] cell = new Cell[position.getY() - figure.getPosition().getY() - 1];
         int index = 0;
