@@ -20,6 +20,7 @@ public class OfficerTest {
         assertThat(result.length, is(2));
     }
 
+    @Test
     public void whenRoadNotImposableForOfficerThenThrowImposableMoveException() throws ImposableMoveException {
         Figure[][] desc = new Figure[8][8];
         for (int i = 0; i != 8; i++) {

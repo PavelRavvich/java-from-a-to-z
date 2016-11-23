@@ -11,7 +11,7 @@ public class DiagonalMovement extends Movement {
         if (this.checkDiagonal(figure, position) &&
                 figure.getPosition().getX() < position.getX() &&
                 figure.getPosition().getY() < position.getY()) {
-            return this.checkRoadRightDown(figure, position);
+            return this.createRoadRightDown(figure, position);
         } else {
             throw new ImposableMoveException("Invalid move");
         }
@@ -29,7 +29,7 @@ public class DiagonalMovement extends Movement {
     }
 
     // наполняет массив пути новыми Cell
-    private Cell[] checkRoadRightDown(Figure figure, Cell position) {
+    private Cell[] createRoadRightDown(Figure figure, Cell position) {
         Cell[] cell = new Cell[position.getY() - figure.getPosition().getY() - 1];
         int index = 0;
         for (int i = figure.getPosition().getY() + 1, j = figure.getPosition().getX() + 1;
