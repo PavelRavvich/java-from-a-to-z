@@ -13,7 +13,7 @@ public class Board {
     }
 
     public void move(Cell position, Cell newPosition) throws ImposableMoveException {
-        boolean existenceFigure = this.existenceFigure(position, newPosition);
+        boolean existenceFigure = this.existenceFigure(position);
         boolean checkRoad = this.checkRoad(desc[position.getY()][position.getX()].move(newPosition));
         boolean noFriendFire = this.noFriendFire(position, newPosition);
         // если все ок записывает фигуру в новую позицию, а в старую записывает Place
@@ -26,7 +26,7 @@ public class Board {
     }
 
     // проверяет существует ли фигура
-    public boolean existenceFigure(Cell position, Cell newPosition) {
+    private boolean existenceFigure(Cell position) {
         boolean result = false;
         if (!(desc[position.getY()][position.getX()] instanceof Place)) {
             result = true;
