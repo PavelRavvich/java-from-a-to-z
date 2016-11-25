@@ -13,46 +13,49 @@ public class Board {
     }
 
     public void move(Cell position, Cell newPosition) throws ImposableMoveException {
-        boolean existenceFigure = this.existenceFigure(position);
-        boolean checkRoad = this.checkRoad(desc[position.getY()][position.getX()].move(newPosition));
         boolean noFriendFire = this.noFriendFire(position, newPosition);
-        // если все ок записывает фигуру в новую позицию, а в старую записывает Place
+        boolean existenceFigure = this.existenceFigure(position);
+        Cell[] cells = desc[position.getY()][position.getX()].move(newPosition);
+        boolean checkRoad = this.checkRoad(cells);
+        // если все ок записывает фигуру в новую позицию, а в старую записывает null
         if (existenceFigure && checkRoad && noFriendFire) {
             desc[newPosition.getY()][newPosition.getX()] = desc[position.getY()][position.getX()];
-            desc[position.getY()][position.getX()] = new Place(new Cell(position.getY(),position.getX()),"");
+            desc[position.getY()][position.getX()] = null;
         } else {
             throw new ImposableMoveException("Error move");
         }
     }
 
     // проверяет существует ли фигура
-    private boolean existenceFigure(Cell position) {
-        boolean result = false;
-        if (!(desc[position.getY()][position.getX()] instanceof Place)) {
-            result = true;
+    private boolean existenceFigure(Cell position) throws ImposableMoveException {
+        if (desc[position.getY()][position.getX()] != null) {
+            return true;
+        } else {
+            throw new ImposableMoveException("Error move");
         }
-        return result;
     }
 
-    // проверяет нет ли припядствий на пути
-    private boolean checkRoad(Cell[] addressRoad) {
-        boolean result = true;
-        for (int i = 0; i != addressRoad.length; i++) {
-            if (!(desc[addressRoad[i].getY()][addressRoad[i].getX()] instanceof Place)) {
-                result = false;
+    // проверяет нет ли припядствий на пути. так как сама фигура в путь входит начинаем обход с i = 1
+    private boolean checkRoad(Cell[] addressRoad) throws ImposableMoveException {
+        for (int i = 1; i != addressRoad.length; i++) {
+            if (desc[addressRoad[i].getY()][addressRoad[i].getX()] != null) {
+                throw new ImposableMoveException("Error move");
             }
         }
-        return result;
+        return true;
     }
 
     // проверяет не совпадает ли цвет объекта в точке назначения с цветом движущейся фигуры
     private boolean noFriendFire(Cell position, Cell newPosition) {
-        boolean noFriendFire = false; //check color
-        String colorStart = desc[position.getY()][position.getX()].getColor();
-        String colorFinish = desc[newPosition.getY()][newPosition.getX()].getColor();
-        if (!colorStart.equals(colorFinish)) {
-            noFriendFire = true;
+        if (desc[newPosition.getY()][newPosition.getX()] != null) {
+            String colorStart = desc[position.getY()][position.getX()].getColor();
+            String colorFinish = desc[newPosition.getY()][newPosition.getX()].getColor();
+            if (colorStart.equals(colorFinish)) {
+                return false;
+            } else {
+                return true;
+            }
         }
-        return noFriendFire;
+        return true;
     }
 }
