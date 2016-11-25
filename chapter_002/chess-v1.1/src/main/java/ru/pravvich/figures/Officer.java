@@ -19,7 +19,7 @@ public class Officer extends Figure {
         return new Cell[0];
     }
 
-    public Cell[] move(Figure figure, Cell position) throws ImposableMoveException {
+    private Cell[] move(Figure figure, Cell position) throws ImposableMoveException {
         if (this.checkDiagonal(figure, position) &&
                 figure.getPosition().getX() < position.getX() &&
                 figure.getPosition().getY() < position.getY()) {
