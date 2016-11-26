@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class OfficerTest {
-    @Test
+    @Test(expected = ImposableMoveException.class)
     public void whenFigureMoveNotDiagonalThenNothingOccurs() throws ImposableMoveException {
         Figure[][] desc = new Figure[8][8];
         desc[4][4] = new Officer(new Cell(4, 4), "white");
