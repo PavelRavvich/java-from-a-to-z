@@ -10,13 +10,8 @@ public class Officer extends Figure {
     }
 
     @Override
-    public Cell[] move(Cell position) {
-        try {
-            return this.moveRightDown(this, position);
-        } catch (ImposableMoveException ex) {
-            System.err.println(ex.getMessage());
-        }
-        return new Cell[0];
+    public Cell[] move(Cell position) throws ImposableMoveException {
+        return this.moveRightDown(this, position);
     }
 
     private Cell[] moveRightDown(Figure figure, Cell position) throws ImposableMoveException {

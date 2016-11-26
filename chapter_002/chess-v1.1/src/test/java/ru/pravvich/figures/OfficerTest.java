@@ -26,11 +26,10 @@ public class OfficerTest {
         assertThat(result.length, is(2));
     }
 
-    @Test
+    @Test(expected = ImposableMoveException.class)
     public void whenRoadNotImposableForOfficerThenThrowImposableMoveException() throws ImposableMoveException {
         Figure[][] desc = new Figure[8][8];
         desc[4][4] = new Officer(new Cell(4, 4), "white");
-        Cell[] result = desc[4][4].move(new Cell(6, 7));
-        assertThat(result.length, is(0));
+        desc[4][4].move(new Cell(6, 7));
     }
 }
