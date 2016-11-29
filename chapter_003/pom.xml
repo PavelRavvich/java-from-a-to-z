@@ -1,0 +1,11 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.pravvich</groupId>
+	<artifactId>chapter_003</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0</version>
+
+	<modules>
+		<module>lesson_1</module>
+	</modules>
+</project>
