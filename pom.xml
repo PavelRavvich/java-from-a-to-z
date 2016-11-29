@@ -4,6 +4,7 @@
 	<artifactId>junior</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0</version>
+	<name>junior</name>
 
 	<modules>
 		<module>chapter_001</module>
@@ -17,12 +18,16 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-	<plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-compiler-plugin</artifactId>
-		<version>3.3</version>
-		<configuration>
-			<compilerVersion>1.8</compilerVersion>
-		</configuration>
-	</plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<compilerVersion>1.8</compilerVersion>
+				</configuration>
+			</plugin>
+		</plugins>
+    </build>
 </project>
