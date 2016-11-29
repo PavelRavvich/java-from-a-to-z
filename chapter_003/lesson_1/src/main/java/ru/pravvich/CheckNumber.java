@@ -5,28 +5,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CheckNumber {
-    private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-    public BufferedReader getBufferedReader() {
-        return this.bufferedReader;
-    }
 
     public boolean checkNumber(BufferedReader in) {
         try {
-            if ((in.read() % 2) == 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+            if ((in.read() % 2) == 0) return true;
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return false;
     }
 
     public static void main(String[] args) {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         CheckNumber checkNumber = new CheckNumber();
-        boolean ans = checkNumber.checkNumber(checkNumber.getBufferedReader());
+        boolean ans = checkNumber.checkNumber(bufferedReader);
         if (ans) {
             System.out.println("Четное.");
         } else {
