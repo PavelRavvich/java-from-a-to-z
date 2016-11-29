@@ -1,4 +1,4 @@
-package ru.pravvich;
+package ru.pravvich.lesson_1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
