@@ -20,6 +20,7 @@ class CheckNumber {
                 close.getMessage();
                 return true;
             } else {
+                close.getMessage();
                 return false;
             }
         } catch (IOException e) {
