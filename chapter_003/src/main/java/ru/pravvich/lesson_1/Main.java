@@ -1,15 +1,30 @@
 package ru.pravvich.lesson_1;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
+        Main main = new Main();
+        main.check();
+    }
 
-        Input input = new Input();
+    private String scanner() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
 
-        Check check = new Check();
+    private void check() {
+        try {
+            int valueCheck = Integer.parseInt(this.scanner());
+            if (valueCheck % 2 == 0) {
+                System.out.println(String.format("%s %s", valueCheck, "- четное число."));
+            } else {
+                System.out.println(String.format("%s %s", valueCheck, "- не четное число."));
+            }
 
-        boolean result = check.checkInput(input);
-
-        System.out.println(result);
+        } catch (NumberFormatException ex) {
+            System.out.println("Это не целое число!");
+        }
     }
 }
