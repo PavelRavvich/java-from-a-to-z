@@ -26,12 +26,7 @@ class CheckNumber {
                 System.out.println("Это не целое число!");
                 return false;
             }
-
-            if ((value % 2) == 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return (value % 2) == 0;
         } catch (IOException e) {
             e.printStackTrace();
         }
