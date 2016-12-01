@@ -13,6 +13,14 @@ public class Client {
     private ArrayList<String> forDelete = new ArrayList<>();
     private ByteArrayOutputStream output = new ByteArrayOutputStream();
 
+    public static void main(String[] args) throws IOException {
+        Censure censure = new Censure();
+        Client client = new Client();
+        client.startApp();
+        censure.dropAbuses(client.input(), client.output, client.toArray());
+        System.out.println(client.result());
+    }
+
     private String[] toArray() {
         String[] result = new String[this.forDelete.size()];
         for (int i = 0; i != this.forDelete.size(); i++) {
@@ -49,15 +57,7 @@ public class Client {
 
     private String result() throws UnsupportedEncodingException {
         byte[] res = this.output.toByteArray();
-        return new String(res,"UTF8");
-    }
-
-    public static void main(String[] args) throws IOException {
-        Censure censure = new Censure();
-        Client client = new Client();
-        client.startApp();
-        censure.dropAbuses(client.input(),client.output,client.toArray());
-        System.out.println(client.result());
+        return new String(res, "UTF8");
     }
 
 }

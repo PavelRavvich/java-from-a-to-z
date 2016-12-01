@@ -9,13 +9,15 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         String strCheck;
         do {
-            System.out.println("Проверяем является ли целое число четным:");
+            System.out.println("Проверяем является ли целое однозначное число четным:");
             strCheck = scanner.nextLine();
-            if (strCheck.matches("([1-9]){1}[0-9]{0,}")) {
+            if (strCheck.matches("([0-9]){1}")) {
                 InputStream input = checkNumber.getInput(strCheck);
                 System.out.println(checkNumber.isNumber(input));
+            } else if ("q".equals(strCheck)) {
+                System.out.println("Выход из программы.");
             } else {
-                System.out.println("Введенный символ не является целочисленным литералом.");
+                System.out.println("Введенный символ не является однозначным целочисленным литералом.");
             }
         } while (!"q".equals(strCheck));
     }
