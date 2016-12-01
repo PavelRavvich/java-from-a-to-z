@@ -4,18 +4,17 @@ import java.io.*;
 
 class CheckNumber {
 
-    InputStream getInput(String src) {
-        try (ByteArrayInputStream result = new ByteArrayInputStream(src.getBytes("UTF-8"))) {
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     boolean isNumber(InputStream in) {
-        try (InputStream input = in) {
-            int value = input.read();
+        try (InputStream input = in; Scanner scanner = new Scanner(input)) {
+            String str = scanner.nextLine();
+            int value;
+            if (str.matches("[+-]?\\d+")) {
+                value = Integer.parseInt(str);
+            } else {
+                System.out.println("Это не целое число!");
+                return false;
+            }
+
             if ((value % 2) == 0) {
                 return true;
             } else {
