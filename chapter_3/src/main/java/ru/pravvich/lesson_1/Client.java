@@ -11,7 +11,7 @@ public class Client {
         do {
             System.out.println("Проверяем является ли целое однозначное число четным:");
             strCheck = scanner.nextLine();
-            if (strCheck.matches("([0-9]){1}")) {
+            if (strCheck.matches("[0-9]+")) {
                 InputStream input = checkNumber.getInput(strCheck);
                 System.out.println(checkNumber.isNumber(input));
             } else if ("q".equals(strCheck)) {

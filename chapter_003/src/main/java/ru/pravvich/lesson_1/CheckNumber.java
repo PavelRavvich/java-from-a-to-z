@@ -4,7 +4,7 @@ import java.io.*;
 
 class CheckNumber {
 
-    ByteArrayInputStream getInput(String src) {
+    InputStream getInput(String src) {
         try (ByteArrayInputStream result = new ByteArrayInputStream(src.getBytes("UTF-8"))) {
             return result;
         } catch (IOException e) {
