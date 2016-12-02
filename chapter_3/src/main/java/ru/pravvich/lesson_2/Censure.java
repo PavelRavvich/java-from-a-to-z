@@ -1,6 +1,7 @@
 package ru.pravvich.lesson_2;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Censure {
@@ -16,34 +17,24 @@ public class Censure {
             inner = String.format("%s ",inner);
             String[] check = inner.split(" ");
 
-            int count = 0; // считаем нули
+            ArrayList<String> withoutNull = new ArrayList<String>();
 
             // присваиваем нули запещенным словам
             for (int i = 0; i != check.length; i++) {
                 for (int j = 0; j != words.length; j++) {
-                    if (check[i].equals(words[j])) {
-                        check[i] = null;
-                        count++;
+                    if (!check[i].equals(words[j])) {
+                        withoutNull.add(check[i]);
                     }
-                }
-            }
-
-            // избавляемся от нулей
-            String[] withoutNull = new String[check.length - count];
-            for (int i = 0, j = 0; i != check.length; i++) {
-                if (check[i] != null) {
-                    withoutNull[j] = check[i];
-                    j++;
                 }
             }
 
             // собераем строку обратно
             String resultCheck = "";
-            for (int i = 0; i != withoutNull.length; i++) {
+            for (int i = 0; i != withoutNull.size(); i++) {
                 if (i != 0) {
-                    resultCheck = String.format("%s%s%s",resultCheck," ",withoutNull[i]);
+                    resultCheck = String.format("%s%s%s",resultCheck," ",withoutNull.get(i));
                 } else {
-                    resultCheck = withoutNull[i];
+                    resultCheck = withoutNull.get(i);
                 }
             }
 
