@@ -1,6 +1,7 @@
 package ru.pravvich.lesson_1;
 
 import java.io.*;
+import java.util.Scanner;
 
 class CheckNumber {
 
