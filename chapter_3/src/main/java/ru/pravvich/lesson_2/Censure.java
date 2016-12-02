@@ -1,9 +1,6 @@
 package ru.pravvich.lesson_2;
 
-import javafx.beans.binding.StringBinding;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Censure {
@@ -14,30 +11,21 @@ public class Censure {
              Scanner in = new Scanner(sours)) {
 
             String inner = in.nextLine();
-
             // разбиваем на массив слов
-            inner = String.format("%s ",inner);
             String[] check = inner.split(" ");
-
-            ArrayList<String> withoutWord = new ArrayList<String>();
+            // собераем строку обратно
+            StringBuilder sb = new StringBuilder();
 
             // записываем не запрещенные слова
             for (int i = 0; i != check.length; i++) {
                 for (int j = 0; j != words.length; j++) {
                     if (!check[i].equals(words[j])) {
-                        withoutWord.add(check[i]);
+                        sb.append(check[i]).append(" ");
                     }
                 }
             }
 
-            // собераем строку обратно
-            StringBuilder sb = new StringBuilder();
-
-            for (String s : withoutWord){
-                sb.append(s).append(" ");
-            }
             String result = sb.toString();
-
             //отправляем в выходной поток
             byte[] bytes = result.getBytes();
             int i = 0;
@@ -49,7 +37,7 @@ public class Censure {
                     break;
                 }
             }
-    } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

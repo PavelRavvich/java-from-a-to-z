@@ -7,7 +7,7 @@ public class Client {
     public static void main(String[] args) throws IOException {
         //CensureInThread censureInThread = new CensureInThread();
         Censure censure = new Censure();
-        ByteArrayInputStream in = new ByteArrayInputStream("В чем секрет жопа есть аслова нет?".getBytes());
+        ByteArrayInputStream in = new ByteArrayInputStream("В чем секрет жопа есть а слова нет?".getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //censureInThread.dropAbuses(in,out,new String[]{"m"});
         censure.dropAbuses(in,out, new String[]{"жопа"});
