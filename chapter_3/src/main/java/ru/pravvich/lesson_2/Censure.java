@@ -1,5 +1,7 @@
 package ru.pravvich.lesson_2;
 
+import javafx.beans.binding.StringBinding;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,21 +31,19 @@ public class Censure {
             }
 
             // собераем строку обратно
-            String resultCheck = "";
-            for (int i = 0; i != withoutWord.size(); i++) {
-                if (i != 0) {
-                    resultCheck = String.format("%s%s%s",resultCheck," ",withoutWord.get(i));
-                } else {
-                    resultCheck = withoutWord.get(i);
-                }
+            StringBuilder sb = new StringBuilder();
+
+            for (String s : withoutWord){
+                sb.append(s).append(" ");
             }
+            String result = sb.toString();
 
             //отправляем в выходной поток
-            byte[] bytes = resultCheck.getBytes();
+            byte[] bytes = result.getBytes();
             int i = 0;
             while (true) {
                 if (i < bytes.length) {
-                    dest.write(resultCheck.getBytes()[i]);
+                    dest.write(result.getBytes()[i]);
                     i++;
                 } else {
                     break;
