@@ -10,9 +10,8 @@ public class Censure {
              OutputStream dest = dst;
              Scanner in = new Scanner(sours)) {
 
-            String inner = in.nextLine();
             // разбиваем на массив слов
-            String[] check = inner.split(" ");
+            String[] check = in.nextLine().split(" ");
             // собераем строку обратно
             StringBuilder sb = new StringBuilder();
 
@@ -24,19 +23,7 @@ public class Censure {
                     }
                 }
             }
-
-            String result = sb.toString();
-            //отправляем в выходной поток
-            byte[] bytes = result.getBytes();
-            int i = 0;
-            while (true) {
-                if (i < bytes.length) {
-                    dest.write(result.getBytes()[i]);
-                    i++;
-                } else {
-                    break;
-                }
-            }
+            dest.write(sb.toString().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
