@@ -17,24 +17,24 @@ public class Censure {
             inner = String.format("%s ",inner);
             String[] check = inner.split(" ");
 
-            ArrayList<String> withoutNull = new ArrayList<String>();
+            ArrayList<String> withoutWord = new ArrayList<String>();
 
             // записываем не запрещенные слова
             for (int i = 0; i != check.length; i++) {
                 for (int j = 0; j != words.length; j++) {
                     if (!check[i].equals(words[j])) {
-                        withoutNull.add(check[i]);
+                        withoutWord.add(check[i]);
                     }
                 }
             }
 
             // собераем строку обратно
             String resultCheck = "";
-            for (int i = 0; i != withoutNull.size(); i++) {
+            for (int i = 0; i != withoutWord.size(); i++) {
                 if (i != 0) {
-                    resultCheck = String.format("%s%s%s",resultCheck," ",withoutNull.get(i));
+                    resultCheck = String.format("%s%s%s",resultCheck," ",withoutWord.get(i));
                 } else {
-                    resultCheck = withoutNull.get(i);
+                    resultCheck = withoutWord.get(i);
                 }
             }
 
