@@ -19,7 +19,7 @@ public class Censure {
 
             ArrayList<String> withoutNull = new ArrayList<String>();
 
-            // присваиваем нули запещенным словам
+            // записываем не запрещенные слова
             for (int i = 0; i != check.length; i++) {
                 for (int j = 0; j != words.length; j++) {
                     if (!check[i].equals(words[j])) {
