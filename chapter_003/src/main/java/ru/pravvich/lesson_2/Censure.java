@@ -16,19 +16,16 @@ public class Censure {
             inner = String.format("%s ",inner);
             String[] check = inner.split(" ");
 
+            int count = 0; // считаем нули
+
             // присваиваем нули запещенным словам
             for (int i = 0; i != check.length; i++) {
                 for (int j = 0; j != words.length; j++) {
                     if (check[i].equals(words[j])) {
                         check[i] = null;
+                        count++;
                     }
                 }
-            }
-
-            // считаем нули
-            int count = 0;
-            for (String str: check) {
-                if (str == null) count++;
             }
 
             // избавляемся от нулей
