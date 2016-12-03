@@ -1,7 +1,6 @@
 package ru.pravvich.lesson_3;
 
 import java.io.*;
-import java.util.Scanner;
 
 class FileMutation {
     // сортируем строки по возрастанию длинны
@@ -24,44 +23,31 @@ class FileMutation {
         }
 
         // записываем
-        this.writeContent(dst, sb.toString());
+        this.writeContent(dst.getAbsolutePath(), sb.toString());
+    }
+
+    // читаем файл
+    private String read(String path) {
+        String result = "";
+        try (RandomAccessFile file = new RandomAccessFile(path, "r")) {
+            int stream = file.read();
+            while (stream != -1) {
+                result = result + ((char) stream);
+                stream = file.read();
+            }
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     // Записываем контент в файл
-    void writeContent(File file, String content) {
-        try (FileOutputStream fileOut = new FileOutputStream(file)) {
-            fileOut.write(content.getBytes());
+    void writeContent(String path, String content) {
+        try (RandomAccessFile file = new RandomAccessFile(path, "rw")) {
+            file.write(content.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // Читаем из файла
-    private String read(String pathToFile) {
-        try (Scanner scanner = new Scanner(new FileInputStream(pathToFile))) {
-            String tmp = "";
-            int count = 0;
-            while (count != this.countingLines(pathToFile)) {
-                tmp = tmp + scanner.nextLine() + "\n";
-                count++;
-            }
-            return tmp;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    // Считаем колличество строк в файле
-    private int countingLines(String pathToFile) {
-        int count = 0;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToFile))) {
-            while (bufferedReader.readLine() != null) {
-                count++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return count;
     }
 }
