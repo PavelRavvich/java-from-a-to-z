@@ -30,12 +30,12 @@ class Chat {
 
     // флаги и логика ответов
     boolean select(String key, boolean botOn) {
-        if (key.equals("стоп")) {
+        if (key.equals(Keys.STOP.getValue())) {
             botOn = false;
             this.logBotAnswer = "";
         }
         if (botOn) System.out.println(this.getRandomAnswer());
-        if (key.equals("продолжить")) botOn = true;
+        if (key.equals(Keys.CONTINUE.getValue())) botOn = true;
         return botOn;
     }
 
