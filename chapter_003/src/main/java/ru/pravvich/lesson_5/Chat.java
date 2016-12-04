@@ -7,6 +7,8 @@ class Chat {
     private String path;
     private String fileContent = "";
     private Random random = new Random();
+    // для записи в лог диалога
+    private String botAnswer;
 
     Chat(String path) {
         this.path = path;
@@ -18,16 +20,13 @@ class Chat {
         try (FileInputStream input = new FileInputStream(this.path)) {
             int stream = input.read();
             while (stream != -1) {
-                this.fileContent = String.format("%s%s", this.fileContent, ((char)stream));
+                this.fileContent = String.format("%s%s", this.fileContent, ((char) stream));
                 stream = input.read();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    // для записи в лог диалога
-    private String botAnswer;
 
     String getBotAnswer() {
         return this.botAnswer;
