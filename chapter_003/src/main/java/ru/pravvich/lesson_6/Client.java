@@ -12,19 +12,14 @@ public class Client {
             InetAddress inetAddress = InetAddress.getByName(address);
             System.out.println("Подключаемся к серверу " + port);
             Socket socket = new Socket(address,port);
-
             InputStream input = socket.getInputStream();
             OutputStream output = socket.getOutputStream();
             DataInputStream in = new DataInputStream(input);
             DataOutputStream out = new DataOutputStream(output);
-
             BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
-
-            String massage;
             System.out.println("Введите фразу для передачи серверу:");
-
             while (true) {
-                massage = buff.readLine();
+                String massage = buff.readLine();
                 out.writeUTF(massage);
                 out.flush();
                 massage = in.readUTF();
