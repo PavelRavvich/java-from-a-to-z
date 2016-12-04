@@ -17,11 +17,12 @@ class Chat {
 
     // читаем файл с авто-ответами
     private void writeFile() {
-        try (FileInputStream input = new FileInputStream(this.path)) {
-            int stream = input.read();
-            while (stream != -1) {
-                this.fileContent = String.format("%s%s", this.fileContent, ((char) stream));
-                stream = input.read();
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(this.path), "UTF-8"))) {
+            String sub;
+            while ((sub = br.readLine()) != null) {
+                this.fileContent = String.format("%s%s\n",this.fileContent,sub);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,15 +43,12 @@ class Chat {
 
     // флаги и логика ответов
     boolean select(String key, boolean botOn) {
-        if (key.equals("stop")) {
+        if (key.equals("стоп")) {
             botOn = false;
             this.botAnswer = "";
         }
         if (botOn) System.out.println(this.getRandomAnswer());
-        if (key.equals("resume")) {
-            botOn = true;
-            System.out.println("When you ask me then I always answer.");
-        }
+        if (key.equals("продолжить")) botOn = true;
         return botOn;
     }
 
