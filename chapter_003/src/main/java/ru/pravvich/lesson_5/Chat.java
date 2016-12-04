@@ -7,8 +7,7 @@ class Chat {
     private String path;
     private String fileContent = "";
     private Random random = new Random();
-    // для записи в лог диалога
-    private String botAnswer;
+    private String logBotAnswer;
 
     Chat(String path) {
         this.path = path;
@@ -22,34 +21,35 @@ class Chat {
                         new FileInputStream(this.path), "UTF-8"))) {
             String sub;
             while ((sub = br.readLine()) != null) {
-                this.fileContent = String.format("%s%s\n",this.fileContent,sub);
+                this.fileContent = String.format("%s%s\n", this.fileContent, sub);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    // флаги и логика ответов
+    boolean select(String key, boolean botOn) {
+        if (key.equals("стоп")) {
+            botOn = false;
+            this.logBotAnswer = "";
+        }
+        if (botOn) System.out.println(this.getRandomAnswer());
+        if (key.equals("продолжить")) botOn = true;
+        return botOn;
+    }
+
+    // для записи в лог диалога
     String getBotAnswer() {
-        return this.botAnswer;
+        return this.logBotAnswer;
     }
 
     // возвращаем случайный ответ(разбив по строчкам)
     private String getRandomAnswer() {
         String[] contentArr = this.fileContent.split("\n");
         int index = this.random.nextInt(contentArr.length - 1);
-        this.botAnswer = contentArr[index];
+        this.logBotAnswer = contentArr[index];
         return contentArr[index];
-    }
-
-    // флаги и логика ответов
-    boolean select(String key, boolean botOn) {
-        if (key.equals("стоп")) {
-            botOn = false;
-            this.botAnswer = "";
-        }
-        if (botOn) System.out.println(this.getRandomAnswer());
-        if (key.equals("продолжить")) botOn = true;
-        return botOn;
     }
 
     // запись беседы в файл
