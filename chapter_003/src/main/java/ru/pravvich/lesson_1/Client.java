@@ -1,7 +1,6 @@
 package ru.pravvich.lesson_1;
 
 import java.io.ByteArrayInputStream;
-import java.io.StringBufferInputStream;
 import java.util.Scanner;
 
 public class Client {
