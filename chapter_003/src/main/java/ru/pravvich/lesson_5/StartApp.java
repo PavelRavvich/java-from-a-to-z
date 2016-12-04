@@ -13,7 +13,7 @@ public class StartApp {
 
     private void start() {
         Chat chat = new Chat("/Users/pavel/Desktop/answer.txt");
-        String protocolLog = ">>>This is log:<<<";
+        String protocolLog = ">>>This is log :<<<";
         String phrase = "";
         boolean botOn = true;
         while (!phrase.equals(this.end)) {
