@@ -1,5 +1,6 @@
 package ru.pravvich.lesson_1;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringBufferInputStream;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class Client {
         CheckNumber checkNumber = new CheckNumber();
         Scanner scanner = new Scanner(System.in);
         String q = scanner.nextLine();
-        boolean result = checkNumber.isNumber(new StringBufferInputStream(q));
+        boolean result = checkNumber.isNumber(new ByteArrayInputStream(q.getBytes()));
         System.out.println(result);
     }
 }
