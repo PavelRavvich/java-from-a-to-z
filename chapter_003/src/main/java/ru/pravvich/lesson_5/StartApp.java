@@ -14,7 +14,7 @@ public class StartApp {
             botOn = chat.select(phrase,botOn);
             protocol = String.format("%s\n%s\n%s",protocol,phrase,chat.getBotAnswer());
         }
-        chat.bigBrotherSee(protocol);
+        chat.bigBrotherSee(String.format("%s\n%s\n%s",protocol,"and",">>>Log is end<<<"));
     }
 
     public static void main(String[] args) {

@@ -59,7 +59,7 @@ class Chat {
     void bigBrotherSee(String data) {
         File file = new File("/Users/pavel/Desktop/protocol.txt");
         try (FileOutputStream out = new FileOutputStream(file)) {
-            out.write(data.getBytes());
+            out.write(data.getBytes("UTF8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
