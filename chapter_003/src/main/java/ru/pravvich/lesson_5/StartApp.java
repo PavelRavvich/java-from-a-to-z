@@ -4,13 +4,13 @@ import java.util.Scanner;
 
 public class StartApp {
     public static void main(String[] args) {
-        System.out.println("Добро пожаловать в бессмымленный чат с ботом! \nВведите ваше сообщение:");
+        System.out.println(Keys.GREETING.getValue());
         StartApp startApp = new StartApp();
         startApp.start();
     }
 
     private void start() {
-        Chat chat = new Chat("/Users/pavel/Desktop/answer.txt");
+        Chat chat = new Chat(Keys.FILEPATH.getValue());
         String protocolLog = ">>>This is log :<<<";
         String phrase = "";
         boolean botOn = true;
