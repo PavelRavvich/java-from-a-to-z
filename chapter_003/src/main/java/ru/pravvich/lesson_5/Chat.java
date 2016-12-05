@@ -4,21 +4,18 @@ import java.io.*;
 import java.util.Random;
 
 class Chat {
-    private String path;
     private String fileContent = "";
+    private String logBotAnswer = "";
     private Random random = new Random();
-    private String logBotAnswer;
 
-    Chat(String path) {
-        this.path = path;
+    Chat() {
         this.writeFile();
     }
 
     // читаем файл с авто-ответами
     private void writeFile() {
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(this.path), "UTF-8"))) {
+        try (InputStream input = getClass().getResourceAsStream(Constants.FILEPATH.getValue());
+             BufferedReader br = new BufferedReader(new InputStreamReader(input))) {
             String sub;
             while ((sub = br.readLine()) != null) {
                 this.fileContent = String.format("%s%s\n", this.fileContent, sub);
@@ -30,12 +27,12 @@ class Chat {
 
     // флаги и логика ответов
     boolean select(String key, boolean botOn) {
-        if (key.equals(Keys.STOP.getValue())) {
+        if (key.equals(Constants.STOP.getValue())) {
             botOn = false;
             this.logBotAnswer = "";
         }
         if (botOn) System.out.println(this.getRandomAnswer());
-        if (key.equals(Keys.CONTINUE.getValue())) botOn = true;
+        if (key.equals(Constants.CONTINUE.getValue())) botOn = true;
         return botOn;
     }
 

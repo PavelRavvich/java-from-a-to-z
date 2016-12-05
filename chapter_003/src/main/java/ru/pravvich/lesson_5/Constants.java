@@ -1,9 +1,9 @@
 package ru.pravvich.lesson_5;
 
-enum Keys {
+enum Constants {
     STOP("стоп"),CONTINUE("продолжить"),FINISH("закончить"),
     GREETING("Добро пожаловать в бессмымленный чат с ботом! \nВведите ваше сообщение:"),
-    FILEPATH("https://www.mkyong.com/java/java-read-a-file-from-resources-folder/answer.txt");
+    FILEPATH("/answer.txt");
 
     private String value;
 
@@ -11,7 +11,7 @@ enum Keys {
         return value;
     }
 
-    Keys(String value) {
+    Constants(String value) {
         this.value = value;
     }
 }
