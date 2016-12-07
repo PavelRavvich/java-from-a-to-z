@@ -1,20 +1,17 @@
 package ru.pravvich.lesson_3;
 
 import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 class FileMutation {
+
+    private Comparator<String> comprator = (o1, o2) -> o1.length() - o2.length();
+
     // сортируем строки по возрастанию длинны
     void sort(File src, File dst) {
         String[] source = this.read(src.getAbsolutePath()).split("\n");
-        for (int i = (source.length - 1); i >= 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (source[j].length() > source[j + 1].length()) {
-                    String tmp = source[j + 1];
-                    source[j + 1] = source[j];
-                    source[j] = tmp;
-                }
-            }
-        }
+        Arrays.sort(source, this.comprator);
 
         // собираем обратно в строку
         StringBuilder sb = new StringBuilder();
