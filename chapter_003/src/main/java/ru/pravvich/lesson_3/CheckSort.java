@@ -8,8 +8,7 @@ public class CheckSort {
     public static void main(String[] args) {
         // сортировка первый способ
         String[] arr = {"ar","h","boot"};
-        Comparator<String> stringLengthComparator = new StringLengthSort();
-        Arrays.sort(arr,stringLengthComparator);
+        Arrays.sort(arr,new StringLengthSort());
         System.out.println(Arrays.toString(arr));
 
         //короткий без отдельного класса хз как работает
@@ -23,15 +22,7 @@ public class CheckSort {
     private static class StringLengthSort implements Comparator<String> {
         @Override
         public int compare(String o1, String o2) {
-            if (o1.length() > o2.length()) {
-                return 1;
-            } else {
-                if (o1.length() < o2.length()) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
+            return o1.length() - o2.length();
         }
     }
 }
