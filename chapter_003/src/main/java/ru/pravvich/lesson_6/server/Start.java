@@ -1,4 +1,4 @@
-package ru.pravvich.lesson_6.client;
+package ru.pravvich.lesson_6.server;
 
 import java.io.File;
 

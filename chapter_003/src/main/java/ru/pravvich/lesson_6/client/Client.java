@@ -1,4 +1,4 @@
-package ru.pravvich.lesson_6;
+package ru.pravvich.lesson_6.client;
 
 import java.io.*;
 import java.net.InetAddress;
