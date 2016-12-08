@@ -17,12 +17,10 @@ public class Input {
             } else if (key.equals("ls")) {
                 this.view.seeCatalog(thisPosition);
             } else if (key.equals("copy")) {
-                System.out.println("Введите имя файла:");
                 File src = new File(this.action());
                 System.out.println("Введите имя директории для копирования файла в формате: 'Absolute_path... /file'");
                 MoveFiles.copy(src,this.scanner.nextLine());
             } else if (key.equals("move")) {
-                System.out.println("Введите имя файла:");
                 File src = new File(this.action());
                 System.out.println("Введите имя директории для переноса файла в формате: 'Absolute_path... /file'");
                 MoveFiles.move(src,this.scanner.nextLine());
@@ -36,6 +34,7 @@ public class Input {
     }
 
     private String action() {
+        System.out.println("Введите имя файла:");
         String fileName = this.scanner.nextLine();
         System.out.println(fileName);
         return String.format("%s/%s",ViewFileSystem.path,fileName);
