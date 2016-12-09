@@ -23,7 +23,7 @@ public class Client {
         }
     }
 
-    void upload(String path) {
+    private void upload(String path) {
         try (OutputStream out = this.socket.getOutputStream();
              FileInputStream fileIn = new FileInputStream(new File(path));
              BufferedInputStream buffer = new BufferedInputStream(fileIn)) {
