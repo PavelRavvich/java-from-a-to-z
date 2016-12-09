@@ -1,27 +1,33 @@
 package ru.pravvich.lesson_6.server;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import static java.lang.String.format;
 
-public class Server {
-
-
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.initServerSocket();
-        server.initSocket();
-        server.download("root.txt");
-    }
+class Server {
 
     private ServerSocket serverSocket;
     private Socket socket;
 
-    private void initServerSocket() {
+    String getCommand() {
+        String command = "error";
+        try (InputStream in = this.socket.getInputStream();
+             BufferedReader buff = new BufferedReader(
+                     new InputStreamReader(in))
+        ) {
+
+            command = buff.readLine();
+            return command;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.err.println("Строка команды не получила значения от клиента.");
+        return command;
+    }
+
+    void initServerSocket() {
         try {
             this.serverSocket = new ServerSocket(5213);
         } catch (IOException e) {
@@ -29,7 +35,7 @@ public class Server {
         }
     }
 
-    private void initSocket() {
+    void acceptSocket() {
         try {
             this.socket = this.serverSocket.accept();
         } catch (IOException e) {
@@ -37,21 +43,19 @@ public class Server {
         }
     }
 
-    private void download(String nameFile) {
+    boolean download(String nameFile) {
         try (InputStream input = this.socket.getInputStream()){
 
-            // available() - возвращает колличество сейчас доступных байтов
-            byte[] buffer = new byte[input.available()];
-            // читаем
+            byte[] buffer = new byte[input.available()];//available()колличество доступных байтов
             int i = input.read();
             while (i != 0) {
-                System.out.println("1.6");
                 i = input.read(buffer);
             }
-            this.createFile(nameFile,buffer);
+            return this.createFile(nameFile,buffer);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     private boolean createFile(String nameFile, byte[] buffer) {
