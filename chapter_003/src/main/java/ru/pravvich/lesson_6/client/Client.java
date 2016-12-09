@@ -1,30 +1,36 @@
 package ru.pravvich.lesson_6.client;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class Client {
     public static void main(String[] args) {
         int port = 5213;
         String address = "127.0.0.1";
+        Client client = new Client();
+        client.initSocket(address,port);
+        client.upload("/Users/pavel/Desktop/test/client/root.txt");
+
+    }
+
+    private Socket socket;
+
+    private void initSocket(String address, int port) {
         try {
-            InetAddress inetAddress = InetAddress.getByName(address);
-            System.out.println("Подключаемся к серверу " + port);
-            Socket socket = new Socket(address,port);
-            InputStream input = socket.getInputStream();
-            OutputStream output = socket.getOutputStream();
-            DataInputStream in = new DataInputStream(input);
-            DataOutputStream out = new DataOutputStream(output);
-            BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Введите фразу для передачи серверу:");
-            while (true) {
-                String massage = buff.readLine();
-                out.writeUTF(massage);
-                out.flush();
-                massage = in.readUTF();
-                System.out.println("Сервер прислал в ответ " + massage);
-            }
+            this.socket = new Socket(address, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void upload(String path) {
+        try (OutputStream out = this.socket.getOutputStream();
+             FileInputStream fileIn = new FileInputStream(new File(path));
+             BufferedInputStream buffer = new BufferedInputStream(fileIn)) {
+
+            byte[] bytes = new byte[(int) new File(path).length()];
+            buffer.read(bytes, 0, bytes.length);
+            out.write(bytes, 0, bytes.length);
         } catch (IOException e) {
             e.printStackTrace();
         }

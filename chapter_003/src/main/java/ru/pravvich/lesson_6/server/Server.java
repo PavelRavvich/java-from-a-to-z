@@ -10,12 +10,16 @@ public class Server {
 
 
     public static void main(String[] args) {
+        Server server = new Server();
+        server.initServerSocket();
+        server.initSocket();
+        server.download("root.txt");
     }
 
-    ServerSocket serverSocket;
-    Socket socket;
+    private ServerSocket serverSocket;
+    private Socket socket;
 
-    void initServerSocket() {
+    private void initServerSocket() {
         try {
             this.serverSocket = new ServerSocket(5213);
         } catch (IOException e) {
@@ -23,7 +27,7 @@ public class Server {
         }
     }
 
-    void initSocket() {
+    private void initSocket() {
         try {
             this.socket = this.serverSocket.accept();
         } catch (IOException e) {
@@ -31,7 +35,7 @@ public class Server {
         }
     }
 
-    void download(String nameFile) {
+    private void download(String nameFile) {
         try (InputStream input = this.socket.getInputStream()){
             // available() - возвращает колличество сейчас доступных байтов
             byte[] buffer = new byte[input.available()];
