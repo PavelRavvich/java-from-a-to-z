@@ -5,39 +5,46 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+
+
     public static void main(String[] args) {
+
+    }
+
+    ServerSocket serverSocket;
+    Socket socket;
+
+    void initSocket() {
         try {
-            ServerSocket serverSocket = new ServerSocket(5213);
-            System.out.println("Ждем подключение к серверу");
-            Socket socket = serverSocket.accept();
-            System.out.println("Подключение состоялось");
-
-            InputStream input = socket.getInputStream();
-            //OutputStream output = socket.getOutputStream();
-
-            DataInputStream in = new DataInputStream(input);
-            //DataOutputStream out = new DataOutputStream(output);
-
-            while (true) {
-                //принимаем
-                int data = in.read();
-
-                //Отправляем это сообщение обратно.
-                //out.writeUTF(massage);
-                //out.flush();
-            }
+            this.serverSocket = new ServerSocket(5213);
+            this.socket = this.serverSocket.accept();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    void unpackingFile(byte[] bytes) {
-        System.out.println("Куда положить файл?");
-        //Scanner scanner = new Scanner(System.in);
-        //ByteArrayInputStream b = new ByteArrayInputStream(bytes);
-        //File file = new File(scanner.nextLine());
-        //int o = b.read();
+    void download(String nameFile) {
+        try (InputStream input = this.socket.getInputStream()){
+            // Саздаём пустой массив байтов из available()
+            // available() - возвращает колличество сейчас доступных байтов
+            byte[] buffer = new byte[input.available()];
+            // читаем
+            int i = input.read(buffer);
+            while (i != -1) {
+                i = input.read(buffer);
+            }
 
+            File file = new File(Paths.REPO.getPath() + "/" + nameFile);
 
+            // Саздаём OutputStream из файла  ...
+            OutputStream outStream = new FileOutputStream(file);
+
+            // Записываем массив байтов в файл
+            outStream.write(buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 }
