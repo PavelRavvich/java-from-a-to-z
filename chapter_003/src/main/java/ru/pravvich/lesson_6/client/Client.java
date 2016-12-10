@@ -2,18 +2,19 @@ package ru.pravvich.lesson_6.client;
 
 import java.io.*;
 import java.net.Socket;
-
+//"d -f /Users/pavel/Desktop/test/client/root.txt"
 public class Client {
+    private Socket socket;
+
     public static void main(String[] args) {
         int port = 5213;
-        String address = "127.0.0.1";
+        String address = "localhost";
+
         Client client = new Client();
         client.initSocket(address,port);
+        client.sendCommand();
         client.upload("/Users/pavel/Desktop/test/client/root.txt");
-
     }
-
-    private Socket socket;
 
     private void initSocket(String address, int port) {
         try {
@@ -23,14 +24,31 @@ public class Client {
         }
     }
 
-    private void upload(String path) {
-        try (OutputStream out = this.socket.getOutputStream();
-             FileInputStream fileIn = new FileInputStream(new File(path));
-             BufferedInputStream buffer = new BufferedInputStream(fileIn)) {
+    private void sendCommand() {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(System.in));
 
-            byte[] bytes = new byte[(int) new File(path).length()];
-            buffer.read(bytes, 0, bytes.length);
-            out.write(bytes, 0, bytes.length);
+             OutputStream out = socket.getOutputStream();
+             BufferedWriter writer = new BufferedWriter(
+                     new OutputStreamWriter(out,"UTF8"))
+        ) {
+
+            String command = reader.readLine();
+            writer.write(command); //пошла на сервер
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void upload(String path) {
+        try (FileOutputStream out = (FileOutputStream) this.socket.getOutputStream();
+             FileInputStream in = new FileInputStream(new File(path))) {
+
+            int data;
+            while ((data = in.read()) != -1) {
+                out.write(data);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

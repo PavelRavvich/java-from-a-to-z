@@ -15,7 +15,7 @@ class Server {
         String command = "error";
         try (InputStream in = this.socket.getInputStream();
              BufferedReader buff = new BufferedReader(
-                     new InputStreamReader(in))
+                     new InputStreamReader(in,"UTF8"))
         ) {
 
             command = buff.readLine();
@@ -43,32 +43,71 @@ class Server {
         }
     }
 
-    boolean download(String nameFile) {
-        try (InputStream input = this.socket.getInputStream()){
+    boolean download(String path) {
+        File target;
+        try (FileInputStream in = (FileInputStream) this.socket.getInputStream();
+             FileOutputStream out = new FileOutputStream(target = new File(path))) {
 
-            byte[] buffer = new byte[input.available()];//available()колличество доступных байтов
-            int i = input.read();
-            while (i != 0) {
-                i = input.read(buffer);
+            int data;
+            while ((data = in.read()) != -1) {
+                out.write(data);
             }
-            return this.createFile(nameFile,buffer);
+
+            if (target.exists())
+                return true;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    private boolean createFile(String nameFile, byte[] buffer) {
-        System.out.println("1.7");
-        File file = new File(format("%s/%s",Paths.REPO.getPath(),nameFile));
-        if (!file.exists()) {
-            try (OutputStream out = new FileOutputStream(file)) {
-                System.out.println("1.8");
-                out.write(buffer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return file.exists();
-    }
+    // меняем клиентский путь к файлу на путь к репозиторию сервера
+//    private File createPath(String oldPath) {
+//        String[] arrPath = oldPath.split("/");
+//        return new File(format("%s/%s",Paths.REPO.getPath(),
+//                arrPath[arrPath.length - 1]));
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    boolean download(String nameFile) {
+//        try (InputStream input = this.socket.getInputStream()){
+//
+//            byte[] buffer = new byte[input.available()];//available()колличество доступных байтов
+//            int i = input.read();
+//            while (i != 0) {
+//                i = input.read(buffer);
+//            }
+//            return this.createFile(nameFile,buffer);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
+
+//    private boolean createFile(String nameFile, byte[] buffer) {
+//        System.out.println("1.7");
+//        File file = new File(format("%s/%s",Paths.REPO.getPath(),nameFile));
+//        if (!file.exists()) {
+//            try (OutputStream out = new FileOutputStream(file)) {
+//                System.out.println("1.8");
+//                out.write(buffer);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return file.exists();
+//    }
 }

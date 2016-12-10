@@ -14,25 +14,25 @@ public class Start {
 
     private void startServer() {
         this.server.initServerSocket();
+        System.out.println("Ждем подключения");
+        this.server.acceptSocket();
         String command = this.server.getCommand();
-        server.acceptSocket();
 
         while (!"q".equals(command)) {
             if (command.contains("d -f ")) {
-                if (this.server.download(toPath(command,"d -f "))) {
-                    System.out.println(String.format("Файл %s был загружен на сервер.",command));
+                if (this.server.download(toPathServerRepo(command))) {
+                    System.out.println(String.format(
+                            "Файл:\n%s\nбыл загружен на сервер.",command));
                 }
             }
-            command = this.server.getCommand();
+            break;
+            //command = this.server.getCommand();
         }
     }
 
-    private static String toPath(String massage, String regExp) {
-        String[] arr = massage.split(regExp);
-        StringBuilder sb = new StringBuilder();
-        for (String word : arr) {
-            sb.append(word);
-        }
-        return new String(sb);
+    // меняем клиентский путь к файлу на путь к репозиторию сервера
+    private static String toPathServerRepo(String massage) {
+        String[] arr = massage.split("/");
+        return Paths.REPO.getPath() + arr[arr.length - 1];
     }
 }
