@@ -23,9 +23,7 @@ public class Client {
 
             String command = this.sendCommand(stringWrite);
             while (!"q".equals(command)) {
-                System.out.println("while");
                 if (command.contains("d -f ")) {
-                    System.out.println("if");
                     this.upload(this.commandToPath(command, "d -f "), (FileOutputStream) out);
                     System.out.println("Файл отправлен");
                 }

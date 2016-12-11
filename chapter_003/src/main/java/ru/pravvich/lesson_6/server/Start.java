@@ -21,12 +21,12 @@ public class Start {
              BufferedReader stringIn = new BufferedReader(new InputStreamReader(in, "UTF8"))
         ) {
 
-            String command = this.server.getCommand(stringIn);
+            String command = this.server.getCommand(stringIn);  // ПРОБЛЕМА!!!!!!!!!!!!!!!!!!
+
             System.out.println(command);
+
             while (!"q".equals(command)) {
-                System.out.println("whole");
                 if (command.contains("d -f ")) {
-                    System.out.println("first if");
                     if (this.server.download(toPathServerRepo(command), ((FileInputStream) in))) {
                         System.out.println(String.format("Файл:\n%s\nбыл загружен на сервер.", command));
                     }
