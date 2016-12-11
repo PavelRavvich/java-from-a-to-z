@@ -30,10 +30,12 @@ class Server {
     }
 
     // Получаем строку от клиента через сокет
-    String getCommand(BufferedReader stringIn) {
+    String getCommand(InputStream in) {
+
         String command = "error";
-        try {
+        try (BufferedReader stringIn = new BufferedReader(new InputStreamReader(in,"UTF8"))) {
             command = stringIn.readLine();
+            System.out.println(command);
             return command;
         } catch (IOException e) {
             e.printStackTrace();

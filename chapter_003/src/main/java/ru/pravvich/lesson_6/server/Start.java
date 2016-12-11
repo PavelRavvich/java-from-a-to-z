@@ -17,11 +17,9 @@ public class Start {
         System.out.println("Подключение установлено.");
 
         try (InputStream in = this.server.getSocket().getInputStream();
-             OutputStream out = this.server.getSocket().getOutputStream();
-             BufferedReader stringIn = new BufferedReader(new InputStreamReader(in, "UTF8"))
-        ) {
+             OutputStream out = this.server.getSocket().getOutputStream()) {
 
-            String command = this.server.getCommand(stringIn);  // ПРОБЛЕМА!!!!!!!!!!!!!!!!!!
+            String command = this.server.getCommand(in);  // ПРОБЛЕМА!!!!!!!!!!!!!!!!!!
 
             System.out.println(command);
 
@@ -33,7 +31,7 @@ public class Start {
                 }
 
                 out.flush();
-                command = this.server.getCommand(stringIn);
+                command = this.server.getCommand(in);
             }
 
         } catch (IOException e) {

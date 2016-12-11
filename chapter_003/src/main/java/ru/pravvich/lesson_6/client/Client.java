@@ -36,7 +36,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private String commandToPath(String command, String regExp) {
