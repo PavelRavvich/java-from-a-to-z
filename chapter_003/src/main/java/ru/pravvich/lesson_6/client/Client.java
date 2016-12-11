@@ -12,8 +12,39 @@ public class Client {
 
         Client client = new Client();
         client.initSocket(address,port);
-        client.sendCommand();
-        client.upload("/Users/pavel/Desktop/test/client/root.txt");
+        client.start();
+    }
+
+    private void start() {
+        try (OutputStream out = socket.getOutputStream();
+             BufferedWriter stringWrite = new BufferedWriter(
+                     new OutputStreamWriter(out,"UTF8"))
+        ){
+
+            String command = this.sendCommand(stringWrite);
+            while (!"q".equals(command)) {
+                System.out.println("while");
+                if (command.contains("d -f ")) {
+                    System.out.println("if");
+                    this.upload(this.commandToPath(command, "d -f "), (FileOutputStream) out);
+                    System.out.println("Файл отправлен");
+                }
+
+                out.flush();
+                command = this.sendCommand(stringWrite);
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String commandToPath(String command, String regExp) {
+        String[] arr = command.split(regExp);
+        System.out.println(arr[1]);
+        return arr[1];
     }
 
     private void initSocket(String address, int port) {
@@ -24,25 +55,23 @@ public class Client {
         }
     }
 
-    private void sendCommand() {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(System.in));
+    private String sendCommand(BufferedWriter writer) {
+        try {
 
-             OutputStream out = socket.getOutputStream();
-             BufferedWriter writer = new BufferedWriter(
-                     new OutputStreamWriter(out,"UTF8"))
-        ) {
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(System.in));
 
             String command = reader.readLine();
             writer.write(command); //пошла на сервер
+            return command;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return "error";
     }
 
-    private void upload(String path) {
-        try (FileOutputStream out = (FileOutputStream) this.socket.getOutputStream();
-             FileInputStream in = new FileInputStream(new File(path))) {
+    private void upload(String path, FileOutputStream out) {
+        try (FileInputStream in = new FileInputStream(new File(path))) {
 
             int data;
             while ((data = in.read()) != -1) {
