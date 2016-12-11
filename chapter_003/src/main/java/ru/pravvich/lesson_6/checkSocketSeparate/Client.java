@@ -25,6 +25,7 @@ public class Client {
         try (InputStream in = this.socket.getInputStream();
              OutputStream out = this.socket.getOutputStream()) {
 
+            // вот тут передаю out
             String command = this.sendMassage(out);
 
             while (!"q".equals(command)) {
@@ -40,6 +41,8 @@ public class Client {
     private String sendMassage(OutputStream out) throws IOException {
         BufferedReader readCons = new BufferedReader(
                 new InputStreamReader(System.in));
+
+        // А ТУТ ДОЛЖЕН ПРИНЯТЬ НО ЧТО-ТО ИДЕТ НЕ ТАК:
         BufferedWriter send = new BufferedWriter(
                 new OutputStreamWriter(out,"UTF8"));
 

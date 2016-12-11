@@ -39,6 +39,7 @@ class Server {
         try (InputStream in = this.socket.getInputStream();
              OutputStream out = this.socket.getOutputStream()) {
 
+            // Вот тут передаю in
             massage = this.getMassage(in);
 
             while (!"q".equals(massage)) {
@@ -52,6 +53,8 @@ class Server {
     }
 
     private String getMassage(InputStream in) throws IOException {
+
+        // ВОТ ТУТ ПРИНИМАЮ in НО ЧТО-ТО ИДЕТ НЕ ТАК:
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(in,"UTF8"));
 
