@@ -91,9 +91,9 @@ class Server {
 
     // отправляем объект в сокет
     private void writeList(OutputStream out, String[] list) throws IOException {
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(out)) {
-            outputStream.writeObject(list);
-        }
+        ObjectOutputStream outputStream = new ObjectOutputStream(out);
+        outputStream.writeObject(list);
+
     }
 
     // отправка файла в сокет
