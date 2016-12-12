@@ -63,25 +63,21 @@ class Server {
                     viewRepo = format("%s%s",viewRepo,command.replace("ls", ""));
                     System.out.println(viewRepo);
                     String[] list = this.view.seeCatalog(new File(viewRepo));
-
-                    // как то отправить к клиенту объект лист
+                    this.writeList(out, list);
                 } else if (command.equals("cd ..")) {
                     File parentCatalog = this.view.moveUp(new File(viewRepo));
                     viewRepo = parentCatalog.getAbsolutePath();
                     String[] list = parentCatalog.list();
-
-                    // как то отправить к клиенту объект лист
+                    this.writeList(out, list);
                 } else if (!command.equals("cd ..") && command.contains("cd ")) {
                     File subCatalog = this.view.moveDown(new File(viewRepo), command.replace("cd ", ""));
                     viewRepo = subCatalog.getAbsolutePath();
                     // list - содержание подкаталога
                     String[] list = subCatalog.list();
-
-                    // как то отправить к клиенту объект лист
+                    this.writeList(out, list);
                 } else {
                     String[] error = {"Неизвестная команда"};
-
-                    // как то отправить
+                    this.writeList(out, error);
                 }
 
                 out.flush();
@@ -90,6 +86,13 @@ class Server {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // отправляем объект в сокет
+    private void writeList(OutputStream out, String[] list) throws IOException {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(out)) {
+            outputStream.writeObject(list);
         }
     }
 

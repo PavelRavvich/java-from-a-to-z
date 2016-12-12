@@ -47,7 +47,10 @@ public class Client {
                         System.out.println(format("Файл:\n%s\nуспешно создан.",clientPath));
                     }
                 } else if (command.equals("ls") || command.contains("cd ")) {
-                    // как то принять в сокет массив строк
+                    String[] content = this.getObj(in);
+                    for (String item : content) {
+                        System.out.println(item);
+                    }
                 } else {
                     System.out.println("Error command");
                 }
@@ -58,6 +61,17 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // принимаем массив строк из сокета
+    private String[] getObj(InputStream objIn) throws IOException {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(objIn);
+            return (String[]) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new String[0];
     }
 
     // загружаем файл из сокета и записываем на свой диск
@@ -109,4 +123,3 @@ public class Client {
         }
     }
 }
-
