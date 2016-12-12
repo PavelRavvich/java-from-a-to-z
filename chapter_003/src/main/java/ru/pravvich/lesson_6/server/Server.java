@@ -10,6 +10,7 @@ class Server {
 
     private ServerSocket serverSocket;
     private Socket socket;
+    private ViewFileSystem view = new ViewFileSystem();
 
     public static void main(String[] args) {
         new Server().startServer();
@@ -44,6 +45,8 @@ class Server {
             // Вот тут передаю in
             command = this.getMassage(in);
 
+            String viewRepo = "/Users/pavel/Desktop/test/server/";
+
             while (!"q".equals(command)) {
                 System.out.println(command);
 
@@ -56,6 +59,29 @@ class Server {
                 } else if (command.contains("d -f ")) {
                     System.out.println(command.replace("d -f ",""));
                     this.upload(command.replace("d -f ",""), (FileOutputStream) out);
+                } else if (command.equals("ls")) {
+                    viewRepo = format("%s%s",viewRepo,command.replace("ls", ""));
+                    System.out.println(viewRepo);
+                    String[] list = this.view.seeCatalog(new File(viewRepo));
+
+                    // как то отправить к клиенту объект лист
+                } else if (command.equals("cd ..")) {
+                    File parentCatalog = this.view.moveUp(new File(viewRepo));
+                    viewRepo = parentCatalog.getAbsolutePath();
+                    String[] list = parentCatalog.list();
+
+                    // как то отправить к клиенту объект лист
+                } else if (!command.equals("cd ..") && command.contains("cd ")) {
+                    File subCatalog = this.view.moveDown(new File(viewRepo), command.replace("cd ", ""));
+                    viewRepo = subCatalog.getAbsolutePath();
+                    // list - содержание подкаталога
+                    String[] list = subCatalog.list();
+
+                    // как то отправить к клиенту объект лист
+                } else {
+                    String[] error = {"Неизвестная команда"};
+
+                    // как то отправить
                 }
 
                 out.flush();

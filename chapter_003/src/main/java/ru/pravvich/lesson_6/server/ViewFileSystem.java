@@ -8,17 +8,11 @@ class ViewFileSystem {
     static String path = "/Users/pavel/Desktop/test";
 
     // метод для просмотра содержания каталога
-    void seeCatalog(File catalog) {
-        if (catalog.isDirectory()) {
-            System.out.println(catalog.getAbsolutePath());
-            for (String item : catalog.list()) {
-                if (new File(format("%s/%s", catalog.getAbsolutePath(), item)).isDirectory()) {
-                    System.out.println(format("%s%s", item, "/"));
-                } else {
-                    System.out.println(item);
-                }
-            }
-        }
+    String[] seeCatalog(File catalog) {
+        if (catalog.isDirectory())
+            return catalog.list();
+        else
+            return new String[0];
     }
 
     // метод для перемещения из каталога в нижний каталог

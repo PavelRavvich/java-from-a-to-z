@@ -46,6 +46,10 @@ public class Client {
                     if (this.download(clientPath, (FileInputStream) in)) {
                         System.out.println(format("Файл:\n%s\nуспешно создан.",clientPath));
                     }
+                } else if (command.equals("ls") || command.contains("cd ")) {
+                    // как то принять в сокет массив строк
+                } else {
+                    System.out.println("Error command");
                 }
 
                 out.flush();
