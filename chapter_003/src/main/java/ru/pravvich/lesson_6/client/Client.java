@@ -2,71 +2,96 @@ package ru.pravvich.lesson_6.client;
 
 import java.io.*;
 import java.net.Socket;
-//"d -f /Users/pavel/Desktop/test/client/root.txt"
+
+import static java.lang.String.format;
+
+//"d -f /Users/pavel/Desktop/test/server/root.txt"
+//"u -f /Users/pavel/Desktop/test/client/root.txt"
 public class Client {
+
     private Socket socket;
 
     public static void main(String[] args) {
-        int port = 5213;
-        String address = "localhost";
-
-        Client client = new Client();
-        client.initSocket(address,port);
-        client.start();
+        new Client().startClient();
     }
 
-    private void start() {
-        try (OutputStream out = socket.getOutputStream();
-             BufferedWriter stringWrite = new BufferedWriter(
-                     new OutputStreamWriter(out,"UTF8"))
-        ){
+    private void connections() {
+        try {
+            this.socket = new Socket("localhost",5000);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            String command = this.sendCommand(stringWrite);
+    private void startClient() {
+        this.connections();
+
+        try (InputStream in = this.socket.getInputStream();
+             OutputStream out = this.socket.getOutputStream()) {
+
+            // вот тут передаю out
+            String command = this.sendMassage(out);
+
             while (!"q".equals(command)) {
-                if (command.contains("d -f ")) {
-                    this.upload(this.commandToPath(command, "d -f "), (FileOutputStream) out);
-                    System.out.println("Файл отправлен");
+                System.out.println(command);
+
+                // загружаем на сервер
+                if (command.contains("u -f ")) {
+                    this.upload(command.replace("u -f ", ""), ((FileOutputStream) out));
+
+                    // скачиваем с сервера
+                } else if (command.contains("d -f ")) {
+                    String clientPath = this.toClientPath(command);
+                    System.out.println(clientPath);
+                    if (this.download(clientPath, (FileInputStream) in)) {
+                        System.out.println(format("Файл:\n%s\nуспешно создан.",clientPath));
+                    }
                 }
 
                 out.flush();
-                command = this.sendCommand(stringWrite);
+                command = this.sendMassage(out);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // загружаем файл из сокета и записываем на свой диск
+    private boolean download(String path, FileInputStream in) {
+        File target;
+        try (FileOutputStream out = new FileOutputStream(target = new File(path))) {
+
+            int data;
+            while ((data = in.read()) != -1) {
+                out.write(data);
             }
 
+            if (target.exists())
+                return true;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    private String commandToPath(String command, String regExp) {
-        String[] arr = command.split(regExp);
-        System.out.println(arr[1]);
-        return arr[1];
+    // преобразуем в путь для клиентского диска
+    private String toClientPath(String clientPath) {
+        String[] arr = clientPath.split("/");
+        return format("/Users/pavel/Desktop/test/client/%s",arr[arr.length - 1]);
     }
 
-    private void initSocket(String address, int port) {
-        try {
-            this.socket = new Socket(address, port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    // отправка сообщения в сокет
+    private String sendMassage(OutputStream out) throws IOException {
+        BufferedReader readCons = new BufferedReader(new InputStreamReader(System.in));
+        DataOutputStream dos = new DataOutputStream(out);
+
+        String command = readCons.readLine();
+        dos.writeUTF(command);
+        return command;
     }
 
-    private String sendCommand(BufferedWriter writer) {
-        try {
-
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(System.in));
-
-            String command = reader.readLine();
-            writer.write(command); //пошла на сервер
-            return command;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "error";
-    }
-
+    // отправка файла в сокет
     private void upload(String path, FileOutputStream out) {
         try (FileInputStream in = new FileInputStream(new File(path))) {
 
@@ -80,3 +105,4 @@ public class Client {
         }
     }
 }
+
