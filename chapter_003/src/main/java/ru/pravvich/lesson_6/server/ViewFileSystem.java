@@ -5,14 +5,34 @@ import java.io.File;
 import static java.lang.String.format;
 
 class ViewFileSystem {
-    static String path = "/Users/pavel/Desktop/test";
 
     // метод для просмотра содержания каталога
     String[] seeCatalog(File catalog) {
-        if (catalog.isDirectory())
-            return catalog.list();
-        else
+        if (catalog.isDirectory()) {
+            String[] list = catalog.list();
+            assert list != null;
+            for (int i = 0; i != list.length; i++) {
+                if (new File(format("%s/%s",
+                        catalog.getAbsolutePath(), list[i])).isDirectory()
+                        ) {
+
+                    list[i] = format("%s/", list[i]);
+                }
+            }
+
+            String[] listWithInfo = new String[list.length + 3];
+            listWithInfo[0] = "В каталоге :";
+            listWithInfo[1] = format("%s/", catalog.getAbsolutePath());
+            listWithInfo[2] = "Содержаться объекты :";
+
+            for (int i = 3, j = 0; i != listWithInfo.length; i++, j++) {
+                listWithInfo[i] = list[j];
+            }
+
+            return listWithInfo;
+        } else {
             return new String[0];
+        }
     }
 
     // метод для перемещения из каталога в нижний каталог
@@ -21,7 +41,7 @@ class ViewFileSystem {
         boolean existsSub = target.exists();
         System.out.println(format("%s/%s", thisPosition.getAbsolutePath(), newPosition));
         if (existsSub && thisPosition.exists() && thisPosition.isDirectory()) {
-            return new File(path = format("%s/%s", thisPosition.getAbsolutePath(), newPosition));
+            return new File(format("%s/%s", thisPosition.getAbsolutePath(), newPosition));
         } else {
             System.out.println("Объект чтения не существует.");
             return new File(thisPosition.getAbsolutePath());
@@ -49,6 +69,6 @@ class ViewFileSystem {
         for (String re : res) {
             sb.append(re);
         }
-        return new File(path = new String(sb));
+        return new File(new String(sb));
     }
 }

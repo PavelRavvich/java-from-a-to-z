@@ -47,12 +47,9 @@ public class Client {
                         System.out.println(format("Файл:\n%s\nуспешно создан.",clientPath));
                     }
                 } else if (command.equals("ls") || command.contains("cd ")) {
-                    String[] content = this.getObj(in);
-                    for (String item : content) {
-                        System.out.println(item);
-                    }
+                    print(this.getObj(in));
                 } else {
-                    System.out.println("Error command");
+                    System.out.println("Неизвестная команда");
                 }
 
                 out.flush();
@@ -120,6 +117,12 @@ public class Client {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void print(String[] list) {
+        for (String item : list) {
+            System.out.println(item);
         }
     }
 }

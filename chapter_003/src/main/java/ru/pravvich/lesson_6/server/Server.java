@@ -45,7 +45,7 @@ class Server {
             // Вот тут передаю in
             command = this.getMassage(in);
 
-            String viewRepo = "/Users/pavel/Desktop/test/server/";
+            String viewRepo = "/Users/pavel/Desktop/test/server";
 
             while (!"q".equals(command)) {
                 System.out.println(command);
@@ -67,17 +67,15 @@ class Server {
                 } else if (command.equals("cd ..")) {
                     File parentCatalog = this.view.moveUp(new File(viewRepo));
                     viewRepo = parentCatalog.getAbsolutePath();
-                    String[] list = parentCatalog.list();
-                    this.writeList(out, list);
+                    String[] path = {format("%s/",viewRepo)};
+                    this.writeList(out, path);
                 } else if (!command.equals("cd ..") && command.contains("cd ")) {
                     File subCatalog = this.view.moveDown(new File(viewRepo), command.replace("cd ", ""));
                     viewRepo = subCatalog.getAbsolutePath();
-                    // list - содержание подкаталога
-                    String[] list = subCatalog.list();
-                    this.writeList(out, list);
+                    String[] path = {format("%s/",viewRepo)};
+                    this.writeList(out, path);
                 } else {
-                    String[] error = {"Неизвестная команда"};
-                    this.writeList(out, error);
+                    System.out.println("ХЗ...");
                 }
 
                 out.flush();
