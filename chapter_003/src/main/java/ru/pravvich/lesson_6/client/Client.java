@@ -25,6 +25,7 @@ public class Client {
 
     private void startClient() {
         this.connections();
+        System.out.println("The connection is established.");
 
         try (InputStream in = this.socket.getInputStream();
              OutputStream out = this.socket.getOutputStream()) {
@@ -37,6 +38,7 @@ public class Client {
                 // загружаем на сервер
                 if (command.contains("u -f ")) {
                     this.upload(command.replace("u -f ", ""), ((FileOutputStream) out));
+                    //!!!
                 // скачиваем с сервера :
                 } else if (command.contains("d -f ")) {
                     String clientPath = this.toClientPath(command);
@@ -75,7 +77,7 @@ public class Client {
         try (FileOutputStream out = new FileOutputStream(target = new File(path))) {
 
             int data;
-            while ((data = in.read()) != -1) {
+            while ((data = in.read()) != 255) {
                 out.write(data);
             }
 
@@ -112,6 +114,8 @@ public class Client {
             while ((data = in.read()) != -1) {
                 out.write(data);
             }
+
+            out.write(-1);
 
         } catch (IOException e) {
             e.printStackTrace();

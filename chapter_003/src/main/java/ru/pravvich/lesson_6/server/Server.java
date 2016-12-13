@@ -102,6 +102,8 @@ class Server {
                 out.write(data);
             }
 
+            out.write(-1);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,7 +120,7 @@ class Server {
         try (FileOutputStream out = new FileOutputStream(target = new File(path))) {
 
             int data;
-            while ((data = in.read()) != -1) {
+            while ((data = in.read()) != 255) {
                 out.write(data);
             }
 
