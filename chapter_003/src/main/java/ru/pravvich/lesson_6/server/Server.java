@@ -61,7 +61,6 @@ class Server {
                     this.upload(command.replace("d -f ",""), (FileOutputStream) out);
                 } else if (command.equals("ls")) {
                     viewRepo = format("%s%s",viewRepo,command.replace("ls", ""));
-                    System.out.println(viewRepo);
                     String[] list = this.view.seeCatalog(new File(viewRepo));
                     this.writeList(out, list);
                 } else if (command.equals("cd ..")) {

@@ -33,13 +33,11 @@ public class Client {
             String command = this.sendMassage(out);
 
             while (!"q".equals(command)) {
-                System.out.println(command);
 
                 // загружаем на сервер
                 if (command.contains("u -f ")) {
                     this.upload(command.replace("u -f ", ""), ((FileOutputStream) out));
-
-                    // скачиваем с сервера
+                // скачиваем с сервера :
                 } else if (command.contains("d -f ")) {
                     String clientPath = this.toClientPath(command);
                     System.out.println(clientPath);
