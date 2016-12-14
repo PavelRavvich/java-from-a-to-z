@@ -15,9 +15,15 @@ public class Client {
         new Client().startClient();
     }
 
+    private static void print(String[] list) {
+        for (String item : list) {
+            System.out.println(item);
+        }
+    }
+
     private void connections() {
         try {
-            this.socket = new Socket("localhost",5000);
+            this.socket = new Socket("localhost", 5000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,12 +45,12 @@ public class Client {
                 if (command.contains("u -f ")) {
                     this.upload(command.replace("u -f ", ""), ((FileOutputStream) out));
                     //!!!
-                // скачиваем с сервера :
+                    // скачиваем с сервера :
                 } else if (command.contains("d -f ")) {
                     String clientPath = this.toClientPath(command);
                     System.out.println(clientPath);
                     if (this.download(clientPath, (FileInputStream) in)) {
-                        System.out.println(format("Файл:\n%s\nуспешно создан.",clientPath));
+                        System.out.println(format("Файл:\n%s\nуспешно создан.", clientPath));
                     }
                 } else if (command.equals("ls") || command.contains("cd ")) {
                     print(this.getObj(in));
@@ -77,7 +83,7 @@ public class Client {
         try (FileOutputStream out = new FileOutputStream(target = new File(path))) {
 
             int data;
-            while ((data = in.read()) != 255) {
+            while ((byte) (data = in.read()) != (-1)) {
                 out.write(data);
             }
 
@@ -93,7 +99,7 @@ public class Client {
     // преобразуем в путь для клиентского диска
     private String toClientPath(String clientPath) {
         String[] arr = clientPath.split("/");
-        return format("/Users/pavel/Desktop/test/client/%s",arr[arr.length - 1]);
+        return format("/Users/pavel/Desktop/test/client/%s", arr[arr.length - 1]);
     }
 
     // отправка сообщения в сокет
@@ -119,12 +125,6 @@ public class Client {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static void print(String[] list) {
-        for (String item : list) {
-            System.out.println(item);
         }
     }
 }

@@ -54,24 +54,24 @@ class Server {
                 if (command.contains("u -f ")) {
                     String serverPath = toServerPath(command);
                     if (this.download(serverPath, (FileInputStream) in)) { // true если удалось
-                        System.out.println(format("Файл:\n%s\nуспешно создан.",serverPath));
+                        System.out.println(format("Файл:\n%s\nуспешно создан.", serverPath));
                     }
                 } else if (command.contains("d -f ")) {
-                    System.out.println(command.replace("d -f ",""));
-                    this.upload(command.replace("d -f ",""), (FileOutputStream) out);
+                    System.out.println(command.replace("d -f ", ""));
+                    this.upload(command.replace("d -f ", ""), (FileOutputStream) out);
                 } else if (command.equals("ls")) {
-                    viewRepo = format("%s%s",viewRepo,command.replace("ls", ""));
+                    viewRepo = format("%s%s", viewRepo, command.replace("ls", ""));
                     String[] list = this.view.seeCatalog(new File(viewRepo));
                     this.writeList(out, list);
                 } else if (command.equals("cd ..")) {
                     File parentCatalog = this.view.moveUp(new File(viewRepo));
                     viewRepo = parentCatalog.getAbsolutePath();
-                    String[] path = {format("%s/",viewRepo)};
+                    String[] path = {format("%s/", viewRepo)};
                     this.writeList(out, path);
                 } else if (!command.equals("cd ..") && command.contains("cd ")) {
                     File subCatalog = this.view.moveDown(new File(viewRepo), command.replace("cd ", ""));
                     viewRepo = subCatalog.getAbsolutePath();
-                    String[] path = {format("%s/",viewRepo)};
+                    String[] path = {format("%s/", viewRepo)};
                     this.writeList(out, path);
                 } else {
                     System.out.println("ХЗ...");
@@ -120,7 +120,7 @@ class Server {
         try (FileOutputStream out = new FileOutputStream(target = new File(path))) {
 
             int data;
-            while ((data = in.read()) != 255) {
+            while ((byte) (data = in.read()) != (-1)) {
                 out.write(data);
             }
 
@@ -135,6 +135,6 @@ class Server {
 
     private String toServerPath(String clientPath) {
         String[] arr = clientPath.split("/");
-        return format("/Users/pavel/Desktop/test/server/%s",arr[arr.length - 1]);
+        return format("/Users/pavel/Desktop/test/server/%s", arr[arr.length - 1]);
     }
 }
