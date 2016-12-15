@@ -3,11 +3,13 @@ package ru.pravvich.lesson_6.server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
 
 import static java.lang.String.format;
 
 class Server {
 
+    private Properties properties = new Properties();
     private ServerSocket serverSocket;
     private Socket socket;
     private ViewFileSystem view = new ViewFileSystem();
@@ -36,16 +38,21 @@ class Server {
         this.initServerSocket();
         System.out.println("Wait connections...");
         this.socketAccept();
+        this.initProperties();
         System.out.println("Connections accept.");
         String command;
 
         try (InputStream in = this.socket.getInputStream();
              OutputStream out = this.socket.getOutputStream()) {
 
+            // извлекаем пути к репозиториям из properties
+            String viewRepo = this.properties.getProperty("serverPath");
+
             // Вот тут передаю in
             command = this.getMassage(in);
 
-            String viewRepo = "/Users/pavel/Desktop/test/server";
+            //String viewRepo = "/Users/pavel/Desktop/test/server";
+
 
             while (!"q".equals(command)) {
                 System.out.println(command);
@@ -135,6 +142,17 @@ class Server {
 
     private String toServerPath(String clientPath) {
         String[] arr = clientPath.split("/");
-        return format("/Users/pavel/Desktop/test/server/%s", arr[arr.length - 1]);
+        return format("%s/%s",this.properties.getProperty("serverPath"), arr[arr.length - 1]);
+    }
+
+    private void initProperties() {
+        try {
+            InputStream inputPr = Thread.currentThread()
+                    .getContextClassLoader().getResourceAsStream("app.properties");
+
+            this.properties.load(inputPr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

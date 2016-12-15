@@ -2,6 +2,7 @@ package ru.pravvich.lesson_6.client;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Properties;
 
 import static java.lang.String.format;
 
@@ -10,6 +11,7 @@ import static java.lang.String.format;
 public class Client {
 
     private Socket socket;
+    private Properties properties = new Properties();
 
     public static void main(String[] args) {
         new Client().startClient();
@@ -23,7 +25,7 @@ public class Client {
 
     private void connections() {
         try {
-            this.socket = new Socket("localhost", 5000);
+            this.socket = new Socket(this.properties.getProperty("ip"), 5000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,6 +34,8 @@ public class Client {
     private void startClient() {
         this.connections();
         System.out.println("The connection is established.");
+
+        this.initProperties();
 
         try (InputStream in = this.socket.getInputStream();
              OutputStream out = this.socket.getOutputStream()) {
@@ -44,7 +48,7 @@ public class Client {
                 // загружаем на сервер
                 if (command.contains("u -f ")) {
                     this.upload(command.replace("u -f ", ""), ((FileOutputStream) out));
-                    //!!!
+                    System.out.println("Файл отправлен на сервер.");
                     // скачиваем с сервера :
                 } else if (command.contains("d -f ")) {
                     String clientPath = this.toClientPath(command);
@@ -99,7 +103,7 @@ public class Client {
     // преобразуем в путь для клиентского диска
     private String toClientPath(String clientPath) {
         String[] arr = clientPath.split("/");
-        return format("/Users/pavel/Desktop/test/client/%s", arr[arr.length - 1]);
+        return format("%s/%s",this.properties.getProperty("clientPath") , arr[arr.length - 1]);
     }
 
     // отправка сообщения в сокет
@@ -123,6 +127,17 @@ public class Client {
 
             out.write(-1);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initProperties() {
+        try {
+            InputStream inputPr = Thread.currentThread()
+                    .getContextClassLoader().getResourceAsStream("app.properties");
+
+            this.properties.load(inputPr);
         } catch (IOException e) {
             e.printStackTrace();
         }
