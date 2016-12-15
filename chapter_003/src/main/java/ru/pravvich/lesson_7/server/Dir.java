@@ -7,7 +7,12 @@ class Dir {
     private ArrayList<String> files = new ArrayList<>();
 
     Dir(String path) {
-        this.initContentDir(new File(path));
+        File file = new File(path);
+        if (file.exists() && file.isDirectory()) {
+            this.initContentDir(file);
+        } else {
+            System.out.println("Такой директории не существует.");
+        }
     }
 
     // записываем в отдельный лист все файлы
