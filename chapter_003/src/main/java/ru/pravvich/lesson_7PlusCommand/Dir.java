@@ -1,17 +1,19 @@
-package ru.pravvich.lesson_7.server;
+package ru.pravvich.lesson_7PlusCommand;
+
+import ru.pravvich.lesson_7PlusCommand.command.HelpText;
 
 import java.io.File;
 import java.util.ArrayList;
 
-class Dir {
+public class Dir {
     private ArrayList<String> files = new ArrayList<>();
 
-    Dir(String path) {
+    public Dir(String path) {
         File file = new File(path);
         if (file.exists() && file.isDirectory()) {
             this.initContentDir(file);
         } else {
-            System.out.println("Такой директории не существует.");
+            System.out.println(HelpText.DORDONTEXIST.getText());
         }
     }
 
@@ -30,7 +32,7 @@ class Dir {
     }
 
     // ищем пути содержащие имя файла (получается регулярка)
-    ArrayList<String> searchRegExp(String regExp) {
+    public ArrayList<String> searchRegExp(String regExp) {
         ArrayList<String> targetFiles = new ArrayList<>();
         for (String item : this.files) {
             if (item.contains(regExp) && new File(item).isFile()) {
@@ -41,7 +43,7 @@ class Dir {
     }
 
     // ищем пути содержащие имя файла
-    ArrayList<String> searchByName(String name) {
+    public ArrayList<String> searchByName(String name) {
         ArrayList<String> targetFiles = new ArrayList<>();
         for (String item : this.files) {
             String[] separatePath = item.split("/");

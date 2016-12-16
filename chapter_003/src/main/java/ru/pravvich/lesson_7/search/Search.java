@@ -1,4 +1,4 @@
-package ru.pravvich.lesson_7.server;
+package ru.pravvich.lesson_7.search;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,7 +21,6 @@ public class Search {
             command = scanner.nextLine();
             while (!"q".equals(command)) {
                 if ("-f".equals(command)) {
-                    // можно сделать
                     System.out.println("Введите полное имя директории для поиска в формате \"absolute path.../dir\":");
                     Dir dir = new Dir(scanner.nextLine());
                     System.out.println("Введите имя файла для поиска:");
