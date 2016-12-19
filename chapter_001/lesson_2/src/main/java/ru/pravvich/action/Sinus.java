@@ -1,6 +1,7 @@
 package ru.pravvich.action;
 
 import ru.pravvich.EngineerCalculate;
+import ru.pravvich.InteractCalc;
 
 import java.util.Scanner;
 
@@ -13,7 +14,6 @@ public class Sinus implements Action {
     @Override
     public void invoke(Scanner scanner) {
         EngineerCalculate calculate = new EngineerCalculate();
-        System.out.println("Введите число:");
-        calculate.sinus(scanner.nextDouble());
+        calculate.sinus(InteractCalc.result);
     }
 }

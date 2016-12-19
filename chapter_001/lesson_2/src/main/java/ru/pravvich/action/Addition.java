@@ -1,6 +1,7 @@
 package ru.pravvich.action;
 
 import ru.pravvich.Calculate;
+import ru.pravvich.InteractCalc;
 
 import java.util.Scanner;
 
@@ -13,9 +14,7 @@ public class Addition implements Action {
     @Override
     public void invoke(Scanner scanner) {
         Calculate calculate = new Calculate();
-        System.out.println("Введите первое число:");
-        double fst = scanner.nextDouble();
         System.out.println("Введите второе:");
-        calculate.add(fst, scanner.nextDouble());
+        calculate.add(InteractCalc.result, scanner.nextDouble());
     }
 }
