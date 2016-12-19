@@ -7,14 +7,33 @@ import java.util.Scanner;
 
 public class Find {
 
+    /**
+     * Target - for contain result paths before record in file
+     */
+    private static ArrayList<String> target;
+
+    /**
+     * Command - var for contain all action program.
+     */
     private ArrayList<Command> commands = new ArrayList<>();
 
-    private static ArrayList<String> target;
+    /**
+     * Default constructor - init all action in program.
+     */
+    private Find() {
+        this.initCommands();
+    }
 
     public static ArrayList<String> getTarget() {
         return target;
     }
 
+    /**
+     * Method init target.
+     *
+     * @param target - target list with result path.
+     * @return - target without changes.
+     */
     public static ArrayList<String> setTarget(ArrayList<String> target) {
         return Find.target = target;
     }
@@ -23,6 +42,10 @@ public class Find {
         new Find().start();
     }
 
+    /**
+     * Method init all action program. Every action is class with
+     * override method invoke(Scanner scanner).
+     */
     private void initCommands() {
         this.commands.add(new UnknownCommand());
         this.commands.add(new SearchRegExp());
@@ -31,8 +54,10 @@ public class Find {
         this.commands.add(new Help());
     }
 
+    /**
+     * Open stream with console and loop menu.
+     */
     private void start() {
-        this.initCommands();
         System.out.println(HelpText.HELP.getText());
         try (Scanner scanner = new Scanner(System.in)) {
 
@@ -51,6 +76,14 @@ public class Find {
         }
     }
 
+    /**
+     * Method check flag for command.
+     * If user in known flag no action.
+     *
+     * @param key Key for identification which one of Command use.
+     * @return If user enter unknowns command than return flag "-1".
+     * "-1" activation class UnknownCommand.
+     */
     private String checkKey(String key) {
         if (!key.equals("-r") && !key.equals("-f") &&
                 !key.equals("-o") && !key.equals("h")) {

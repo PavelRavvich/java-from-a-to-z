@@ -2,8 +2,8 @@ package ru.pravvich;
 
 import ru.pravvich.figures.*;
 
-public class Board {
-    public static Figure[][] desc = new Figure[8][8];
+class Board {
+    static Figure[][] desc = new Figure[8][8];
 
     private void add(Figure figure) {
         if (figure instanceof Officer) {
@@ -12,7 +12,7 @@ public class Board {
         }
     }
 
-    public void move(Cell position, Cell newPosition) throws ImposableMoveException {
+    void move(Cell position, Cell newPosition) throws ImposableMoveException {
         boolean noFriendFire = this.noFriendFire(position, newPosition);
         boolean existenceFigure = this.existenceFigure(position);
         Cell[] cells = desc[position.getY()][position.getX()].move(newPosition);
