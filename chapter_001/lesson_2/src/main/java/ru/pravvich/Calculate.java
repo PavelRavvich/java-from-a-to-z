@@ -4,8 +4,8 @@ package ru.pravvich;
  * Implements Calculate.
  * Supports repeated using previous calculation.
  */
-class Calculate {
-    private double result;
+public class Calculate {
+    double result;
 
     void setResult(double result) {
         this.result = result;
@@ -21,17 +21,17 @@ class Calculate {
      *
      * @param first - first argument, second - second argument
      */
-    void add(double first, double second) {
+    public void add(double first, double second) {
         this.result = first + second;
     }
 
 
     /**
-     * subtraction operation.
+     * Subtraction operation.
      *
      * @param first - first argument, second - second argument
      */
-    void subtraction(double first, double second) {
+    public void subtraction(double first, double second) {
         this.result = first - second;
     }
 
@@ -41,7 +41,7 @@ class Calculate {
      *
      * @param first - first argument, second - second argument
      */
-    void multiplication(double first, double second) {
+    public void multiplication(double first, double second) {
         this.result = first * second;
     }
 
@@ -51,7 +51,7 @@ class Calculate {
      *
      * @param first - first argument, second - second argument
      */
-    void div(double first, double second) {
+    public void div(double first, double second) {
         if (second != 0) {
             this.result = first / second;
         } else {

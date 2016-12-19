@@ -8,6 +8,8 @@ import java.util.Scanner;
  */
 public class InteractCalc {
 
+    public static double result;
+
     /**
      * Calculate calculate is contain all method action
      * and var result action.
