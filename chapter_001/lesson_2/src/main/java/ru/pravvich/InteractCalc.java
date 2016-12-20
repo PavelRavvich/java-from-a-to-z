@@ -1,5 +1,8 @@
 package ru.pravvich;
 
+import ru.pravvich.action.*;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -8,18 +11,27 @@ import java.util.Scanner;
  */
 public class InteractCalc {
 
-    public static double result;
-
     /**
-     * Calculate calculate is contain all method action
-     * and var result action.
+     * Contain current result action.
+     * When invoke Reset (user enter flag - "c") then value update
      */
-    private Calculate calculate = new Calculate();
+    public static double result;
 
     /**
      * Scanner for read input stream for command line.
      */
     private Scanner scanner = new Scanner(System.in);
+    /**
+     * Contain all actions this program.
+     */
+    private ArrayList<Action> actions = new ArrayList<>();
+
+    /**
+     * Default constructor.
+     */
+    private InteractCalc() {
+        this.initActions();
+    }
 
     public static void main(String[] args) {
         System.out.println(Help.HELP.getContent());
@@ -28,6 +40,7 @@ public class InteractCalc {
 
     /**
      * Read type double from command line.
+     *
      * @return double is result write. If result read no number return 0;
      */
     private double nextDouble() {
@@ -41,6 +54,7 @@ public class InteractCalc {
 
     /**
      * Read type String from command line.
+     *
      * @return String is result write.
      */
     private String nextAction() {
@@ -48,47 +62,60 @@ public class InteractCalc {
     }
 
     /**
+     * Init ArrayList all type actions.
+     */
+    private void initActions() {
+        this.actions.add(new Sinus());
+        this.actions.add(new Reset());
+        this.actions.add(new Addit());
+        this.actions.add(new Divis());
+        this.actions.add(new Subst());
+        this.actions.add(new Multi());
+    }
+
+    /**
      * Move loop menu for user. If action equal "q" loop is end.
+     * МОЖНО БЫЛО КОНЕЧНО ВЕСЬ КОД ПЕРЕД ЦИКЛОМ ВЫНЕСТИ НО МНЕ ПОКАЗАЛОСЬ
+     * ЧТО И ТАК НОРМАЛЬНО ЭТО ОДИН СМЫСЛ
      */
     private void start() {
 
         System.out.println(Help.FIRST.getContent());
-        this.calculate.setResult(this.nextDouble());
+        result = this.nextDouble();
         System.out.println(Help.ACTION.getContent());
         String action = this.nextAction();
 
         while (!"q".equals(action)) {
+            this.actionExist(action);
 
-            if ("+".equals(action)) {
-                System.out.println(Help.SECOND.getContent());
-                this.calculate.add(this.calculate.getResult(), this.nextDouble());
-                System.out.println(this.calculate.getResult());
-
-            } else if ("-".equals(action)) {
-                System.out.println(Help.SECOND.getContent());
-                this.calculate.subtraction(this.calculate.getResult(), this.nextDouble());
-                System.out.println(this.calculate.getResult());
-
-            } else if ("*".equals(action)) {
-                System.out.println(Help.SECOND.getContent());
-                this.calculate.multiplication(this.calculate.getResult(), this.nextDouble());
-                System.out.println(this.calculate.getResult());
-
-            } else if ("/".equals(action)) {
-                System.out.println(Help.SECOND.getContent());
-                this.calculate.div(this.calculate.getResult(), this.nextDouble());
-                System.out.println(this.calculate.getResult());
-
-            } else if ("c".equals(action) || "C".equals(action)) {
-                System.out.println(Help.FIRST.getContent());
-                this.calculate.setResult(this.nextDouble());
-
-            } else {
-                System.out.println(Help.NOEXIST.getContent());
+            for (Action act : this.actions) {
+                if (act.name().equals(action)) {
+                    act.invoke(this.scanner);
+                    break;
+                }
             }
 
             System.out.println(Help.ACTION.getContent());
             action = this.nextAction();
+        }
+    }
+
+    /**
+     * Check flag exist in list actions.
+     *
+     * @param action name action for check.
+     */
+    private void actionExist(String action) {
+        int count = 0;
+        Flags[] flags = Flags.values();
+        for (Flags item : flags) {
+            if (!action.equals(item.getFlag())) {
+                count++;
+            }
+        }
+
+        if (count == Flags.values().length) {
+            System.out.println(Help.NOEXIST.getContent());
         }
     }
 }

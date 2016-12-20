@@ -5,14 +5,14 @@ package ru.pravvich;
  * Supports repeated using previous calculation.
  */
 public class Calculate {
-    double result;
+    private double result;
 
     void setResult(double result) {
         this.result = result;
     }
 
 
-    double getResult() {
+    public double getResult() {
         return this.result;
     }
 
