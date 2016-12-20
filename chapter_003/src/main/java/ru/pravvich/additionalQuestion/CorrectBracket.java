@@ -2,26 +2,32 @@ package ru.pravvich.additionalQuestion;
 
 class CorrectBracket {
 
-    // сложный если учитывать свякие вложенные в вложенные и тд
+    public static void main(String[] args) {
+        String s = "()()";
+        CorrectBracket correctBracket = new CorrectBracket();
+        System.out.println(correctBracket.checkSecond(s));
+    }
+
     boolean checkSecond(String bracket) {
-        String[] arr = bracket.split("");
-        if (arr.length % 2 != 0)
+        char[] array = bracket.toCharArray();
+
+        if (array.length % 2 != 0)
             return false;
 
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != null && arr[i].equals("(")) {
-                for (int j = i + 1; j < arr.length; j++) {
-                    if (arr[j] != null && arr[j].equals(")")) {
-                        arr[i] = null;
-                        arr[j] = null;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == '(') {
+                for (int j = i + 1; j < array.length; j++) {
+                    if (array[j] == ')') {
+                        array[i] = '+';
+                        array[j] = '+';
                         break;
                     }
                 }
             }
         }
 
-        for (String item : arr) {
-            if (item != null)
+        for (char c : array) {
+            if (c != '+')
                 return false;
         }
         return true;
