@@ -117,11 +117,11 @@ public class Food implements Product {
     public String getFlag() {
         String result;
         int i = this.checkQuality();
-        if ((i > 0 && i < 26) || i == 0) {
+        if ((i >= 0 && i < 26)) {
             result = "warehouse";
         } else if (i > 25 && i < 76) {
             result = "shop";
-        } else if (i > 74 && i < 101) {
+        } else if (i > 75 && i < 101) {
             this.calculateDiscount();
             result = "shop";
         } else {
