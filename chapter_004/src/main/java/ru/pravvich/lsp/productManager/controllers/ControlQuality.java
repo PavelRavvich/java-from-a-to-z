@@ -11,6 +11,14 @@ import java.util.ArrayList;
 public class ControlQuality implements Controller {
 
     /**
+     * Markers on every repo.
+     */
+    private static Repo warehouse;
+    private static Repo shop;
+    private static Repo trash;
+    private static Repo reserveWarehouse;
+    private static Repo updateWarehouse;
+    /**
      * Contain all repositories type.
      */
     private ArrayList<Repo> repo = new ArrayList<>();
@@ -20,6 +28,26 @@ public class ControlQuality implements Controller {
      */
     public ControlQuality() {
         this.initRepo();
+    }
+
+    public static Repo getWarehouse() {
+        return warehouse;
+    }
+
+    public static Repo getShop() {
+        return shop;
+    }
+
+    public static Repo getTrash() {
+        return trash;
+    }
+
+    public static Repo getUpdateWarehouse() {
+        return updateWarehouse;
+    }
+
+    public static Repo getReserveWarehouse() {
+        return reserveWarehouse;
     }
 
     /**
@@ -35,9 +63,11 @@ public class ControlQuality implements Controller {
      * Init list which contain all repositories type.
      */
     private void initRepo() {
-        this.repo.add(new Warehouse());
-        this.repo.add(new Shop());
-        this.repo.add(new Trash());
+        this.repo.add(warehouse = new Warehouse());
+        this.repo.add(shop = new Shop());
+        this.repo.add(trash = new Trash());
+        this.repo.add(reserveWarehouse = new ReserveWarehouse());
+        this.repo.add(updateWarehouse = new UpdateWarehouse());
     }
 
     /**
@@ -54,7 +84,6 @@ public class ControlQuality implements Controller {
         for (Repo item : this.repo) {
             if (flag.equals(item.getName())) {
                 item.getProducts().add(product);
-                break;
             }
         }
     }
