@@ -87,4 +87,20 @@ public class ControlQuality implements Controller {
             }
         }
     }
+
+    /**
+     * Search exist product in repo.
+     * @param product product for search.
+     * @return true - if any repo contain product. False - if product do not find.
+     */
+    public boolean isAppropriate(Product product) {
+        for (Repo r : this.repo) {
+            for (Product p : r.getProducts()) {
+                if (product.equals(p)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
