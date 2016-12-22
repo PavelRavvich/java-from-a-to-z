@@ -15,6 +15,22 @@ public class ControlQuality implements Controller {
      */
     private ArrayList<Repo> repo = new ArrayList<>();
 
+    public Repo getWarehouse() {
+        return warehouse;
+    }
+
+    public Repo getShop() {
+        return shop;
+    }
+
+    public Repo getTrash() {
+        return trash;
+    }
+
+    private static Repo warehouse;
+    private static Repo shop;
+    private static Repo trash;
+
     /**
      * Default constructor.
      */
@@ -35,9 +51,9 @@ public class ControlQuality implements Controller {
      * Init list which contain all repositories type.
      */
     private void initRepo() {
-        this.repo.add(new Warehouse());
-        this.repo.add(new Shop());
-        this.repo.add(new Trash());
+        this.repo.add(warehouse = new Warehouse());
+        this.repo.add(shop = new Shop());
+        this.repo.add(trash = new Trash());
     }
 
     /**
