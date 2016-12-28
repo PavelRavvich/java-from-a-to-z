@@ -96,9 +96,9 @@ public class Food implements Product {
     /**
      * Calculate how much was spent before the expiry date.
      *
-     * @return percent how much was spent before the expiry date.
+     * @return percent how much was spent before the expiry date in percent.
      */
-    private int checkQuality() {
+    public int checkQuality() {
         Calendar currentDate = Calendar.getInstance();
         // differenceOne – разница между датой изготовления и датой окончания срока
         long differenceOne = this.expireDate.getTimeInMillis() - this.createDate.getTimeInMillis();
@@ -109,28 +109,9 @@ public class Food implements Product {
     }
 
     /**
-     * Generate flag for determines name repo for this product.
-     *
-     * @return flag which signal is repo name.
+     * Calculate discount.
      */
-    @Override
-    public String getFlag() {
-        String result;
-        int i = this.checkQuality();
-        if ((i >= 0 && i < 26)) {
-            result = "warehouse";
-        } else if (i > 25 && i < 76) {
-            result = "shop";
-        } else if (i > 75 && i < 101) {
-            this.calculateDiscount();
-            result = "shop";
-        } else {
-            result = "trash";
-        }
-        return result;
-    }
-
-    private void calculateDiscount() {
+    public void calculateDiscount() {
         this.prise = this.prise - this.discount;
     }
 }

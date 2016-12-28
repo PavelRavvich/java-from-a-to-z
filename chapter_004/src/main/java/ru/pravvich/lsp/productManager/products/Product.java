@@ -7,12 +7,6 @@ import java.util.Calendar;
  */
 public interface Product {
 
-    /**
-     * Generate flag for determines name repo for this product.
-     *
-     * @return flag which signal is repo name.
-     */
-    String getFlag();
 
     Calendar getExpireDate();
     void setExpireDate(Calendar expireDate);
@@ -28,4 +22,7 @@ public interface Product {
 
     int getDiscount();
     void setDiscount(int discount);
+
+    int checkQuality();
+    void calculateDiscount();
 }
