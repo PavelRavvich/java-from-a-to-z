@@ -15,7 +15,7 @@ public interface Repo {
     ArrayList<Product> getProducts();
 
     /**
-     * Get name repo.
+     * Get name repo.&
      * @return name repo.
      */
     String getName();
