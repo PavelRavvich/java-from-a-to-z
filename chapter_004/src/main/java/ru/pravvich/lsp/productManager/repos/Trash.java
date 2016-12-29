@@ -23,4 +23,9 @@ public class Trash implements Repo {
     public String getName() {
         return "trash";
     }
+
+    @Override
+    public boolean isAppropriate(Product product) {
+        return false;
+    }
 }

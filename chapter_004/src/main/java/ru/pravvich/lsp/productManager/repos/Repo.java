@@ -20,4 +20,6 @@ public interface Repo {
      */
     String getName();
 
+    boolean isAppropriate(Product product);
+
 }

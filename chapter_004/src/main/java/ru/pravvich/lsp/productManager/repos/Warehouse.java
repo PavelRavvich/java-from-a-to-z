@@ -23,4 +23,9 @@ public class Warehouse implements Repo {
     public String getName() {
         return "warehouse";
     }
+
+    @Override
+    public boolean isAppropriate(Product product) {
+        return false;
+    }
 }

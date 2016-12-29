@@ -23,4 +23,9 @@ public class Shop implements Repo {
     public String getName() {
         return "shop";
     }
+
+    @Override
+    public boolean isAppropriate(Product product) {
+        return false;
+    }
 }
