@@ -98,7 +98,8 @@ public class Food implements Product {
      *
      * @return percent how much was spent before the expiry date.
      */
-    private int checkQuality() {
+    @Override
+    public int checkQuality() {
         Calendar currentDate = Calendar.getInstance();
         // differenceOne – разница между датой изготовления и датой окончания срока
         long differenceOne = this.expireDate.getTimeInMillis() - this.createDate.getTimeInMillis();

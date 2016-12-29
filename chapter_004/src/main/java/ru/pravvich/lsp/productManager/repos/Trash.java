@@ -26,6 +26,6 @@ public class Trash implements Repo {
 
     @Override
     public boolean isAppropriate(Product product) {
-        return false;
+        return (product.checkQuality() > 100);
     }
 }

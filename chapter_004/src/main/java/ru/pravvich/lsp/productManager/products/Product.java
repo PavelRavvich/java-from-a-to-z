@@ -28,4 +28,6 @@ public interface Product {
 
     int getDiscount();
     void setDiscount(int discount);
+
+    int checkQuality();
 }
