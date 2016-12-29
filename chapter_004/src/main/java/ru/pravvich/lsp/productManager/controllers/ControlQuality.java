@@ -55,7 +55,7 @@ public class ControlQuality implements Controller {
      *
      * @return list with contain all repositories type.
      */
-    public ArrayList<Repo> getRepo() {
+    ArrayList<Repo> getRepo() {
         return this.repo;
     }
 
@@ -83,7 +83,6 @@ public class ControlQuality implements Controller {
         for (Repo item : this.repo) {
             if (item.isAppropriate(product)) {
                 item.getProducts().add(product);
-                break;
             }
         }
     }

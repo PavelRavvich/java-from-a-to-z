@@ -1,14 +1,18 @@
 package ru.pravvich.lsp.productManager.repos;
 
 import ru.pravvich.lsp.productManager.controllers.ControlQuality;
+import ru.pravvich.lsp.productManager.products.Product;
 
-public class ReserveWarehouse extends Warehouse {
+public class ReserveWarehouse extends UpdateWarehouse {
 
     @Override
     public String getName() {
-        if (ControlQuality.getUpdateWarehouse().getProducts().size() == 9) {
-            return "warehouse";
-        }
-        return "";
+        return "warehouse";
+    }
+
+    @Override
+    public boolean isAppropriate(Product product) {
+        return ControlQuality.getUpdateWarehouse().getProducts()
+                .size() == 9 && (product.checkQuality() < 26);
     }
 }
