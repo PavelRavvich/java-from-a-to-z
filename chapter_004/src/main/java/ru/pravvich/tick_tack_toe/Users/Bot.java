@@ -1,21 +1,20 @@
 package ru.pravvich.tick_tack_toe.Users;
 
+import ru.pravvich.tick_tack_toe.Desc;
+
 public class Bot implements Positioning {
     private Posit posit = new Posit();
-    private String color;
-    private int descSize = 3;
-
-    public void setDescSize(int descSize) {
-        this.descSize = descSize;
-    }
+    private char color;
+    private int x = -1;
+    private int y = -1;
 
     @Override
-    public void setColor(String color) {
+    public void setColor(char color) {
         this.color = color;
     }
 
     @Override
-    public String getColor() {
+    public char getColor() {
         return this.color;
     }
 
@@ -26,12 +25,19 @@ public class Bot implements Positioning {
 
     @Override
     public void setPosit() {
-        this.posit.setX(this.generatePos());
-        this.posit.setY(this.generatePos());
+        this.posit = this.generatePos();
     }
 
-    private int generatePos() {
-        int maximum = (this.descSize - 1);
-        return (int) (Math.random() * (++maximum));
+    private Posit generatePos() {
+        char[][] desc = Desc.getInfoDesc();
+        for (int i = 0; i < desc.length; i++) {
+            for (int j = 0; j < desc.length; j++) {
+                if (desc[j][i] == ' ') {
+                    return new Posit(i, j);
+                }
+            }
+        }
+        System.err.println("Что-то пошло не так");
+        return new Posit();
     }
 }

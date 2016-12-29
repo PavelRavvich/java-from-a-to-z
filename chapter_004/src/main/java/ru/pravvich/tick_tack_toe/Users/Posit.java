@@ -4,6 +4,14 @@ public class Posit {
     private int x;
     private int y;
 
+    Posit() {
+    }
+
+    Posit(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public int getX() {
         return x;
     }

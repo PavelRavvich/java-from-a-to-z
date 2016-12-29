@@ -6,7 +6,7 @@ public class TickTack {
 
     private ArrayList<Game> games = new ArrayList<>();
 
-    TickTack() {
+    private TickTack() {
         this.initGames();
     }
 
