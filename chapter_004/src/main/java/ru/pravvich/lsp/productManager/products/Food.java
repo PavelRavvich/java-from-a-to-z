@@ -131,7 +131,7 @@ public class Food implements Product {
         return result;
     }
 
-    private void calculateDiscount() {
+    public void calculateDiscount() {
         this.prise = this.prise - this.discount;
     }
 }

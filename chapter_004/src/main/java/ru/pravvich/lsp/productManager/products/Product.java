@@ -30,4 +30,5 @@ public interface Product {
     void setDiscount(int discount);
 
     int checkQuality();
+    void calculateDiscount();
 }
