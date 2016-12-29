@@ -18,6 +18,9 @@ public class ControlQuality implements Controller {
     private static Repo trash;
     private static Repo reserveWarehouse;
     private static Repo updateWarehouse;
+    private static Repo updateTrash;
+    private static Repo recycling;
+
     /**
      * Contain all repositories type.
      */
@@ -28,6 +31,14 @@ public class ControlQuality implements Controller {
      */
     public ControlQuality() {
         this.initRepo();
+    }
+
+    public static Repo getUpdateTrash() {
+        return updateTrash;
+    }
+
+    public static Repo getRecycling() {
+        return recycling;
     }
 
     public static Repo getWarehouse() {
@@ -68,6 +79,8 @@ public class ControlQuality implements Controller {
         this.repo.add(trash = new Trash());
         this.repo.add(reserveWarehouse = new ReserveWarehouse());
         this.repo.add(updateWarehouse = new UpdateWarehouse());
+        this.repo.add(updateTrash = new UpdateTrash());
+        this.repo.add(recycling = new Recycling());
     }
 
     /**
