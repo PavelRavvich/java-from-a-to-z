@@ -7,17 +7,7 @@ import java.util.ArrayList;
 /**
  * Determines trash, repo for bad products.
  */
-public class Trash implements Repo {
-
-    /**
-     * List contain bad products.
-     */
-    private ArrayList<Product> products = new ArrayList<>();
-
-    @Override
-    public ArrayList<Product> getProducts() {
-        return this.products;
-    }
+public class Trash extends Warehouse {
 
     @Override
     public String getName() {
