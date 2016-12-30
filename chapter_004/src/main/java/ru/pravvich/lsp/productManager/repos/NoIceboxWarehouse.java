@@ -5,8 +5,8 @@ import ru.pravvich.lsp.productManager.products.Product;
 public class NoIceboxWarehouse extends Warehouse {
 
     /**
-     * This repo contain only 10 products, all next after 10, go in NoIceboxReserveWarehouse.
-     * @return "" if filling equal 10 products.
+     * This repo contain only 9 products, all next after 9, go in NoIceboxReserveWarehouse.
+     * @return "" if filling equal 9 products.
      */
     @Override
     public boolean isAppropriate(Product product) {
