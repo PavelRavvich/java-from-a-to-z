@@ -61,7 +61,7 @@ public class UpdateReserveWarehouseTest {
             control.uploadInRepo(food);
         }
 
-        assertThat(ControlQuality.getUpdateWarehouse().getProducts().size(),is(9));
-        assertThat(ControlQuality.getReserveWarehouse().getProducts().size(),is(1));
+        assertThat(ControlQuality.getUpdateWarehouse().getProducts().size(), is(9));
+        assertThat(ControlQuality.getReserveWarehouse().getProducts().size(), is(1));
     }
 }

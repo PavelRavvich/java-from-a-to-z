@@ -20,6 +20,9 @@ public class ControlQuality implements Controller {
     private static Repo updateWarehouse;
     private static Repo updateTrash;
     private static Repo recycling;
+    private static Repo icebox;
+    private static Repo noIceboxWarehouse;
+    private static Repo noIceboxReserveWarehouse;
 
     /**
      * Contain all repositories type.
@@ -31,6 +34,18 @@ public class ControlQuality implements Controller {
      */
     public ControlQuality() {
         this.initRepo();
+    }
+
+    public static Repo getNoIceboxReserveWarehouse() {
+        return noIceboxReserveWarehouse;
+    }
+
+    public static Repo getNoIceboxWarehouse() {
+        return noIceboxWarehouse;
+    }
+
+    public static Repo getIcebox() {
+        return icebox;
     }
 
     public static Repo getUpdateTrash() {
@@ -81,6 +96,9 @@ public class ControlQuality implements Controller {
         this.repo.add(updateWarehouse = new UpdateWarehouse());
         this.repo.add(updateTrash = new UpdateTrash());
         this.repo.add(recycling = new Recycling());
+        this.repo.add(icebox = new Icebox());
+        this.repo.add(noIceboxWarehouse = new NoIceboxWarehouse());
+        this.repo.add(noIceboxReserveWarehouse = new NoIceboxReserveWarehouse());
     }
 
     /**
@@ -95,6 +113,7 @@ public class ControlQuality implements Controller {
     public void uploadInRepo(Product product) {
         for (Repo item : this.repo) {
             if (item.isAppropriate(product)) {
+                System.out.println(item.getClass());
                 item.getProducts().add(product);
             }
         }

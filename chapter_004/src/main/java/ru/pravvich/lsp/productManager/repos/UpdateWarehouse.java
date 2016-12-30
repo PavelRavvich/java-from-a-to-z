@@ -11,16 +11,6 @@ import java.util.ArrayList;
  */
 public class UpdateWarehouse extends Warehouse {
 
-    /**
-     * List contain products.
-     */
-    private ArrayList<Product> products = new ArrayList<>();
-
-    @Override
-    public ArrayList<Product> getProducts() {
-        return this.products;
-    }
-
     @Override
     public String getName() {
         return "warehouse";
@@ -32,6 +22,7 @@ public class UpdateWarehouse extends Warehouse {
      */
     @Override
     public boolean isAppropriate(Product product) {
-        return this.getProducts().size() < 9 && (product.checkQuality() < 26);
+        return this.getProducts().size() < 9 &&
+                (product.checkQuality() < 26);
     }
 }
