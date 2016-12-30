@@ -21,6 +21,6 @@ public class NoIceboxReserveWarehouse extends NoIceboxWarehouse {
     @Override
     public boolean isAppropriate(Product product) {
         return ControlQuality.getNoIceboxWarehouse().getProducts()
-                .size() == 8 && (product.checkQuality() < 26);
+                .size() == 9 && (product.checkQuality() < 26);
     }
 }

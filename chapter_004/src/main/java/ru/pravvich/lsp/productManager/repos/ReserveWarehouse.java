@@ -13,6 +13,6 @@ public class ReserveWarehouse extends UpdateWarehouse {
     @Override
     public boolean isAppropriate(Product product) {
         return ControlQuality.getUpdateWarehouse().getProducts()
-                .size() == 8 && (product.checkQuality() < 26);
+                .size() == 9 && (product.checkQuality() < 26);
     }
 }

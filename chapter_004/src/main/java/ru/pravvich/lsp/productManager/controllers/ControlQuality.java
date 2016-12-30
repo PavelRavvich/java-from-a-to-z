@@ -113,7 +113,6 @@ public class ControlQuality implements Controller {
     public void uploadInRepo(Product product) {
         for (Repo item : this.repo) {
             if (item.isAppropriate(product)) {
-                System.out.println(item.getClass());
                 item.getProducts().add(product);
             }
         }

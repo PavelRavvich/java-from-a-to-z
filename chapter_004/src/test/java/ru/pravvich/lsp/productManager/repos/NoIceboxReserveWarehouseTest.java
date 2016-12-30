@@ -40,12 +40,18 @@ public class NoIceboxReserveWarehouseTest {
 
         ControlQuality control = new ControlQuality();
 
-        for (int i = 0; i != 10; i++) {
+        int j = 0,m = 0, p = 0;
+
+        for (int i = 0; i != 12; i++) {
+            m = ControlQuality.getNoIceboxWarehouse().getProducts().size();
+            j = ControlQuality.getNoIceboxReserveWarehouse().getProducts().size();
             control.uploadInRepo(food);
+            j = ControlQuality.getNoIceboxReserveWarehouse().getProducts().size();
+            j = ControlQuality.getNoIceboxReserveWarehouse().getProducts().size();
         }
 
         assertThat(ControlQuality.getNoIceboxWarehouse().getProducts().size(), is(9));
-        assertThat(ControlQuality.getNoIceboxReserveWarehouse().getProducts().size(), is(1));
+        assertThat(ControlQuality.getNoIceboxReserveWarehouse().getProducts().size(), is(3));
     }
 
 }

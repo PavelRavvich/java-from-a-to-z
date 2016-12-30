@@ -57,11 +57,11 @@ public class UpdateReserveWarehouseTest {
 
         ControlQuality control = new ControlQuality();
 
-        for (int i = 0; i != 10; i++) {
+        for (int i = 0; i != 11; i++) {
             control.uploadInRepo(food);
         }
 
         assertThat(ControlQuality.getUpdateWarehouse().getProducts().size(), is(9));
-        assertThat(ControlQuality.getReserveWarehouse().getProducts().size(), is(1));
+        assertThat(ControlQuality.getReserveWarehouse().getProducts().size(), is(2));
     }
 }

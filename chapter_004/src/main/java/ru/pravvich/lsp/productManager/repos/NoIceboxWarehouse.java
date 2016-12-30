@@ -2,9 +2,7 @@ package ru.pravvich.lsp.productManager.repos;
 
 import ru.pravvich.lsp.productManager.products.Product;
 
-import java.util.ArrayList;
-
-public class NoIceboxWarehouse extends UpdateWarehouse {
+public class NoIceboxWarehouse extends Warehouse {
 
     /**
      * This repo contain only 10 products, all next after 10, go in NoIceboxReserveWarehouse.
@@ -12,6 +10,7 @@ public class NoIceboxWarehouse extends UpdateWarehouse {
      */
     @Override
     public boolean isAppropriate(Product product) {
+        System.out.println(this.getProducts().size());
         return  this.getProducts().size() < 9 &&
                 (product.checkQuality() < 26) &&
                 this.checkIceFlag(product);
