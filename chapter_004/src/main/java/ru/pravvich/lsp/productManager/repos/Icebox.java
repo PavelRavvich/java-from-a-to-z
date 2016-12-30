@@ -27,7 +27,7 @@ public class Icebox extends Warehouse {
 
     /**
      * Check flag product's.
-     * @param product product for check.
+     * @param product product for check with flag.
      * @return If product's flag is "ice". Else return false.
      */
     private boolean checkFlag(Product product) {
