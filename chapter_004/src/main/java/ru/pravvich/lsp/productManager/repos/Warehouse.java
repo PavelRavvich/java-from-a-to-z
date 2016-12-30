@@ -12,7 +12,7 @@ public class Warehouse implements Repo {
     /**
      * List contain products.
      */
-    private ArrayList<Product> products = new ArrayList<>();
+    protected ArrayList<Product> products = new ArrayList<>();
 
     @Override
     public ArrayList<Product> getProducts() {

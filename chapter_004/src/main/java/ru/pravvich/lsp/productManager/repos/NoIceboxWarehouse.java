@@ -1,5 +1,6 @@
 package ru.pravvich.lsp.productManager.repos;
 
+import ru.pravvich.lsp.productManager.controllers.ControlQuality;
 import ru.pravvich.lsp.productManager.products.Product;
 
 public class NoIceboxWarehouse extends Warehouse {
@@ -10,8 +11,7 @@ public class NoIceboxWarehouse extends Warehouse {
      */
     @Override
     public boolean isAppropriate(Product product) {
-        System.out.println(this.getProducts().size());
-        return  this.getProducts().size() < 9 &&
+        return  ControlQuality.getNoIceboxWarehouse().getProducts().size() < 9 &&
                 (product.checkQuality() < 26) &&
                 this.checkIceFlag(product);
     }

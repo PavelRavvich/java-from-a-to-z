@@ -51,7 +51,7 @@ public class NoIceboxReserveWarehouseTest {
         }
 
         assertThat(ControlQuality.getNoIceboxWarehouse().getProducts().size(), is(9));
-        assertThat(ControlQuality.getNoIceboxReserveWarehouse().getProducts().size(), is(3));
+        assertThat(ControlQuality.getNoIceboxReserveWarehouse().getProducts().size(), is(4));
     }
 
 }
