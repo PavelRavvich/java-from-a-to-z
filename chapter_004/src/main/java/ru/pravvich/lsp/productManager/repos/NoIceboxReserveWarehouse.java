@@ -6,7 +6,7 @@ import ru.pravvich.lsp.productManager.products.Product;
 /**
  * Update ReserveWarehouse for save products when base repo reached the limit.
  */
-public class NoIceboxReserveWarehouse extends Warehouse {
+public class NoIceboxReserveWarehouse extends NoIceboxWarehouse {
 
     @Override
     public String getName() {

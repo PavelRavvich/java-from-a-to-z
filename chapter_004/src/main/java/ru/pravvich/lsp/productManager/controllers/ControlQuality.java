@@ -97,8 +97,8 @@ public class ControlQuality implements Controller {
         this.repo.add(updateTrash = new UpdateTrash());
         this.repo.add(recycling = new Recycling());
         this.repo.add(icebox = new Icebox());
-        this.repo.add(noIceboxWarehouse = new NoIceboxWarehouse());
         this.repo.add(noIceboxReserveWarehouse = new NoIceboxReserveWarehouse());
+        this.repo.add(noIceboxWarehouse = new NoIceboxWarehouse());
     }
 
     /**
