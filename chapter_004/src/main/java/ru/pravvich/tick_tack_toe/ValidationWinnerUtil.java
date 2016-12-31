@@ -1,7 +1,24 @@
 package ru.pravvich.tick_tack_toe;
 
+/**
+ * Util class determines validates statements desc.
+ */
 class ValidationWinnerUtil {
 
+    /**
+     * Check conditions for game can go on.
+     * @return true if winner do not determines and empty cell is exist.
+     */
+    public boolean gameCanGoOn(char[][] desc) {
+        return !this.winnerDetermines(desc) &&
+                this.emptyCallExist(  desc);
+    }
+
+    /**
+     * Check exist empty cell.
+     * @param desc - desc for check.
+     * @return true if we have empty cell. False if not empty cell.
+     */
     public boolean emptyCallExist(char[][] desc) {
         for (char[] aDesc : desc) {
             for (int j = 0; j < desc.length; j++) {
@@ -13,17 +30,28 @@ class ValidationWinnerUtil {
         return false;
     }
 
-    public boolean valid(char[][] desc) {
+    /**
+     * Determines winner
+     * @param desc - desc for check.
+     * @return true if we have winner now. False if winner do not exist now.
+     */
+    public boolean winnerDetermines(char[][] desc) {
         return this.validateVertical(desc) ||
                 this.validateHorizontal(desc) ||
                 this.validateDiagonals(desc);
     }
 
+    /**
+     * Validate winner by vertical.
+     * @param desc - desc for check.
+     * @return true if we have winner now. False if winner do not exist now.
+     */
     private boolean validateVertical(char[][] desc) {
         byte equal = 0;
         for (int i = 0; i != desc.length; i++) {
             for (int j = 0; j != (desc.length - 1); j++) {
-                if (desc[i][j] == (desc[i][j + 1]) && (' ' != (desc[i][j]))) {
+                if (desc[i][j] == (desc[i][j + 1]) && (' ' != (desc[i][j]))
+                        ) {
 
                     equal++;
                 }
@@ -37,6 +65,11 @@ class ValidationWinnerUtil {
         return equal == (desc.length - 1);
     }
 
+    /**
+     * Validate winner by horizontal.
+     * @param desc - desc for check.
+     * @return true if we have winner now. False if winner do not exist now.
+     */
     private boolean validateHorizontal(char[][] desc) {
         byte equal = 0;
         for (int j = 0; j != desc.length; j++) {
@@ -58,6 +91,11 @@ class ValidationWinnerUtil {
         return equal == (desc.length - 1);
     }
 
+    /**
+     * Validate winner by diagonals.
+     * @param desc - desc for check.
+     * @return true if we have winner now. False if winner do not exist now.
+     */
     private boolean validateDiagonals(char[][] desc) {
         byte equal = 0;
         for (int i = 0; i != desc.length - 1; i++) {

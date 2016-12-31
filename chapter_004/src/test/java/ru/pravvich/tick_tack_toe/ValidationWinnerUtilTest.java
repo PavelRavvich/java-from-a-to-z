@@ -24,13 +24,13 @@ public class ValidationWinnerUtilTest {
 
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.valid(desc);
+        boolean result = valid.winnerDetermines(desc);
 
         assertThat(result, is(false));
     }
 
     /**
-     * @see ValidationWinnerUtil#valid(char[][])
+     * @see ValidationWinnerUtil#winnerDetermines(char[][])
      */
     @Test
     public void whenWinVerticalThenResultTrue() {
@@ -46,13 +46,13 @@ public class ValidationWinnerUtilTest {
         desc[1][2] = 'X';
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.valid(desc);
+        boolean result = valid.winnerDetermines(desc);
 
         assertThat(result, is(true));
     }
 
     /**
-     * @see ValidationWinnerUtil#valid(char[][])
+     * @see ValidationWinnerUtil#winnerDetermines(char[][])
      */
     @Test
     public void whenWinHorizontalThenResultTrue() {
@@ -68,13 +68,13 @@ public class ValidationWinnerUtilTest {
         desc[2][2] = 'X';
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.valid(desc);
+        boolean result = valid.winnerDetermines(desc);
 
         assertThat(result, is(true));
     }
 
     /**
-     * @see ValidationWinnerUtil#valid(char[][])
+     * @see ValidationWinnerUtil#winnerDetermines(char[][])
      */
     @Test
     public void whenWinDiagonalLeftUpToRightDownThenResultTrue() {
@@ -90,13 +90,13 @@ public class ValidationWinnerUtilTest {
         desc[2][2] = 'X';
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.valid(desc);
+        boolean result = valid.winnerDetermines(desc);
 
         assertThat(result, is(true));
     }
 
     /**
-     * @see ValidationWinnerUtil#valid(char[][])
+     * @see ValidationWinnerUtil#winnerDetermines(char[][])
      */
     @Test
     public void whenWinDiagonalRightUoToLeftDownThenResultTrue() {
@@ -112,13 +112,13 @@ public class ValidationWinnerUtilTest {
         desc[0][2] = 'X';
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.valid(desc);
+        boolean result = valid.winnerDetermines(desc);
 
         assertThat(result, is(true));
     }
 
     /**
-     * @see ValidationWinnerUtil#valid(char[][])
+     * @see ValidationWinnerUtil#winnerDetermines(char[][])
      */
     @Test
     public void thenNobodyWinnerThenReturnFalse() {
@@ -134,7 +134,7 @@ public class ValidationWinnerUtilTest {
         desc[0][2] = 'O';
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.valid(desc);
+        boolean result = valid.winnerDetermines(desc);
 
         assertThat(result, is(false));
     }

@@ -1,11 +1,12 @@
 package ru.pravvich.tick_tack_toe;
 
+import ru.pravvich.tick_tack_toe.Users.In;
 import ru.pravvich.tick_tack_toe.Users.Input;
 
 import static java.lang.String.format;
 
 public class Desc {
-    private Input input = new Input();
+    private In input = new Input();
     private char[][] desc = new char[3][3];
     private static char[][] infoDesc;
 

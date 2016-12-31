@@ -2,7 +2,7 @@ package ru.pravvich.tick_tack_toe.Users;
 
 public class User implements Positioning {
     private Posit posit = new Posit();
-    private Input input = new Input();
+    private In input = new Input();
     private char color;
 
     @Override

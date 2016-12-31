@@ -13,20 +13,12 @@ class TickTack {
     /**
      * Contain gamers every time his win.
      */
-    private static ArrayList<Positioning> winners = new ArrayList<>();
+    private ArrayList<Positioning> winners = new ArrayList<>();
 
     /**
      * Contain all games.
      */
-    private ArrayList<Game> games = new ArrayList<>();
-
-    /**
-     * Get winners list for check master winner.
-     * @return list points win.
-     */
-    static ArrayList<Positioning> getWinners() {
-        return winners;
-    }
+    private ArrayList<Round> games = new ArrayList<>();
 
     /**
      * Default constructor.
@@ -48,15 +40,25 @@ class TickTack {
      * Loop games to 5 points.
      */
     void start() {
-        for (Game game : this.games) {
+        for (Round game : this.games) {
             if (this.resultGames(winners).equals("")) {
                 game.firstMove();
+                addWinner(game);
             } else {
                 System.out.println(String.format(
                         "Победитель: %s", this.resultGames(winners)));
                 break;
             }
         }
+    }
+
+    /**
+     * Add winner in list goals.
+     * @param game held game.
+     */
+    private void addWinner(Round game) {
+        if (game.getWinner() != null)
+            this.winners.add(game.getWinner());
     }
 
     /**

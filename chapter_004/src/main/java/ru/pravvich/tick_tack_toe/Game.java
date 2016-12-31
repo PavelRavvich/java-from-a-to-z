@@ -1,17 +1,25 @@
 package ru.pravvich.tick_tack_toe;
 
-import ru.pravvich.tick_tack_toe.Users.Bot;
-import ru.pravvich.tick_tack_toe.Users.Input;
-import ru.pravvich.tick_tack_toe.Users.Positioning;
-import ru.pravvich.tick_tack_toe.Users.User;
+import ru.pravvich.tick_tack_toe.Users.*;
 
 import java.util.ArrayList;
+
+import static java.lang.String.format;
 
 /**
  * Determines game process.
  */
-class Game {
+class Game implements Round {
 
+    /**
+     * winner.
+     */
+    private Positioning winner;
+
+    /**
+     * For input.
+     */
+    private In input = new Input();
     /**
      * Bot player.
      */
@@ -37,6 +45,11 @@ class Game {
      */
     private ValidationWinnerUtil valid = new ValidationWinnerUtil();
 
+    @Override
+    public Positioning getWinner() {
+        return this.winner;
+    }
+
     /**
      * Check correct move.
      * @param player player which move.
@@ -56,93 +69,91 @@ class Game {
     /**
      * Determines fist move.
      */
-    void firstMove() {
-        this.desc.descSize();
+    @Override
+    public void firstMove() {
+        this.desc.descSize( );
         System.out.println("Кто ходит первым? Enter: Bot / I");
-        String answer = new Input().getStrInput().toUpperCase();
-        if (answer.equals("BOT")) {
-            this.bot.setColor('X');
-            this.user.setColor('O');
-            this.gamers.add(this.user);
-            this.gamers.add(this.bot);
-            this.desc.initInfoDesc();
-            this.move(this.bot);
+        if (this.input.getStrInput().toUpperCase().equals("BOT")) {
+            this.fstMoveBot();
         } else {
-            Printer.printDesc(this.desc.getDesc());
-            this.user.setColor('X');
-            this.bot.setColor('O');
-            this.gamers.add(this.bot);
-            this.gamers.add(this.user);
-            this.move(this.user);
+            this.fstMoveUsr();
         }
         Printer.printDesc(this.desc.getDesc());
-        this.playLoop();
+        this.loopMoves();
+    }
+
+    /**
+     * Configurable statement game if bot move second.
+     */
+    private void fstMoveBot() {
+        this.bot.setColor('X');
+        this.user.setColor('O');
+        this.gamers.add(this.user);
+        this.gamers.add(this.bot);
+        this.desc.initInfoDesc();
+        this.move(this.bot);
+    }
+
+    /**
+     * Configurable statement game if user choice move first.
+     */
+    private void fstMoveUsr() {
+        this.user.setColor('X');
+        this.bot.setColor('O' );
+        this.gamers.add( this.bot);
+        this.gamers.add(this.user);
+        Printer.printDesc(this.desc.getDesc());
+        this.move(this.user);
     }
 
     /**
      * Loop game process.
      */
-    private void playLoop() {
+    private void loopMoves() {
         Positioning winner = null;
-        while (!this.valid.valid(this.desc.getDesc()) &&
-                this.valid.emptyCallExist(this.desc.getDesc())) {
-
+        while (this.valid.gameCanGoOn(this.desc.getDesc())) {
             for (Positioning gamer : this.gamers) {
-                if (this.move(gamer)) {
+
+                if (this.valid.gameCanGoOn(this.desc.getDesc())
+                        && this.move(gamer)
+                        ) {
+
                     Printer.printDesc(this.desc.getDesc());
-                } else {
+                    winner = gamer;
+
+                } else if (this.valid.gameCanGoOn(this.desc.getDesc())) {
                     this.mistakeMove(gamer);
                     Printer.printDesc(this.desc.getDesc());
                 }
-                winner = gamer;
             }
         }
-        TickTack.getWinners().add(winner);
-        System.out.println("Победитель: " + winner.getColor());
+        this.initResultGame(winner);
     }
 
     /**
-     * Give more chance when player mistake.
+     * Init result game.
+     * @see TickTack#winners
+     * @param winner gamer for estimated award.
+     */
+    private void initResultGame(Positioning winner) {
+        if (!this.valid.emptyCallExist(  this.desc.getDesc()) &&
+                !this.valid.winnerDetermines(this.desc.getDesc())
+                ) {
+
+            System.out.println("Ничья.");
+        } else if (this.valid.winnerDetermines(  this.desc.getDesc())) {
+            this.winner = winner;
+            System.out.println(format("Победитель: %s", winner.getColor()));
+        }
+    }
+
+    /**
+     * Give more chance when player which mistake - try move in busy cell.
      * @param gamer player which mistake.
      */
     private void mistakeMove(Positioning gamer) {
         while (!this.move(gamer)) {
             mistakeMove(gamer);
-        }
-    }
-
-    /**
-     * Print current statement desc.
-     */
-    private static class Printer {
-        static void printDesc(char[][] desc) {
-            System.out.print("y\\x");
-
-            for (int i = 0; i < desc.length; i++) {
-                System.out.print("  " + i + ":");
-            }
-            System.out.println();
-            System.out.print("   ");
-
-            for (char[] aDesc : desc) {
-                System.out.print(" ---");
-            }
-            System.out.println();
-
-            for (int i = 0; i < desc.length; i++) {
-                System.out.print(i + ": | ");
-                for (char[] aDesc : desc) {
-                    System.out.print(aDesc[i]);
-                    System.out.print(" | ");
-                }
-                System.out.println();
-                System.out.print("   ");
-                for (char[] aDesc : desc) {
-
-                    System.out.print(" ---");
-                }
-                System.out.println();
-            }
         }
     }
 }
