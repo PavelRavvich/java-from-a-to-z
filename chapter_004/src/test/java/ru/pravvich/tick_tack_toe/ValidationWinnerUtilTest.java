@@ -1,6 +1,7 @@
 package ru.pravvich.tick_tack_toe;
 
 import org.junit.Test;
+import ru.pravvich.tick_tack_toe.desk.ValidationWinnerUtil;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;

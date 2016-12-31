@@ -1,9 +1,9 @@
-package ru.pravvich.tick_tack_toe;
+package ru.pravvich.tick_tack_toe.desk;
 
 /**
  * Util class determines validates statements desc.
  */
-class ValidationWinnerUtil {
+public class ValidationWinnerUtil {
 
     /**
      * Check conditions for game can go on.

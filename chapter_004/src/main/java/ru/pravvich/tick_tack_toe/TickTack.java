@@ -2,6 +2,8 @@ package ru.pravvich.tick_tack_toe;
 
 import ru.pravvich.tick_tack_toe.Users.Positioning;
 import ru.pravvich.tick_tack_toe.Users.User;
+import ru.pravvich.tick_tack_toe.round.Game;
+import ru.pravvich.tick_tack_toe.round.Round;
 
 import java.util.ArrayList;
 

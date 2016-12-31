@@ -1,10 +1,10 @@
-package ru.pravvich.tick_tack_toe;
+package ru.pravvich.tick_tack_toe.round;
 
 import ru.pravvich.tick_tack_toe.Users.Positioning;
 
 /**
  *
  */
-public interface Winner {
+interface Winner {
     Positioning getWinner();
 }

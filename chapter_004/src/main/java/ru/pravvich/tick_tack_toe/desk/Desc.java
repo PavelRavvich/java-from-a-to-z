@@ -1,4 +1,4 @@
-package ru.pravvich.tick_tack_toe;
+package ru.pravvich.tick_tack_toe.desk;
 
 import ru.pravvich.tick_tack_toe.Users.In;
 import ru.pravvich.tick_tack_toe.Users.Input;
@@ -20,7 +20,7 @@ public class Desc {
         return this.desc;
     }
 
-    void initInfoDesc() {
+    public void initInfoDesc() {
         infoDesc = this.desc;
 
     }

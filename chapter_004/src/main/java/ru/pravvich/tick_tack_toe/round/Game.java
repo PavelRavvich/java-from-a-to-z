@@ -1,6 +1,10 @@
-package ru.pravvich.tick_tack_toe;
+package ru.pravvich.tick_tack_toe.round;
 
+import ru.pravvich.tick_tack_toe.*;
 import ru.pravvich.tick_tack_toe.Users.*;
+import ru.pravvich.tick_tack_toe.desk.Desc;
+import ru.pravvich.tick_tack_toe.desk.Printer;
+import ru.pravvich.tick_tack_toe.desk.ValidationWinnerUtil;
 
 import java.util.ArrayList;
 
@@ -9,7 +13,7 @@ import static java.lang.String.format;
 /**
  * Determines game process.
  */
-class Game implements Round {
+public class Game implements Round {
 
     /**
      * winner.

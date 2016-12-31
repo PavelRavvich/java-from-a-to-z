@@ -1,4 +1,4 @@
-package ru.pravvich.tick_tack_toe;
+package ru.pravvich.tick_tack_toe.round;
 
 /**
  *

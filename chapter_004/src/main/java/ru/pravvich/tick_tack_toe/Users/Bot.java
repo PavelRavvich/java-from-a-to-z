@@ -1,6 +1,6 @@
 package ru.pravvich.tick_tack_toe.Users;
 
-import ru.pravvich.tick_tack_toe.Desc;
+import ru.pravvich.tick_tack_toe.desk.Desc;
 
 public class Bot implements Positioning {
     private Posit posit = new Posit();

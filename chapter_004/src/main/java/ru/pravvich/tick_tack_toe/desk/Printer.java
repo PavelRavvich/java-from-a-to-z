@@ -1,10 +1,10 @@
-package ru.pravvich.tick_tack_toe;
+package ru.pravvich.tick_tack_toe.desk;
 
 /**
  * Print current statement desc.
  */
-class Printer {
-    static void printDesc(char[][] desc) {
+public class Printer {
+    public static void printDesc(char[][] desc) {
         System.out.print("y\\x");
 
         for (int i = 0; i < desc.length; i++) {
