@@ -1,12 +1,12 @@
 package ru.pravvich.tick_tack_toe.Users;
 
+import ru.pravvich.tick_tack_toe.Users.position.Posit;
+import ru.pravvich.tick_tack_toe.Users.position.Position;
 import ru.pravvich.tick_tack_toe.desk.Desc;
 
-public class Bot implements Positioning {
-    private Posit posit = new Posit();
+public class Bot implements Gamers {
+    private Position posit = new Posit();
     private char color;
-    private int x = -1;
-    private int y = -1;
 
     @Override
     public void setColor(char color) {
@@ -19,7 +19,7 @@ public class Bot implements Positioning {
     }
 
     @Override
-    public Posit getPosit() {
+    public Position getPosit() {
         return this.posit;
     }
 
@@ -28,7 +28,7 @@ public class Bot implements Positioning {
         this.posit = this.generatePos();
     }
 
-    private Posit generatePos() {
+    private Position generatePos() {
         char[][] desc = Desc.getInfoDesc();
         for (int i = 0; i < desc.length; i++) {
             for (int j = 0; j < desc.length; j++) {

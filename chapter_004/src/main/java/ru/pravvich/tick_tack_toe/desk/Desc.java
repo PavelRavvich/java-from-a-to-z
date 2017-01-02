@@ -5,41 +5,50 @@ import ru.pravvich.tick_tack_toe.Users.Input;
 
 import static java.lang.String.format;
 
-public class Desc {
-    private In input = new Input();
-    private char[][] desc = new char[3][3];
+/**
+ * Determines desc.
+ */
+public class Desc implements Board {
+
+    /**
+     * Information about statement desc for bot.
+     */
     private static char[][] infoDesc;
 
+    /**
+     * Input for get console in.
+     */
+    private In input = new Input();
 
+    /**
+     * Desc for game.
+     */
+    private char[][] desc = new char[3][3];
+
+    /**
+     * Pointer on desc. It's information for bot about statement desc.
+     *
+     * @return current statement desc.
+     */
     public static char[][] getInfoDesc() {
         return infoDesc;
     }
 
+    /**
+     * Getter for desc. Init infoDesc.
+     *
+     * @return desc.
+     */
+    @Override
     public char[][] getDesc() {
-        initInfoDesc();
+        infoDesc = this.desc;
         return this.desc;
     }
 
-    public void initInfoDesc() {
-        infoDesc = this.desc;
-
-    }
-
-    private void initNonstandardDesc() {
-        System.out.println("Введите размер сторон:");
-        int i = this.input.getNumInput();
-        this.desc = new char[i][i];
-        System.out.println(format("Установлен размер поля: %s/%s", i, i));
-    }
-
-    private void initContentDesc() {
-        for (int i = 0; i != this.desc.length; i++) {
-            for (int j = 0; j != this.desc.length; j++) {
-                this.desc[j][i] = ' ';
-            }
-        }
-    }
-
+    /**
+     * For choice desc size.
+     */
+    @Override
     public void descSize() {
         System.out.println("Хотите использовать стандартный размер поля: y/n");
         String answer = this.input.getStrInput();
@@ -49,5 +58,26 @@ public class Desc {
             this.initNonstandardDesc();
         }
         this.initContentDesc();
+    }
+
+    /**
+     * Install desc nonstandard size.
+     */
+    private void initNonstandardDesc() {
+        System.out.println("Введите размер сторон:");
+        int i = this.input.getNumInput();
+        this.desc = new char[i][i];
+        System.out.println(format("Установлен размер поля: %s/%s", i, i));
+    }
+
+    /**
+     * Fill desc empty call. Empty is ' '.
+     */
+    private void initContentDesc() {
+        for (int i = 0; i != this.desc.length; i++) {
+            for (int j = 0; j != this.desc.length; j++) {
+                this.desc[j][i] = ' ';
+            }
+        }
     }
 }

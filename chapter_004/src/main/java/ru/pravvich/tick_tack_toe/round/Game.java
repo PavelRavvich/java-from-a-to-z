@@ -2,6 +2,7 @@ package ru.pravvich.tick_tack_toe.round;
 
 import ru.pravvich.tick_tack_toe.*;
 import ru.pravvich.tick_tack_toe.Users.*;
+import ru.pravvich.tick_tack_toe.desk.Board;
 import ru.pravvich.tick_tack_toe.desk.Desc;
 import ru.pravvich.tick_tack_toe.desk.Printer;
 import ru.pravvich.tick_tack_toe.desk.ValidationWinnerUtil;
@@ -18,7 +19,7 @@ public class Game implements Round {
     /**
      * winner.
      */
-    private Positioning winner;
+    private Gamers winner;
 
     /**
      * For input.
@@ -27,22 +28,22 @@ public class Game implements Round {
     /**
      * Bot player.
      */
-    private Positioning bot = new Bot();
+    private Gamers bot = new Bot();
 
     /**
      * User player.
      */
-    private Positioning user = new User();
+    private Gamers user = new User();
 
     /**
      * Desc for play.
      */
-    private Desc desc = new Desc();
+    private Board desc = new Desc();
 
     /**
      * List contain all gamer: bot and user.
      */
-    private ArrayList<Positioning> gamers = new ArrayList<>();
+    private ArrayList<Gamers> gamers = new ArrayList<>();
 
     /**
      * Util class contain algorithm determining winner.
@@ -50,16 +51,16 @@ public class Game implements Round {
     private ValidationWinnerUtil valid = new ValidationWinnerUtil();
 
     @Override
-    public Positioning getWinner() {
+    public Gamers getWinner() {
         return this.winner;
     }
 
     /**
      * Check correct move.
      * @param player player which move.
-     * @return true if cell is empty(== ' '). False if cell contain symbol.
+     * @return true if move success. False if move fail
      */
-    private boolean move(Positioning player) {
+    private boolean move(Gamers player) {
         player.setPosit();
         if (this.desc.getDesc()[player.getPosit().getY()][player.getPosit().getX()] == ' ') {
             this.desc.getDesc()[player.getPosit().getY()][player.getPosit().getX()] = player.getColor();
@@ -92,10 +93,8 @@ public class Game implements Round {
     private void fstMoveBot() {
         this.bot.setColor('X');
         this.user.setColor('O');
-        this.gamers.add(this.user);
         this.gamers.add(this.bot);
-        this.desc.initInfoDesc();
-        this.move(this.bot);
+        this.gamers.add(this.user);
     }
 
     /**
@@ -104,22 +103,20 @@ public class Game implements Round {
     private void fstMoveUsr() {
         this.user.setColor('X');
         this.bot.setColor('O' );
-        this.gamers.add( this.bot);
         this.gamers.add(this.user);
-        Printer.printDesc(this.desc.getDesc());
-        this.move(this.user);
+        this.gamers.add( this.bot);
     }
 
     /**
      * Loop game process.
      */
     private void loopMoves() {
-        Positioning winner = null;
+        Gamers winner = null;
         while (this.valid.gameCanGoOn(this.desc.getDesc())) {
-            for (Positioning gamer : this.gamers) {
+            for (Gamers gamer : this.gamers) {
 
-                if (this.valid.gameCanGoOn(this.desc.getDesc())
-                        && this.move(gamer)
+                if (this.valid.gameCanGoOn(this.desc.getDesc()) &&
+                        this.move(gamer)
                         ) {
 
                     Printer.printDesc(this.desc.getDesc());
@@ -135,11 +132,21 @@ public class Game implements Round {
     }
 
     /**
+     * Give more chance when player which mistake - try move in busy cell.
+     * @param gamer player which mistake.
+     */
+    private void mistakeMove(Gamers gamer) {
+        while (!this.move(gamer)) {
+            mistakeMove(gamer);
+        }
+    }
+
+    /**
      * Init result game.
      * @see TickTack#winners
      * @param winner gamer for estimated award.
      */
-    private void initResultGame(Positioning winner) {
+    private void initResultGame(Gamers winner) {
         if (!this.valid.emptyCallExist(  this.desc.getDesc()) &&
                 !this.valid.winnerDetermines(this.desc.getDesc())
                 ) {
@@ -148,16 +155,6 @@ public class Game implements Round {
         } else if (this.valid.winnerDetermines(  this.desc.getDesc())) {
             this.winner = winner;
             System.out.println(format("Победитель: %s", winner.getColor()));
-        }
-    }
-
-    /**
-     * Give more chance when player which mistake - try move in busy cell.
-     * @param gamer player which mistake.
-     */
-    private void mistakeMove(Positioning gamer) {
-        while (!this.move(gamer)) {
-            mistakeMove(gamer);
         }
     }
 }

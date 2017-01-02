@@ -1,12 +1,15 @@
 package ru.pravvich.tick_tack_toe.Users;
 
-public class User implements Positioning {
-    private Posit posit = new Posit();
+import ru.pravvich.tick_tack_toe.Users.position.Posit;
+import ru.pravvich.tick_tack_toe.Users.position.Position;
+
+public class User implements Gamers {
+    private Position posit = new Posit();
     private In input = new Input();
     private char color;
 
     @Override
-    public Posit getPosit() {
+    public Position getPosit() {
         return this.posit;
     }
 

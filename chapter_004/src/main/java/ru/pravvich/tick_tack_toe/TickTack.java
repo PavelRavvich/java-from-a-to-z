@@ -1,6 +1,6 @@
 package ru.pravvich.tick_tack_toe;
 
-import ru.pravvich.tick_tack_toe.Users.Positioning;
+import ru.pravvich.tick_tack_toe.Users.Gamers;
 import ru.pravvich.tick_tack_toe.Users.User;
 import ru.pravvich.tick_tack_toe.round.Game;
 import ru.pravvich.tick_tack_toe.round.Round;
@@ -15,7 +15,7 @@ class TickTack {
     /**
      * Contain gamers every time his win.
      */
-    private ArrayList<Positioning> winners = new ArrayList<>();
+    private ArrayList<Gamers> winners = new ArrayList<>();
 
     /**
      * Contain all games.
@@ -68,9 +68,9 @@ class TickTack {
      * @param users list involved gamers.
      * @return "" if 5 points not success. if 5 points success name winner.
      */
-    private String resultGames(ArrayList<Positioning> users) {
+    private String resultGames(ArrayList<Gamers> users) {
         int u = 0, b = 0;
-        for (Positioning obj : users) {
+        for (Gamers obj : users) {
             if (obj instanceof User) {
                 u++;
                 if (u == 5) return "user";

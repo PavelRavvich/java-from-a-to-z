@@ -2,6 +2,9 @@ package ru.pravvich.tick_tack_toe.Users;
 
 import java.util.Scanner;
 
+/**
+ * Console in.
+ */
 public class Input implements In {
     private Scanner scanner = new Scanner(System.in);
 
