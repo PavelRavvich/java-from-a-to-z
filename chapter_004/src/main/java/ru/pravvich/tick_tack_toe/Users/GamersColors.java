@@ -3,13 +3,7 @@ package ru.pravvich.tick_tack_toe.Users;
 /**
  * Determines actions which colors.
  */
-public interface GamersColors {
-
-    /**
-     * Determines color for this gamer.
-     * @param color 'X' or 'Y'.
-     */
-    void setColor(char color);
+interface GamersColors {
 
     /**
      * Getter for gamer color.

@@ -43,12 +43,12 @@ class TickTack {
      */
     void start() {
         for (Round game : this.games) {
-            if (this.resultGames(winners).equals("")) {
+            if (this.resultAllGames(winners).equals("")) {
                 game.firstMove();
                 addWinner(game);
             } else {
                 System.out.println(String.format(
-                        "Победитель: %s", this.resultGames(winners)));
+                        "Победитель: %s", this.resultAllGames(winners)));
                 break;
             }
         }
@@ -68,15 +68,17 @@ class TickTack {
      * @param users list involved gamers.
      * @return "" if 5 points not success. if 5 points success name winner.
      */
-    private String resultGames(ArrayList<Gamers> users) {
+    private String resultAllGames(ArrayList<Gamers> users) {
         int u = 0, b = 0;
         for (Gamers obj : users) {
             if (obj instanceof User) {
                 u++;
-                if (u == 5) return "user";
+                if (u == 5)
+                    return "user";
             } else {
                 b++;
-                if (b == 5) return "bot";
+                if (b == 5)
+                    return "bot";
             }
         }
         return "";

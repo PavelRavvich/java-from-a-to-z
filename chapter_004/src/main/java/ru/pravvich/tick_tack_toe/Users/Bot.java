@@ -5,11 +5,10 @@ import ru.pravvich.tick_tack_toe.Users.position.Position;
 import ru.pravvich.tick_tack_toe.desk.Desc;
 
 public class Bot implements Gamers {
-    private Position posit = new Posit();
-    private char color;
+    private Position posit;
+    private final char color;
 
-    @Override
-    public void setColor(char color) {
+    public Bot(char color) {
         this.color = color;
     }
 

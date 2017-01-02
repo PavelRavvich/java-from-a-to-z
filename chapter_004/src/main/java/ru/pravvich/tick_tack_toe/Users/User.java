@@ -6,16 +6,15 @@ import ru.pravvich.tick_tack_toe.Users.position.Position;
 public class User implements Gamers {
     private Position posit = new Posit();
     private In input = new Input();
-    private char color;
+    private final char color;
+
+    public User(char color) {
+        this.color = color;
+    }
 
     @Override
     public Position getPosit() {
         return this.posit;
-    }
-
-    @Override
-    public void setColor(char color) {
-        this.color = color;
     }
 
     @Override

@@ -11,7 +11,7 @@ public class ValidationWinnerUtil {
      */
     public boolean gameCanGoOn(char[][] desc) {
         return !this.winnerDetermines(desc) &&
-                this.emptyCallExist(  desc);
+                this.emptyCellExist(  desc);
     }
 
     /**
@@ -19,7 +19,7 @@ public class ValidationWinnerUtil {
      * @param desc - desc for check.
      * @return true if we have empty cell. False if not empty cell.
      */
-    public boolean emptyCallExist(char[][] desc) {
+    public boolean emptyCellExist(char[][] desc) {
         for (char[] aDesc : desc) {
             for (int j = 0; j < desc.length; j++) {
                 if (' ' == (aDesc[j])) {
@@ -36,9 +36,9 @@ public class ValidationWinnerUtil {
      * @return true if we have winner now. False if winner do not exist now.
      */
     public boolean winnerDetermines(char[][] desc) {
-        return this.validateVertical(desc) ||
+        return this.validateVertical(   desc) ||
                 this.validateHorizontal(desc) ||
-                this.validateDiagonals(desc);
+                this.validateDiagonals( desc);
     }
 
     /**
@@ -50,7 +50,8 @@ public class ValidationWinnerUtil {
         byte equal = 0;
         for (int i = 0; i != desc.length; i++) {
             for (int j = 0; j != (desc.length - 1); j++) {
-                if (desc[i][j] == (desc[i][j + 1]) && (' ' != (desc[i][j]))
+                if (desc[i][j] == (desc[i][j + 1]) &&
+                        (' ' != (desc[i][j]))
                         ) {
 
                     equal++;
@@ -75,7 +76,8 @@ public class ValidationWinnerUtil {
         for (int j = 0; j != desc.length; j++) {
             for (int i = 0; i != desc.length - 1; i++) {
                 if (desc[i][j] == desc[i + 1][j] &&
-                        ' ' != (desc[i][j])) {
+                        (' ') != (desc[i][j])
+                        ) {
 
                     equal++;
                 }
@@ -100,7 +102,8 @@ public class ValidationWinnerUtil {
         byte equal = 0;
         for (int i = 0; i != desc.length - 1; i++) {
             if (desc[i][i] == (desc[i + 1][i + 1]) &&
-                    ' ' != (desc[i][i])) {
+                    (' ') != (desc[i][i])
+                    ) {
 
                 equal++;
             }
@@ -113,8 +116,9 @@ public class ValidationWinnerUtil {
         for (int i = 0, j = (desc.length - 1);
              i != desc.length - 1 && j > 0 ; i++, j--) {
 
-            if (desc[i][j] == (desc[i + 1][j - 1])
-                    && ' ' != (desc[i][j])) {
+            if (desc[i][j] == (desc[i + 1][j - 1]) &&
+                    (' ') != (desc[i][j])
+                    ) {
 
                 equal++;
             }

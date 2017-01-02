@@ -2,10 +2,7 @@ package ru.pravvich.tick_tack_toe.round;
 
 import ru.pravvich.tick_tack_toe.*;
 import ru.pravvich.tick_tack_toe.Users.*;
-import ru.pravvich.tick_tack_toe.desk.Board;
-import ru.pravvich.tick_tack_toe.desk.Desc;
-import ru.pravvich.tick_tack_toe.desk.Printer;
-import ru.pravvich.tick_tack_toe.desk.ValidationWinnerUtil;
+import ru.pravvich.tick_tack_toe.desk.*;
 
 import java.util.ArrayList;
 
@@ -28,12 +25,12 @@ public class Game implements Round {
     /**
      * Bot player.
      */
-    private Gamers bot = new Bot();
+    private Gamers bot;
 
     /**
      * User player.
      */
-    private Gamers user = new User();
+    private Gamers user;
 
     /**
      * Desc for play.
@@ -88,23 +85,19 @@ public class Game implements Round {
     }
 
     /**
-     * Configurable statement game if bot move second.
+     * Configurable statement game if bot move first.
      */
     private void fstMoveBot() {
-        this.bot.setColor('X');
-        this.user.setColor('O');
-        this.gamers.add(this.bot);
-        this.gamers.add(this.user);
+        this.gamers.add(this.bot = new Bot(Colors.X.getColor()));
+        this.gamers.add(this.user = new User(Colors.O.getColor()));
     }
 
     /**
      * Configurable statement game if user choice move first.
      */
     private void fstMoveUsr() {
-        this.user.setColor('X');
-        this.bot.setColor('O' );
-        this.gamers.add(this.user);
-        this.gamers.add( this.bot);
+        this.gamers.add(this.user = new User(Colors.X.getColor()));
+        this.gamers.add(this.bot = new Bot(Colors.O.getColor()));
     }
 
     /**
@@ -128,6 +121,7 @@ public class Game implements Round {
                 }
             }
         }
+
         this.initResultGame(winner);
     }
 
@@ -147,7 +141,7 @@ public class Game implements Round {
      * @param winner gamer for estimated award.
      */
     private void initResultGame(Gamers winner) {
-        if (!this.valid.emptyCallExist(  this.desc.getDesc()) &&
+        if (!this.valid.emptyCellExist(  this.desc.getDesc()) &&
                 !this.valid.winnerDetermines(this.desc.getDesc())
                 ) {
 

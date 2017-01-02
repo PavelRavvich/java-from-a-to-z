@@ -141,7 +141,7 @@ public class ValidationWinnerUtilTest {
     }
 
     /**
-     * @see ValidationWinnerUtil#emptyCallExist(char[][])
+     * @see ValidationWinnerUtil#emptyCellExist(char[][])
      */
     @Test
     public void whenEmptyCellExistThenReturnTrue() {
@@ -157,13 +157,13 @@ public class ValidationWinnerUtilTest {
         desc[0][2] = 'O';
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.emptyCallExist(desc);
+        boolean result = valid.emptyCellExist(desc);
 
         assertThat(result, is(true));
     }
 
     /**
-     * @see ValidationWinnerUtil#emptyCallExist(char[][])
+     * @see ValidationWinnerUtil#emptyCellExist(char[][])
      */
     @Test
     public void whenEmptyCellNotExistThenReturnFalse() {
@@ -175,7 +175,7 @@ public class ValidationWinnerUtilTest {
         }
 
         ValidationWinnerUtil valid = new ValidationWinnerUtil();
-        boolean result = valid.emptyCallExist(desc);
+        boolean result = valid.emptyCellExist(desc);
 
         assertThat(result, is(false));
     }
