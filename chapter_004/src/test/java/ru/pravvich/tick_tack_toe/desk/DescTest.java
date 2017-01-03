@@ -18,7 +18,7 @@ public class DescTest {
     @Test
     public void whenUserChoiceStandardDescSizeThenDeskSizeEqualTreeToTree() {
         StubInput input = new StubInput();
-        Board desc = new Desc(input);
+        Board desc = new Desc();
         input.setAnswersStr(new String[]{"y"});
         desc.setInput(input);
 
@@ -34,7 +34,7 @@ public class DescTest {
     @Test
     public void whenUserChoiceNonstandardThenSizeThenDeskSizeEqualUserInput() {
         StubInput input = new StubInput();
-        Board desc = new Desc(input);
+        Board desc = new Desc();
         input.setAnswersStr(new String[]{"n"});
         input.setAnswersNum(new int[]{5});
         desc.setInput(input);

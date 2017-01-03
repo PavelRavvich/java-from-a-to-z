@@ -16,7 +16,7 @@ public class Game implements Round {
     /**
      * Desc for play.
      */
-    private Board desc = new Desc(this.input);
+    private Board desc = new Desc();
 
     /**
      * winner.
@@ -27,44 +27,6 @@ public class Game implements Round {
      * For input.
      */
     private In input = new Input();
-
-    /**
-     * Bot player.
-     */
-    private Gamers bot;
-
-    /**
-     * User player.
-     */
-    private Gamers user;
-
-
-
-    /**
-     * Use for test class StubInput.
-     */
-    @Override
-    public void setDesc(Board desc) {
-        this.desc = desc;
-    }
-
-    /**
-     * Use for test class StubInput.
-     *
-     * @param input emulation console input stream.
-     */
-    @Override
-    public void setInput(In input) {
-        this.input = input;
-    }
-
-    /**
-     * Use for test class StubInput.
-     */
-    @Override
-    public ArrayList<Gamers> getGamers() {
-        return this.gamers;
-    }
 
     /**
      * List contain all gamer: bot and user.
@@ -102,7 +64,7 @@ public class Game implements Round {
      */
     @Override
     public void firstMove() {
-        this.desc.initDescSize( );
+        this.desc.initDescSize();
         System.out.println("Кто ходит первым? Enter: Bot / I");
         if (this.input.getStrInput().toUpperCase().equals("BOT")) {
             this.fstMoveBot();
@@ -117,16 +79,16 @@ public class Game implements Round {
      * Configurable statement game if bot move first.
      */
     private void fstMoveBot() {
-        this.gamers.add(this.bot = new Bot(Colors.X.getColor()));
-        this.gamers.add(this.user = new User(Colors.O.getColor()));
+        this.gamers.add(new Bot(Colors.X.getColor()));
+        this.gamers.add(new User(Colors.O.getColor()));
     }
 
     /**
      * Configurable statement game if user choice move first.
      */
     private void fstMoveUsr() {
-        this.gamers.add(this.user = new User(Colors.X.getColor()));
-        this.gamers.add(this.bot = new Bot(Colors.O.getColor()));
+        this.gamers.add(new User(Colors.X.getColor()));
+        this.gamers.add(new Bot(Colors.O.getColor()));
     }
 
     /**

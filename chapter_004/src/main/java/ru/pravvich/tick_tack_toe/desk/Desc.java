@@ -18,7 +18,7 @@ public class Desc implements Board {
     /**
      * Input for get console in.
      */
-    private In input;
+    private In input = new Input();
 
     /**
      * Desc for game.
@@ -41,10 +41,6 @@ public class Desc implements Board {
      */
     @Override
     public void setInput(In input) {
-        this.input = input;
-    }
-
-    public Desc(In input) {
         this.input = input;
     }
 
