@@ -7,6 +7,7 @@ public interface Validation {
 
     /**
      * Determines winner
+     *
      * @param desc - desc for check.
      * @return true if we have winner now. False if winner do not exist now.
      */
@@ -14,6 +15,7 @@ public interface Validation {
 
     /**
      * Check exist empty cell.
+     *
      * @param desc - desc for check.
      * @return true if we have empty cell. False if not empty cell.
      */
@@ -21,6 +23,7 @@ public interface Validation {
 
     /**
      * Check conditions for game can go on.
+     *
      * @return true if winner do not determines and empty cell is exist.
      */
     boolean gameCanGoOn(char[][] desc);

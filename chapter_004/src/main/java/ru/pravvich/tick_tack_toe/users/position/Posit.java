@@ -15,6 +15,7 @@ public class Posit implements Position {
 
     /**
      * Constructor for bot. Where bot generate move he use this constructor.
+     *
      * @param x - x.
      * @param y - y.
      */
@@ -29,13 +30,13 @@ public class Posit implements Position {
     }
 
     @Override
-    public int getY() {
-        return y;
+    public void setX(int x) {
+        this.x = x;
     }
 
     @Override
-    public void setX(int x) {
-        this.x = x;
+    public int getY() {
+        return y;
     }
 
     @Override

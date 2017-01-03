@@ -5,7 +5,6 @@ package ru.pravvich.tick_tack_toe;
  * StubInput substitution Input for tests.
  *
  * @see ru.pravvich.tick_tack_toe.desk.Desc;
- * @see ru.pravvich.tick_tack_toe.round.Game;
  */
 public interface StubInputInterface {
 

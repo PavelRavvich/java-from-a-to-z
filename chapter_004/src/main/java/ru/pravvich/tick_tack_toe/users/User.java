@@ -9,22 +9,21 @@ import ru.pravvich.tick_tack_toe.users.position.*;
 public class User implements Gamers, StubInputInterface {
 
     /**
+     * Side on current game. May be 'X' or 'O'.
+     */
+    private final char color;
+    /**
      * Position for move.
      */
     private Position posit = new Posit();
-
     /**
      * Console input for get data from user.
      */
     private In input = new Input();
 
     /**
-     * Side on current game. May be 'X' or 'O'.
-     */
-    private final char color;
-
-    /**
      * Default constructor.
+     *
      * @param color 'X' or 'O'.
      */
     public User(char color) {
@@ -33,6 +32,7 @@ public class User implements Gamers, StubInputInterface {
 
     /**
      * Getter for position.
+     *
      * @return position.
      */
     @Override
@@ -42,6 +42,7 @@ public class User implements Gamers, StubInputInterface {
 
     /**
      * Getter for color.
+     *
      * @return color.
      */
     @Override
@@ -62,6 +63,7 @@ public class User implements Gamers, StubInputInterface {
 
     /**
      * This setter for tests. He need for use StubInput class.
+     *
      * @param input emulation console input.
      */
     @Override

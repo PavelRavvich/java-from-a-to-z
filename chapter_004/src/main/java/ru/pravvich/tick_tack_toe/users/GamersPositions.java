@@ -9,6 +9,7 @@ interface GamersPositions {
 
     /**
      * Getter position.
+     *
      * @return Position on field.
      */
     Position getPosit();

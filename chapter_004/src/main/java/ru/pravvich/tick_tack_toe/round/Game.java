@@ -19,12 +19,12 @@ public class Game implements Round {
     private Board desc = new Desc();
 
     /**
-     * winner.
+     * Winner.
      */
     private Gamers winner;
 
     /**
-     * For input.
+     * For console input.
      */
     private In input = new Input();
 
@@ -38,6 +38,11 @@ public class Game implements Round {
      */
     private Validation valid = new ValidationWinnerUtil();
 
+    /**
+     * Getter for winner.
+     *
+     * @return gamer which win.
+     */
     @Override
     public Gamers getWinner() {
         return this.winner;
@@ -45,6 +50,7 @@ public class Game implements Round {
 
     /**
      * Check correct move.
+     *
      * @param player player which move.
      * @return true if move success. False if move fail
      */
@@ -118,6 +124,7 @@ public class Game implements Round {
 
     /**
      * Give more chance when player which mistake - try move in busy cell.
+     *
      * @param gamer player which mistake.
      */
     private void mistakeMove(Gamers gamer) {
@@ -128,16 +135,17 @@ public class Game implements Round {
 
     /**
      * Init result game.
-     * @see TickTack#winners
+     *
      * @param winner gamer for estimated award.
+     * @see TickTack#winners
      */
     private void initResultGame(Gamers winner) {
-        if (!this.valid.emptyCellExist(  this.desc.getDesc()) &&
+        if (!this.valid.emptyCellExist(this.desc.getDesc()) &&
                 !this.valid.winnerDetermines(this.desc.getDesc())
                 ) {
 
             System.out.println("Ничья.");
-        } else if (this.valid.winnerDetermines(  this.desc.getDesc())) {
+        } else if (this.valid.winnerDetermines(this.desc.getDesc())) {
             this.winner = winner;
             System.out.println(format("Победитель: %s", winner.getColor()));
         }

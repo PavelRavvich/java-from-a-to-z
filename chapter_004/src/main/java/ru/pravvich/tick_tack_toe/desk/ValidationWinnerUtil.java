@@ -7,16 +7,18 @@ public class ValidationWinnerUtil implements Validation {
 
     /**
      * Check conditions for game can go on.
+     *
      * @return true if winner do not determines and empty cell is exist.
      */
     @Override
     public boolean gameCanGoOn(char[][] desc) {
         return !this.winnerDetermines(desc) &&
-                this.emptyCellExist(  desc);
+                this.emptyCellExist(desc);
     }
 
     /**
      * Check exist empty cell.
+     *
      * @param desc - desc for check.
      * @return true if we have empty cell. False if not empty cell.
      */
@@ -34,18 +36,20 @@ public class ValidationWinnerUtil implements Validation {
 
     /**
      * Determines winner
+     *
      * @param desc - desc for check.
      * @return true if we have winner now. False if winner do not exist now.
      */
     @Override
     public boolean winnerDetermines(char[][] desc) {
-        return this.validateVertical(   desc) ||
+        return this.validateVertical(desc) ||
                 this.validateHorizontal(desc) ||
-                this.validateDiagonals( desc);
+                this.validateDiagonals(desc);
     }
 
     /**
      * Validate winner by vertical.
+     *
      * @param desc - desc for check.
      * @return true if we have winner now. False if winner do not exist now.
      */
@@ -71,6 +75,7 @@ public class ValidationWinnerUtil implements Validation {
 
     /**
      * Validate winner by horizontal.
+     *
      * @param desc - desc for check.
      * @return true if we have winner now. False if winner do not exist now.
      */
@@ -98,6 +103,7 @@ public class ValidationWinnerUtil implements Validation {
 
     /**
      * Validate winner by diagonals.
+     *
      * @param desc - desc for check.
      * @return true if we have winner now. False if winner do not exist now.
      */
@@ -117,7 +123,7 @@ public class ValidationWinnerUtil implements Validation {
 
         equal = 0;
         for (int i = 0, j = (desc.length - 1);
-             i != desc.length - 1 && j > 0 ; i++, j--) {
+             i != desc.length - 1 && j > 0; i++, j--) {
 
             if (desc[i][j] == (desc[i + 1][j - 1]) &&
                     (' ') != (desc[i][j])

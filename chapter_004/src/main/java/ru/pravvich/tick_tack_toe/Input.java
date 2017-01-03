@@ -14,6 +14,7 @@ public class Input implements In {
 
     /**
      * Console input for string.
+     *
      * @return input string.
      */
     @Override
@@ -23,6 +24,7 @@ public class Input implements In {
 
     /**
      * Console input for int.
+     *
      * @return input int.
      */
     @Override

@@ -55,6 +55,7 @@ class TickTack {
 
     /**
      * Add winner in list goals.
+     *
      * @param game held game.
      */
     private void addWinner(Round game) {
@@ -64,6 +65,7 @@ class TickTack {
 
     /**
      * Check wins to five points.
+     *
      * @param users list involved gamers.
      * @return "" if 5 points not success. if 5 points success name winner.
      */
