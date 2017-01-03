@@ -1,7 +1,7 @@
 package ru.pravvich.tick_tack_toe.round;
 
 import ru.pravvich.tick_tack_toe.*;
-import ru.pravvich.tick_tack_toe.Users.*;
+import ru.pravvich.tick_tack_toe.users.*;
 import ru.pravvich.tick_tack_toe.desk.*;
 
 import java.util.ArrayList;
@@ -14,6 +14,11 @@ import static java.lang.String.format;
 public class Game implements Round {
 
     /**
+     * Desc for play.
+     */
+    private Board desc = new Desc(this.input);
+
+    /**
      * winner.
      */
     private Gamers winner;
@@ -22,6 +27,7 @@ public class Game implements Round {
      * For input.
      */
     private In input = new Input();
+
     /**
      * Bot player.
      */
@@ -32,10 +38,33 @@ public class Game implements Round {
      */
     private Gamers user;
 
+
+
     /**
-     * Desc for play.
+     * Use for test class StubInput.
      */
-    private Board desc = new Desc();
+    @Override
+    public void setDesc(Board desc) {
+        this.desc = desc;
+    }
+
+    /**
+     * Use for test class StubInput.
+     *
+     * @param input emulation console input stream.
+     */
+    @Override
+    public void setInput(In input) {
+        this.input = input;
+    }
+
+    /**
+     * Use for test class StubInput.
+     */
+    @Override
+    public ArrayList<Gamers> getGamers() {
+        return this.gamers;
+    }
 
     /**
      * List contain all gamer: bot and user.
@@ -45,7 +74,7 @@ public class Game implements Round {
     /**
      * Util class contain algorithm determining winner.
      */
-    private ValidationWinnerUtil valid = new ValidationWinnerUtil();
+    private Validation valid = new ValidationWinnerUtil();
 
     @Override
     public Gamers getWinner() {
@@ -73,7 +102,7 @@ public class Game implements Round {
      */
     @Override
     public void firstMove() {
-        this.desc.descSize( );
+        this.desc.initDescSize( );
         System.out.println("Кто ходит первым? Enter: Bot / I");
         if (this.input.getStrInput().toUpperCase().equals("BOT")) {
             this.fstMoveBot();

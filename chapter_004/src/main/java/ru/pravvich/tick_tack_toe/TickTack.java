@@ -1,9 +1,7 @@
 package ru.pravvich.tick_tack_toe;
 
-import ru.pravvich.tick_tack_toe.Users.Gamers;
-import ru.pravvich.tick_tack_toe.Users.User;
-import ru.pravvich.tick_tack_toe.round.Game;
-import ru.pravvich.tick_tack_toe.round.Round;
+import ru.pravvich.tick_tack_toe.users.*;
+import ru.pravvich.tick_tack_toe.round.*;
 
 import java.util.ArrayList;
 
@@ -40,6 +38,7 @@ class TickTack {
 
     /**
      * Loop games to 5 points.
+     * After 5 wins one of players - break.
      */
     void start() {
         for (Round game : this.games) {

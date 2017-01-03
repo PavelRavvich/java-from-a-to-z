@@ -3,12 +3,13 @@ package ru.pravvich.tick_tack_toe.desk;
 /**
  * Util class determines validates statements desc.
  */
-public class ValidationWinnerUtil {
+public class ValidationWinnerUtil implements Validation {
 
     /**
      * Check conditions for game can go on.
      * @return true if winner do not determines and empty cell is exist.
      */
+    @Override
     public boolean gameCanGoOn(char[][] desc) {
         return !this.winnerDetermines(desc) &&
                 this.emptyCellExist(  desc);
@@ -19,6 +20,7 @@ public class ValidationWinnerUtil {
      * @param desc - desc for check.
      * @return true if we have empty cell. False if not empty cell.
      */
+    @Override
     public boolean emptyCellExist(char[][] desc) {
         for (char[] aDesc : desc) {
             for (int j = 0; j < desc.length; j++) {
@@ -35,6 +37,7 @@ public class ValidationWinnerUtil {
      * @param desc - desc for check.
      * @return true if we have winner now. False if winner do not exist now.
      */
+    @Override
     public boolean winnerDetermines(char[][] desc) {
         return this.validateVertical(   desc) ||
                 this.validateHorizontal(desc) ||

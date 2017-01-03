@@ -15,6 +15,4 @@ public enum Colors {
     Colors(char color) {
         this.color = color;
     }
-
-
 }

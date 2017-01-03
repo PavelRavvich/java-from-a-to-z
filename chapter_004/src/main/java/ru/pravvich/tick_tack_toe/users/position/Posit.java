@@ -1,4 +1,4 @@
-package ru.pravvich.tick_tack_toe.Users.position;
+package ru.pravvich.tick_tack_toe.users.position;
 
 /**
  * Determines position on 2d coordinate axis.

@@ -1,7 +1,7 @@
-package ru.pravvich.tick_tack_toe.Users;
+package ru.pravvich.tick_tack_toe.users;
 
-import ru.pravvich.tick_tack_toe.Users.position.Posit;
-import ru.pravvich.tick_tack_toe.Users.position.Position;
+import ru.pravvich.tick_tack_toe.*;
+import ru.pravvich.tick_tack_toe.users.position.*;
 
 public class User implements Gamers {
     private Position posit = new Posit();

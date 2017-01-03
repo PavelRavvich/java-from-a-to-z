@@ -1,6 +1,6 @@
-package ru.pravvich.tick_tack_toe.Users;
+package ru.pravvich.tick_tack_toe.users;
 
-import ru.pravvich.tick_tack_toe.Users.position.Position;
+import ru.pravvich.tick_tack_toe.users.position.Position;
 
 /**
  * Determines actions which positions.

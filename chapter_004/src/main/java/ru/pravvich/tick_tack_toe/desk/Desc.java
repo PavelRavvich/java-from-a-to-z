@@ -1,7 +1,6 @@
 package ru.pravvich.tick_tack_toe.desk;
 
-import ru.pravvich.tick_tack_toe.Users.In;
-import ru.pravvich.tick_tack_toe.Users.Input;
+import ru.pravvich.tick_tack_toe.*;
 
 import static java.lang.String.format;
 
@@ -15,10 +14,11 @@ public class Desc implements Board {
      */
     private static char[][] infoDesc;
 
+
     /**
      * Input for get console in.
      */
-    private In input = new Input();
+    private In input;
 
     /**
      * Desc for game.
@@ -32,6 +32,20 @@ public class Desc implements Board {
      */
     public static char[][] getInfoDesc() {
         return infoDesc;
+    }
+
+    /**
+     * Use for test class StubInput.
+     *
+     * @param input emulation console input stream.
+     */
+    @Override
+    public void setInput(In input) {
+        this.input = input;
+    }
+
+    public Desc(In input) {
+        this.input = input;
     }
 
     /**
@@ -49,7 +63,7 @@ public class Desc implements Board {
      * For choice desc size.
      */
     @Override
-    public void descSize() {
+    public void initDescSize() {
         System.out.println("Хотите использовать стандартный размер поля: y/n");
         String answer = this.input.getStrInput();
         if (answer.equals("y")) {

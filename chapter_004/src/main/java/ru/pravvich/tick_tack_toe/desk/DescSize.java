@@ -8,5 +8,5 @@ interface DescSize {
     /**
      * Init desc size in starting game.
      */
-    void descSize();
+    void initDescSize();
 }
