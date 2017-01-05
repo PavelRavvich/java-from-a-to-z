@@ -13,6 +13,10 @@ public class TicTacToe implements TicTacToeStart {
     // единственный победитель набравший 5 побед
     private String winner;
 
+    void setGames(ArrayList games) {
+        this.games = games;
+    }
+
     // инициализирует объеты партий
     public void createGames() {
         for (int i = 0; i < 100; i++) {
@@ -30,7 +34,6 @@ public class TicTacToe implements TicTacToeStart {
     // зацикливает игры до 5 побед
     @Override
     public void start() {
-        createGames();
         int count = 0;
         while (checkWinner().equals("") && count < games.size()) {
             Play game = this.games.get(count);

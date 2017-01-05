@@ -1,45 +1,120 @@
 package ru.pravvich.tic_tac.ticTacToe;
 
 import org.junit.Test;
+import ru.pravvich.tic_tac.game.Dialog;
+import ru.pravvich.tic_tac.game.Game;
+import ru.pravvich.tic_tac.game.Play;
 import ru.pravvich.tic_tac.input.StubInput;
+
+import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class TicTacToeTest {
     @Test
-    public void whenBotMoveFirstAndManWinFiveGamesThenManWinnerAll() {
+    public void whenBotMoveFirstAndUserWinFiveGamesThenUserWinnerAll() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[]{
-                "bot", "bot", "bot", "bot", "bot"});
+        input.setAnswersStr(new String[] {
+                "bot", "y",
+                "bot", "y",
+                "bot", "y",
+                "bot", "y",
+                "bot", "y"});
 
-        input.setAnswersNum(new int[]{
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,});
+        input.setAnswersNum(new int[] {
+                2, 0, 1, 1, 0, 2,
+                2, 0, 1, 1, 0, 2,
+                2, 0, 1, 1, 0, 2,
+                2, 0, 1, 1, 0, 2,
+                2, 0, 1, 1, 0, 2});
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
+
+        ArrayList<Play> games = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            games.add(game);
+        }
+
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.setGames(games);
+
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("user"));
     }
 
     @Test
-    public void whenManMoveFirstAndManWinFiveGamesThenManWinnerAll() {
+    public void whenBotMoveFirstAndWinFiveGamesThenBotWinnerAll() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[]{
-                "user", "user", "user", "user", "user"});
+        input.setAnswersStr(new String[] {
+                "bot", "y",
+                "bot", "y",
+                "bot", "y",
+                "bot", "y",
+                "bot", "y"});
 
-        input.setAnswersNum(new int[]{
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,
-                3, 0, 1, 1, 1, 2, 1,});
+        input.setAnswersNum(new int[] {
+                0, 1, 1, 1,
+                0, 1, 1, 1,
+                0, 1, 1, 1,
+                0, 1, 1, 1,
+                0, 1, 1, 1});
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
+
+        ArrayList<Play> games = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            games.add(game);
+        }
+
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.setGames(games);
+
+
+        ticTacToe.start();
+        assertThat(ticTacToe.getWinner(), is("bot"));
+    }
+
+    @Test
+    public void whenManMoveFirstAndWinFiveGamesThenManWinnerAll() {
+        StubInput input = new StubInput();
+        input.setAnswersStr(new String[] {
+                "I", "y",
+                "I", "y",
+                "I", "y",
+                "I", "y",
+                "I", "y"});
+
+        input.setAnswersNum(new int[] {
+                0, 1, 1, 1, 2, 1,
+                0, 1, 1, 1, 2, 1,
+                0, 1, 1, 1, 2, 1,
+                0, 1, 1, 1, 2, 1,
+                0, 1, 1, 1, 2, 1});
+
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
+
+        ArrayList<Play> games = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            games.add(game);
+        }
+
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.setGames(games);
+
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("user"));
@@ -48,36 +123,34 @@ public class TicTacToeTest {
     @Test
     public void whenManMoveFirstAndBotWinFiveGamesThenBotWinnerAll() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[]{
-                "user", "user", "user", "user", "user"});
+        input.setAnswersStr(new String[] {
+                "I", "y",
+                "I", "y",
+                "I", "y",
+                "I", "y",
+                "I", "y"});
 
-        input.setAnswersNum(new int[]{
-                3, 1, 0, 1, 1, 2, 1,
-                3, 1, 0, 1, 1, 2, 1,
-                3, 1, 0, 1, 1, 2, 1,
-                3, 1, 0, 1, 1, 2, 1,
-                3, 1, 0, 1, 1, 2, 1,});
+        input.setAnswersNum(new int[] {
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2});
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
 
-        ticTacToe.start();
-        assertThat(ticTacToe.getWinner(), is("bot"));
-    }
+        ArrayList<Play> games = new ArrayList<>();
 
-    @Test
-    public void whenBotMoveFirstAndBotWinFiveGamesThenBotWinnerAll() {
-        StubInput input = new StubInput();
-        input.setAnswersStr(new String[]{
-                "bot", "bot", "bot", "bot", "bot"});
+        for (int i = 0; i < 100; i++) {
+            games.add(game);
+        }
 
-        input.setAnswersNum(new int[]{
-                3, 1, 0, 1, 1,
-                3, 1, 0, 1, 1,
-                3, 1, 0, 1, 1,
-                3, 1, 0, 1, 1,
-                3, 1, 0, 1, 1,});
+        TicTacToe ticTacToe = new TicTacToe();
+        ticTacToe.setGames(games);
 
-        TicTacToeStart ticTacToe = new TicTacToe();
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("bot"));
