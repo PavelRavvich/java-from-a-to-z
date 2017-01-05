@@ -1,7 +1,6 @@
 package ru.pravvich.tic_tac.ticTacToe;
 
 import ru.pravvich.tic_tac.game.*;
-import ru.pravvich.tic_tac.input.*;
 import ru.pravvich.tic_tac.users.Subject;
 
 import java.util.ArrayList;
@@ -11,22 +10,14 @@ public class TicTacToe implements TicTacToeStart {
     private ArrayList<Play> games = new ArrayList<>();
     // хранит объекты игроков которые победили
     private ArrayList<Subject> winners = new ArrayList<>();
-    // для ввода с консоли
-    private Input input = new ConsoleInput();
     // единственный победитель набравший 5 побед
     private String winner;
-
-    // for test
-    @Override
-    public void setInput(Input input) {
-        this.input = input;
-    }
 
     // инициализирует объеты партий
     public void createGames() {
         for (int i = 0; i < 100; i++) {
             this.games.add(
-                    new Game(this.input));
+                    new Game());
         }
     }
 

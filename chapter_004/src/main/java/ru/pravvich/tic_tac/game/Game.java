@@ -2,7 +2,6 @@ package ru.pravvich.tic_tac.game;
 
 import ru.pravvich.tic_tac.*;
 import ru.pravvich.tic_tac.board.*;
-import ru.pravvich.tic_tac.input.Input;
 import ru.pravvich.tic_tac.location.Position;
 import ru.pravvich.tic_tac.users.*;
 import ru.pravvich.tic_tac.validation.*;
@@ -15,24 +14,22 @@ public class Game implements Play {
     private Validation validation = new ValidationWinnerUtil();
     // игроки
     private Subject[] gamers = new Subject[2];
-    // ввод с консоли
-    private Input input;
     // побелитель данной партии
     private Subject win;
     // доска для игры
     private Desk board;
 
-    public Game(Input input) {
-        this.input = input;
+    private DialogAsk dialogs = new Dialog();
+
+    public void setDialogs(Dialog dialogs) {
+        this.dialogs = dialogs;
     }
 
     // устанавливает размер доски
     private void initBoard() {
-        System.out.println("Хотите использовать стандартный размер доски 3х3 (y/n)?");
-        String answer = this.input.getString();
+        String answer = this.dialogs.askStr("Хотите использовать стандартный размер доски 3х3 (y/n)?");
         if (answer.equals("n")) {
-            System.out.println("Введите размер доски :");
-            this.board = new Board(this.input.getNumber());
+            this.board = new Board(this.dialogs.askNum("Введите размер доски :"));
         } else if (answer.equals("y")) {
             this.board = new Board(3);
         } else {
@@ -54,9 +51,8 @@ public class Game implements Play {
     // ходит первым. кто первый тот играет крестиками.
     @Override
     public void choiceSide() {
-        System.out.println("Кто ходит первый: (Bot / I) :");
-        String answer = this.input.getString().toLowerCase();
-        if (answer.equals("i")) {
+        String answer = this.dialogs.askStr("Кто ходит первый: (Bot / I) :");
+        if (answer.toLowerCase().equals("i")) {
             this.gamers[0] = new User(Cell.X, "user");
             this.gamers[1] = new User(Cell.O, "bot");
         } else if (answer.equals("bot")){
@@ -93,10 +89,8 @@ public class Game implements Play {
     // если пользователь то с консоли принимает
     private Position getNewPosition(Subject subject) {
         if (subject.getName().equals("user")) {
-            System.out.println("По вертикали:");
-            int y = this.input.getNumber();
-            System.out.println("По горизонтали:");
-            return new Position(this.input.getNumber(), y);
+            return new Position(this.dialogs.askNum("По горизонтали:")
+                    , this.dialogs.askNum("По вертикали:"));
         } else {
             return new AutomaticMove().generateMove(this.board);
         }

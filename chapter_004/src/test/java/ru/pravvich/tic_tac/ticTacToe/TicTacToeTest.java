@@ -21,7 +21,7 @@ public class TicTacToeTest {
                 3, 0, 1, 1, 1, 2, 1,});
 
         TicTacToeStart ticTacToe = new TicTacToe();
-        ticTacToe.setInput(input);
+
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("user"));
     }
@@ -40,7 +40,7 @@ public class TicTacToeTest {
                 3, 0, 1, 1, 1, 2, 1,});
 
         TicTacToeStart ticTacToe = new TicTacToe();
-        ticTacToe.setInput(input);
+
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("user"));
     }
@@ -59,7 +59,7 @@ public class TicTacToeTest {
                 3, 1, 0, 1, 1, 2, 1,});
 
         TicTacToeStart ticTacToe = new TicTacToe();
-        ticTacToe.setInput(input);
+
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("bot"));
     }
@@ -78,7 +78,7 @@ public class TicTacToeTest {
                 3, 1, 0, 1, 1,});
 
         TicTacToeStart ticTacToe = new TicTacToe();
-        ticTacToe.setInput(input);
+
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("bot"));
     }

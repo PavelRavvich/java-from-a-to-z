@@ -1,7 +1,7 @@
-package ru.pravvich.tic_tac.ticTacToe;
+package ru.pravvich.tic_tac.game;
 
 import ru.pravvich.tic_tac.input.Input;
 
-public interface TicTacSetInput {
+public interface DialogSetInput {
     void setInput(Input input);
 }

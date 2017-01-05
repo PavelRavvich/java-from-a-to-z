@@ -15,7 +15,10 @@ public class GameTest {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"i"});
         input.setAnswersNum(new int[]{3});
-        Game game = new Game(input);
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         assertThat(game.getGamers()[0].getName(), is("user"));
@@ -27,7 +30,10 @@ public class GameTest {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"bot"});
         input.setAnswersNum(new int[] {3});
-        Game game = new Game(input);
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
 
         game.choiceSide();
         assertThat(game.getGamers()[0].getName(), is("bot"));
@@ -38,8 +44,11 @@ public class GameTest {
     public void whenBotMoveFirstAndWinByHorizontalThen() {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"bot", "y"});
-        input.setAnswersNum(new int[] {2, 0, 2, 1});
-        Game game = new Game(input);
+        input.setAnswersNum(new int[] {0, 1, 1, 1});
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
@@ -53,7 +62,10 @@ public class GameTest {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"I", "y"});
         input.setAnswersNum(new int[] {0, 1, 1, 1, 2, 1});
-        Game game = new Game(input);
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
@@ -66,8 +78,11 @@ public class GameTest {
     public void whenManMoveFirstAndWinByVerticalThen() {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"I", "y"});
-        input.setAnswersNum(new int[] {0, 0, 1, 0, 2, 0});
-        Game game = new Game(input);
+        input.setAnswersNum(new int[] {0, 0, 0, 1, 0, 2});
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
@@ -80,8 +95,11 @@ public class GameTest {
     public void whenBotMoveSecondAndWinByVerticalThen() {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"I", "y"});
-        input.setAnswersNum(new int[] {0, 1, 0, 2, 1, 1, 2, 2});
-        Game game = new Game(input);
+        input.setAnswersNum(new int[] {1, 0, 2, 0, 1, 1, 2, 2});
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
@@ -95,7 +113,10 @@ public class GameTest {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"I", "y"});
         input.setAnswersNum(new int[] {0, 0, 1, 1, 2, 2});
-        Game game = new Game(input);
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
@@ -108,8 +129,11 @@ public class GameTest {
     public void whenManMoveSecondAndWinByDiagonalRightUpToLeftDownThen() {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"bot", "y"});
-        input.setAnswersNum(new int[] {0, 2, 1, 1, 2, 0});
-        Game game = new Game(input);
+        input.setAnswersNum(new int[] {2, 0, 1, 1, 0, 2});
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
@@ -123,7 +147,10 @@ public class GameTest {
         StubInput input = new StubInput();
         input.setAnswersStr(new String[] {"bot", "n"});
         input.setAnswersNum(new int[] {4, 0, 1, 1, 1, 2, 1, 3, 1});
-        Game game = new Game(input);
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
         game.choiceSide();
 
         game.loopMove();
