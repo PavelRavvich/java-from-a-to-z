@@ -13,7 +13,7 @@ public class GameTest {
     @Test
     public void whenUserMoveFirstThenUserAddInArrGamersFirst() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"I"});
+        input.setAnswersStr(new String[] {"i"});
         input.setAnswersNum(new int[]{3});
         Game game = new Game(input);
         game.choiceSide();
@@ -37,8 +37,8 @@ public class GameTest {
     @Test
     public void whenBotMoveFirstAndWinByHorizontalThen() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"bot"});
-        input.setAnswersNum(new int[] {3, 2, 0, 2, 1});
+        input.setAnswersStr(new String[] {"bot", "y"});
+        input.setAnswersNum(new int[] {2, 0, 2, 1});
         Game game = new Game(input);
         game.choiceSide();
 
@@ -51,8 +51,8 @@ public class GameTest {
     @Test
     public void whenManMoveFirstAndWinByHorizontalThen() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"I"});
-        input.setAnswersNum(new int[] {3, 0, 1, 1, 1, 2, 1});
+        input.setAnswersStr(new String[] {"I", "y"});
+        input.setAnswersNum(new int[] {0, 1, 1, 1, 2, 1});
         Game game = new Game(input);
         game.choiceSide();
 
@@ -65,8 +65,8 @@ public class GameTest {
     @Test
     public void whenManMoveFirstAndWinByVerticalThen() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"I"});
-        input.setAnswersNum(new int[] {3, 0, 0, 1, 0, 2, 0});
+        input.setAnswersStr(new String[] {"I", "y"});
+        input.setAnswersNum(new int[] {0, 0, 1, 0, 2, 0});
         Game game = new Game(input);
         game.choiceSide();
 
@@ -79,8 +79,8 @@ public class GameTest {
     @Test
     public void whenBotMoveSecondAndWinByVerticalThen() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"I"});
-        input.setAnswersNum(new int[] {3, 0, 1, 0, 2, 1, 1, 2, 2});
+        input.setAnswersStr(new String[] {"I", "y"});
+        input.setAnswersNum(new int[] {0, 1, 0, 2, 1, 1, 2, 2});
         Game game = new Game(input);
         game.choiceSide();
 
@@ -93,8 +93,8 @@ public class GameTest {
     @Test
     public void whenManMoveFirstAndWinByDiagonalLeftUpToRightDownThen() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"I"});
-        input.setAnswersNum(new int[] {3, 0, 0, 1, 1, 2, 2});
+        input.setAnswersStr(new String[] {"I", "y"});
+        input.setAnswersNum(new int[] {0, 0, 1, 1, 2, 2});
         Game game = new Game(input);
         game.choiceSide();
 
@@ -107,8 +107,8 @@ public class GameTest {
     @Test
     public void whenManMoveSecondAndWinByDiagonalRightUpToLeftDownThen() {
         StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {"bot"});
-        input.setAnswersNum(new int[] {3, 0, 2, 1, 1, 2, 0});
+        input.setAnswersStr(new String[] {"bot", "y"});
+        input.setAnswersNum(new int[] {0, 2, 1, 1, 2, 0});
         Game game = new Game(input);
         game.choiceSide();
 
@@ -116,5 +116,17 @@ public class GameTest {
         Subject subject = game.initWinner();
         assertThat(subject.getName(), is("user"));
         assertThat(subject.getColor(), is(Cell.O));
+    }
+
+    @Test
+    public void whenUseNonstandardSizeDescThenSizeItIsChoiceUser() {
+        StubInput input = new StubInput();
+        input.setAnswersStr(new String[] {"bot", "n"});
+        input.setAnswersNum(new int[] {4, 0, 1, 1, 1, 2, 1, 3, 1});
+        Game game = new Game(input);
+        game.choiceSide();
+
+        game.loopMove();
+        assertThat(game.getBoard().getBoard().length, is(4));
     }
 }

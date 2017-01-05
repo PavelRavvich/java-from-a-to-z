@@ -5,10 +5,10 @@ import ru.pravvich.tic_tac.board.*;
 import ru.pravvich.tic_tac.input.Input;
 import ru.pravvich.tic_tac.location.Position;
 import ru.pravvich.tic_tac.users.*;
-import ru.pravvich.tic_tac.validation.Validation;
-import ru.pravvich.tic_tac.validation.ValidationWinnerUtil;
+import ru.pravvich.tic_tac.validation.*;
 
 import static java.lang.String.format;
+
 // описывает партию
 public class Game implements Play {
     // объект утилитного класса в который вынесена проверка наличия победителя
@@ -28,8 +28,16 @@ public class Game implements Play {
 
     // устанавливает размер доски
     private void initBoard() {
-        System.out.println("Размер доски :");
-        this.board = new Board(this.input.getNumber());
+        System.out.println("Хотите использовать стандартный размер доски 3х3 (y/n)?");
+        String answer = this.input.getString();
+        if (answer.equals("n")) {
+            System.out.println("Введите размер доски :");
+            this.board = new Board(this.input.getNumber());
+        } else if (answer.equals("y")) {
+            this.board = new Board(3);
+        } else {
+            initBoard();
+        }
     }
 
     // for test
@@ -37,24 +45,32 @@ public class Game implements Play {
         return gamers;
     }
 
+    // for test
+    Desk getBoard() {
+        return board;
+    }
+
     // инициализирует массив с игроками. порядок меняется в зависимости от того кто
     // ходит первым. кто первый тот играет крестиками.
     @Override
     public void choiceSide() {
-        this.initBoard();
-        System.out.println("Кто ходит первый: (bot / I) :");
-        if (!input.getString().toLowerCase().equals("bot")) {
+        System.out.println("Кто ходит первый: (Bot / I) :");
+        String answer = this.input.getString().toLowerCase();
+        if (answer.equals("i")) {
             this.gamers[0] = new User(Cell.X, "user");
             this.gamers[1] = new User(Cell.O, "bot");
-        } else {
+        } else if (answer.equals("bot")){
             this.gamers[0] = new User(Cell.X, "bot");
             this.gamers[1] = new User(Cell.O, "user");
+        } else {
+            choiceSide();
         }
     }
 
     // зацикливает очередность ходов игроков
     @Override
     public void loopMove() {
+        this.initBoard();
         PrinterBoard.printDesc(board.getBoard());
         while (validation.gameCanGoOn(board.getBoard())) {
             for (Subject subject : this.gamers) {
