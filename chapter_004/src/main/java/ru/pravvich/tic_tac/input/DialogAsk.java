@@ -1,6 +1,6 @@
-package ru.pravvich.tic_tac.game;
+package ru.pravvich.tic_tac.input;
 
-public interface DialogAsk {
+interface DialogAsk {
     String askStr(String question);
     int askNum(String question);
 }

@@ -2,6 +2,7 @@ package ru.pravvich.tic_tac.game;
 
 import ru.pravvich.tic_tac.*;
 import ru.pravvich.tic_tac.board.*;
+import ru.pravvich.tic_tac.input.*;
 import ru.pravvich.tic_tac.location.Position;
 import ru.pravvich.tic_tac.users.*;
 import ru.pravvich.tic_tac.validation.*;
@@ -19,9 +20,10 @@ public class Game implements Play {
     // доска для игры
     private Desk board;
 
-    private DialogAsk dialogs = new Dialog();
+    private DialogAggregation dialogs = new Dialog();
 
-    public void setDialogs(Dialog dialogs) {
+    @Override
+    public void setDialogs(DialogAggregation dialogs) {
         this.dialogs = dialogs;
     }
 

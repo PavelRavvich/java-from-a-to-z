@@ -1,10 +1,8 @@
 package ru.pravvich.tic_tac.ticTacToe;
 
 import org.junit.Test;
-import ru.pravvich.tic_tac.game.Dialog;
-import ru.pravvich.tic_tac.game.Game;
-import ru.pravvich.tic_tac.game.Play;
-import ru.pravvich.tic_tac.input.StubInput;
+import ru.pravvich.tic_tac.input.*;
+import ru.pravvich.tic_tac.game.*;
 
 import java.util.ArrayList;
 
@@ -29,9 +27,9 @@ public class TicTacToeTest {
                 2, 0, 1, 1, 0, 2,
                 2, 0, 1, 1, 0, 2});
 
-        Dialog dialog = new Dialog();
+        DialogAggregation dialog = new Dialog();
         dialog.setInput(input);
-        Game game = new Game();
+        Play game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -40,7 +38,7 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToe ticTacToe = new TicTacToe();
+        TicTacToeStart ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
 
 
@@ -65,9 +63,9 @@ public class TicTacToeTest {
                 0, 1, 1, 1,
                 0, 1, 1, 1});
 
-        Dialog dialog = new Dialog();
+        DialogAggregation dialog = new Dialog();
         dialog.setInput(input);
-        Game game = new Game();
+        Play game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -76,7 +74,7 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToe ticTacToe = new TicTacToe();
+        TicTacToeStart ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
 
 
@@ -101,9 +99,9 @@ public class TicTacToeTest {
                 0, 1, 1, 1, 2, 1,
                 0, 1, 1, 1, 2, 1});
 
-        Dialog dialog = new Dialog();
+        DialogAggregation dialog = new Dialog();
         dialog.setInput(input);
-        Game game = new Game();
+        Play game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -112,7 +110,7 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToe ticTacToe = new TicTacToe();
+        TicTacToeStart ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
 
 
@@ -137,9 +135,9 @@ public class TicTacToeTest {
                 1, 0, 2, 0, 1, 1, 2, 2,
                 1, 0, 2, 0, 1, 1, 2, 2});
 
-        Dialog dialog = new Dialog();
+        DialogAggregation dialog = new Dialog();
         dialog.setInput(input);
-        Game game = new Game();
+        Play game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -148,7 +146,7 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToe ticTacToe = new TicTacToe();
+        TicTacToeStart ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
 
 

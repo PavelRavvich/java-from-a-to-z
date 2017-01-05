@@ -1,9 +1,7 @@
-package ru.pravvich.tic_tac.game;
+package ru.pravvich.tic_tac.input;
 
-import ru.pravvich.tic_tac.input.ConsoleInput;
-import ru.pravvich.tic_tac.input.Input;
-
-public class Dialog implements DialogAsk, DialogSetInput {
+// инкапсулирует все случаи когда нужен ввод с консоли
+public class Dialog implements DialogAggregation {
     private Input input = new ConsoleInput();
 
     @Override

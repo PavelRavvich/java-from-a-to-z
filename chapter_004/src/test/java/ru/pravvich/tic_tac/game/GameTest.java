@@ -2,7 +2,7 @@ package ru.pravvich.tic_tac.game;
 
 import org.junit.Test;
 import ru.pravvich.tic_tac.Cell;
-import ru.pravvich.tic_tac.input.StubInput;
+import ru.pravvich.tic_tac.input.*;
 import ru.pravvich.tic_tac.users.Subject;
 
 import static org.hamcrest.core.Is.is;

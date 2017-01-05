@@ -1,4 +1,5 @@
 package ru.pravvich.tic_tac.location;
+
 // описывает коотрдинаты на доске
 public class Position implements Location {
     private int x;
