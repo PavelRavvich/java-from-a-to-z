@@ -9,11 +9,13 @@ public class ConsoleInput implements Input{
         return scanner.next();
     }
 
+    // ввод строк с консоли
     @Override
     public String getString() {
         return input();
     }
 
+    // ввод цифр с консоли
     @Override
     public int getNumber() {
         String number = input();

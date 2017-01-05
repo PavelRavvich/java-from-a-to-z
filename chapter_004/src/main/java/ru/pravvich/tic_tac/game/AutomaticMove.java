@@ -3,7 +3,7 @@ package ru.pravvich.tic_tac.game;
 import ru.pravvich.tic_tac.Cell;
 import ru.pravvich.tic_tac.board.Desk;
 import ru.pravvich.tic_tac.location.Position;
-
+// определяет алгоритм ходов бота
 class AutomaticMove {
     Position generateMove(Desk board) {
         int size = board.getBoard().length;

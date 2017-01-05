@@ -9,28 +9,36 @@ import ru.pravvich.tic_tac.validation.Validation;
 import ru.pravvich.tic_tac.validation.ValidationWinnerUtil;
 
 import static java.lang.String.format;
-
+// описывает партию
 public class Game implements Play {
+    // объект утилитного класса в который вынесена проверка наличия победителя
     private Validation validation = new ValidationWinnerUtil();
+    // игроки
     private Subject[] gamers = new Subject[2];
+    // ввод с консоли
     private Input input;
+    // побелитель данной партии
     private Subject win;
+    // доска для игры
     private Desk board;
 
     public Game(Input input) {
         this.input = input;
     }
 
+    // устанавливает размер доски
     private void initBoard() {
         System.out.println("Размер доски :");
         this.board = new Board(this.input.getNumber());
     }
 
     // for test
-    public Subject[] getGamers() {
+    Subject[] getGamers() {
         return gamers;
     }
 
+    // инициализирует массив с игроками. порядок меняется в зависимости от того кто
+    // ходит первым. кто первый тот играет крестиками.
     @Override
     public void choiceSide() {
         this.initBoard();
@@ -44,6 +52,7 @@ public class Game implements Play {
         }
     }
 
+    // зацикливает очередность ходов игроков
     @Override
     public void loopMove() {
         PrinterBoard.printDesc(board.getBoard());
@@ -64,6 +73,8 @@ public class Game implements Play {
         }
     }
 
+    // дает новую позицию для хода если бот то генерирует в классе AutomaticMove
+    // если пользователь то с консоли принимает
     private Position getNewPosition(Subject subject) {
         if (subject.getName().equals("user")) {
             System.out.println("По вертикали:");
@@ -75,6 +86,7 @@ public class Game implements Play {
         }
     }
 
+    // в момент когда игра продолжаться не может смотрит есть ли победитель если да то записывает его в поле win
     @Override
     public Subject initWinner() {
         if (!this.validation.emptyCellExist(board.getBoard()) &&

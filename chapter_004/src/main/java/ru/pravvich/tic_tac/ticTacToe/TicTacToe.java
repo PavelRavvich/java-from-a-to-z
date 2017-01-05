@@ -7,9 +7,13 @@ import ru.pravvich.tic_tac.users.Subject;
 import java.util.ArrayList;
 
 public class TicTacToe implements TicTacToeStart {
+    // хранит партии которые можно будет сыграть в процессе игры
     private ArrayList<Play> games = new ArrayList<>();
+    // хранит объекты игроков которые победили
     private ArrayList<Subject> winners = new ArrayList<>();
+    // для ввода с консоли
     private Input input = new ConsoleInput();
+    // единственный победитель набравший 5 побед
     private String winner;
 
     // for test
@@ -18,6 +22,7 @@ public class TicTacToe implements TicTacToeStart {
         this.input = input;
     }
 
+    // инициализирует объеты партий
     public void createGames() {
         for (int i = 0; i < 100; i++) {
             this.games.add(
@@ -25,11 +30,13 @@ public class TicTacToe implements TicTacToeStart {
         }
     }
 
+    // возвращает имя победителя
     @Override
     public String getWinner() {
         return this.winner;
     }
 
+    // зацикливает игры до 5 побед
     @Override
     public void start() {
         createGames();
@@ -47,6 +54,7 @@ public class TicTacToe implements TicTacToeStart {
         this.winner = checkWinner();
     }
 
+    // проверяет кто победил 5 раз и возвращает имя победителя
     private String checkWinner() {
         int user = 0, bot = 0;
         for (Subject winner : winners) {
