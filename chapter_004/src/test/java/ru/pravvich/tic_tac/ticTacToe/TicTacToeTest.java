@@ -1,6 +1,7 @@
 package ru.pravvich.tic_tac.ticTacToe;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 import ru.pravvich.tic_tac.input.*;
 import ru.pravvich.tic_tac.game.*;
 
@@ -8,8 +9,9 @@ import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
-public class TicTacToeTest {
+public class TicTacToeTest extends Mockito {
     @Test
     public void whenBotMoveFirstAndUserWinFiveGamesThenUserWinnerAll() {
         StubInput input = new StubInput();
@@ -167,6 +169,24 @@ public class TicTacToeTest {
                 1, 0, 2, 0, 1, 1, 2, 2,
                 1, 0, 2, 0, 1, 1, 2, 2});
 
+        Dialog dialog = new Dialog();
+        dialog.setInput(input);
+        Game game = new Game();
+        game.setDialogs(dialog);
 
+        ArrayList<Play> games = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            games.add(game);
+        }
+
+        TicTacToe ticTac = new TicTacToe();
+        TicTacToe spy = spy(ticTac);
+        spy.setGames(games);
+        spy.start();
+        String result = spy.getWinner();
+
+        verify(spy).start();
+        assertEquals(result, "bot");
     }
 }
