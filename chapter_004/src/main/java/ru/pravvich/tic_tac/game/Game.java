@@ -20,10 +20,9 @@ public class Game implements Play {
     // доска для игры
     private Desk board;
 
-    private DialogAsk dialogs = new Dialog();
+    private DialogAsk dialogs;
 
-    // для теста
-    public void setDialogs(DialogAsk dialogs) {
+    public Game(DialogAsk dialogs) {
         this.dialogs = dialogs;
     }
 

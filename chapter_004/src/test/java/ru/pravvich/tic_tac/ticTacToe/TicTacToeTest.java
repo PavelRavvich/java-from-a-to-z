@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
-public class TicTacToeTest extends Mockito {
+public class TicTacToeTest {
     @Test
     public void whenBotMoveFirstAndUserWinFiveGamesThenUserWinnerAll() {
         StubInput input = new StubInput();
@@ -29,10 +28,9 @@ public class TicTacToeTest extends Mockito {
                 2, 0, 1, 1, 0, 2,
                 2, 0, 1, 1, 0, 2});
 
-        Dialog dialog = new Dialog();
-        dialog.setInput(input);
-        Game game = new Game();
-        game.setDialogs(dialog);
+        Dialog dialog = new Dialog(input);
+
+        Game game = new Game(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
 
@@ -64,10 +62,9 @@ public class TicTacToeTest extends Mockito {
                 0, 1, 1, 1,
                 0, 1, 1, 1});
 
-        Dialog dialog = new Dialog();
-        dialog.setInput(input);
-        Game game = new Game();
-        game.setDialogs(dialog);
+        Dialog dialog = new Dialog(input);
+
+        Game game = new Game(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
 
@@ -99,10 +96,9 @@ public class TicTacToeTest extends Mockito {
                 0, 1, 1, 1, 2, 1,
                 0, 1, 1, 1, 2, 1});
 
-        Dialog dialog = new Dialog();
-        dialog.setInput(input);
-        Game game = new Game();
-        game.setDialogs(dialog);
+        Dialog dialog = new Dialog(input);
+
+        Game game = new Game(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
 
@@ -134,10 +130,9 @@ public class TicTacToeTest extends Mockito {
                 1, 0, 2, 0, 1, 1, 2, 2,
                 1, 0, 2, 0, 1, 1, 2, 2});
 
-        Dialog dialog = new Dialog();
-        dialog.setInput(input);
-        Game game = new Game();
-        game.setDialogs(dialog);
+        Dialog dialog = new Dialog(input);
+
+        Game game = new Game(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
 
@@ -150,43 +145,5 @@ public class TicTacToeTest extends Mockito {
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("bot"));
-    }
-
-    @Test
-    public void whenThen() {
-        StubInput input = new StubInput();
-        input.setAnswersStr(new String[] {
-                "I", "y",
-                "I", "y",
-                "I", "y",
-                "I", "y",
-                "I", "y"});
-
-        input.setAnswersNum(new int[] {
-                1, 0, 2, 0, 1, 1, 2, 2,
-                1, 0, 2, 0, 1, 1, 2, 2,
-                1, 0, 2, 0, 1, 1, 2, 2,
-                1, 0, 2, 0, 1, 1, 2, 2,
-                1, 0, 2, 0, 1, 1, 2, 2});
-
-        Dialog dialog = new Dialog();
-        dialog.setInput(input);
-        Game game = new Game();
-        game.setDialogs(dialog);
-
-        ArrayList<Play> games = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            games.add(game);
-        }
-
-        TicTacToe ticTac = new TicTacToe();
-        TicTacToe spy = spy(ticTac);
-        spy.setGames(games);
-        spy.start();
-        String result = spy.getWinner();
-
-        verify(spy).start();
-        assertEquals(result, "bot");
     }
 }

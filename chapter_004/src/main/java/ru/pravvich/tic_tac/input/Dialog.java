@@ -4,8 +4,7 @@ package ru.pravvich.tic_tac.input;
 public class Dialog implements DialogAsk {
     private Input input = new ConsoleInput();
 
-    //for test
-    public void setInput(Input input) {
+    public Dialog(Input input) {
         this.input = input;
     }
 

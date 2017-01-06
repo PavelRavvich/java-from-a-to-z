@@ -1,6 +1,8 @@
 package ru.pravvich.tic_tac.ticTacToe;
 
 import ru.pravvich.tic_tac.game.*;
+import ru.pravvich.tic_tac.input.Dialog;
+import ru.pravvich.tic_tac.input.Input;
 import ru.pravvich.tic_tac.users.Subject;
 
 import java.util.ArrayList;
@@ -19,10 +21,11 @@ public class TicTacToe implements TicTacToeStart {
     }
 
     // инициализирует объеты партий
-    public void createGames() {
+    public void createGames(Input input) {
         for (int i = 0; i < 100; i++) {
             this.games.add(
-                    new Game());
+                    new Game(
+                            new Dialog(input)));
         }
     }
 
@@ -36,7 +39,7 @@ public class TicTacToe implements TicTacToeStart {
     @Override
     public void start() {
         int count = 0;
-        while (checkWinner().equals("") && count < games.size()) {
+        while (checkWinner().equals("")) {
             Play game = this.games.get(count);
             game.choiceSide();
             game.loopMove();
