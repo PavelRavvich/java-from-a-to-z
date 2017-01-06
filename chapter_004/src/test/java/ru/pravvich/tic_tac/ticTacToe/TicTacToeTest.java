@@ -27,9 +27,9 @@ public class TicTacToeTest {
                 2, 0, 1, 1, 0, 2,
                 2, 0, 1, 1, 0, 2});
 
-        DialogAggregation dialog = new Dialog();
+        Dialog dialog = new Dialog();
         dialog.setInput(input);
-        Play game = new Game();
+        Game game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -38,9 +38,8 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        TicTacToe ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
-
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("user"));
@@ -63,9 +62,9 @@ public class TicTacToeTest {
                 0, 1, 1, 1,
                 0, 1, 1, 1});
 
-        DialogAggregation dialog = new Dialog();
+        Dialog dialog = new Dialog();
         dialog.setInput(input);
-        Play game = new Game();
+        Game game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -74,9 +73,8 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        TicTacToe ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
-
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("bot"));
@@ -99,9 +97,9 @@ public class TicTacToeTest {
                 0, 1, 1, 1, 2, 1,
                 0, 1, 1, 1, 2, 1});
 
-        DialogAggregation dialog = new Dialog();
+        Dialog dialog = new Dialog();
         dialog.setInput(input);
-        Play game = new Game();
+        Game game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -110,9 +108,8 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        TicTacToe ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
-
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("user"));
@@ -135,9 +132,9 @@ public class TicTacToeTest {
                 1, 0, 2, 0, 1, 1, 2, 2,
                 1, 0, 2, 0, 1, 1, 2, 2});
 
-        DialogAggregation dialog = new Dialog();
+        Dialog dialog = new Dialog();
         dialog.setInput(input);
-        Play game = new Game();
+        Game game = new Game();
         game.setDialogs(dialog);
 
         ArrayList<Play> games = new ArrayList<>();
@@ -146,11 +143,30 @@ public class TicTacToeTest {
             games.add(game);
         }
 
-        TicTacToeStart ticTacToe = new TicTacToe();
+        TicTacToe ticTacToe = new TicTacToe();
         ticTacToe.setGames(games);
-
 
         ticTacToe.start();
         assertThat(ticTacToe.getWinner(), is("bot"));
+    }
+
+    @Test
+    public void whenThen() {
+        StubInput input = new StubInput();
+        input.setAnswersStr(new String[] {
+                "I", "y",
+                "I", "y",
+                "I", "y",
+                "I", "y",
+                "I", "y"});
+
+        input.setAnswersNum(new int[] {
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2,
+                1, 0, 2, 0, 1, 1, 2, 2});
+
+
     }
 }

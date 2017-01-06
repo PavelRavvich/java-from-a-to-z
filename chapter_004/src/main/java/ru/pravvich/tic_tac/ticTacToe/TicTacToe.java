@@ -13,8 +13,8 @@ public class TicTacToe implements TicTacToeStart {
     // единственный победитель набравший 5 побед
     private String winner;
 
-    @Override
-    public void setGames(ArrayList games) {
+    // for test
+    void setGames(ArrayList games) {
         this.games = games;
     }
 

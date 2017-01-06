@@ -20,10 +20,10 @@ public class Game implements Play {
     // доска для игры
     private Desk board;
 
-    private DialogAggregation dialogs = new Dialog();
+    private DialogAsk dialogs = new Dialog();
 
-    @Override
-    public void setDialogs(DialogAggregation dialogs) {
+    // для теста
+    public void setDialogs(DialogAsk dialogs) {
         this.dialogs = dialogs;
     }
 

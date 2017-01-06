@@ -1,4 +1,4 @@
 package ru.pravvich.tic_tac.game;
 
-public interface Play extends ChoiceSide, LoopMove, InitWinner, GameSetDialogs {
+public interface Play extends ChoiceSide, LoopMove, InitWinner {
 }
