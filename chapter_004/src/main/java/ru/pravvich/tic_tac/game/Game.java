@@ -9,24 +9,47 @@ import ru.pravvich.tic_tac.validation.*;
 
 import static java.lang.String.format;
 
-// описывает партию
+/**
+ * Determines round:
+ * Init size desk.
+ * Init array with gamers in order.
+ * Loop moves from gamers.
+ * Get new positions for moves.
+ * Determines winner.
+ */
 public class Game implements Play {
-    // объект утилитного класса в который вынесена проверка наличия победителя
+    /**
+     * Determines validation winner and exist empty cell.
+     */
     private Validation validation = new ValidationWinnerUtil();
-    // игроки
+    /**
+     * Array contain players.
+     */
     private Subject[] gamers = new Subject[2];
-    // побелитель данной партии
+    /**
+     * Winner current round.
+     */
     private Subject win;
-    // доска для игры
+    /**
+     * Desk for round.
+     */
     private Desk board;
-
+    /**
+     * Provide input stream for user console input.
+     */
     private DialogAsk dialogs;
 
+    /**
+     * Default constructor.
+     * @param dialogs user's console input stream.
+     */
     public Game(DialogAsk dialogs) {
         this.dialogs = dialogs;
     }
 
-    // устанавливает размер доски
+    /**
+     * Init desk size.
+     */
     private void initBoard() {
         String answer = this.dialogs.askStr("Хотите использовать стандартный размер доски 3х3 (y/n)?");
         if (answer.equals("n")) {
@@ -38,18 +61,26 @@ public class Game implements Play {
         }
     }
 
-    // for test
+    /**
+     * Getter for tests by gamers's order.
+     * @return array with gamers.
+     */
     Subject[] getGamers() {
         return gamers;
     }
 
-    // for test
+    /**
+     * Getter for test correct init board size.
+     * @return board for current round.
+     */
     Desk getBoard() {
         return board;
     }
 
-    // инициализирует массив с игроками. порядок меняется в зависимости от того кто
-    // ходит первым. кто первый тот играет крестиками.
+    /**
+     * Init user's array.
+     * Player which move first, is playing for the 'x'.
+     */
     @Override
     public void choiceSide() {
         String answer = this.dialogs.askStr("Кто ходит первый: (Bot / I) :");
@@ -64,7 +95,9 @@ public class Game implements Play {
         }
     }
 
-    // зацикливает очередность ходов игроков
+    /**
+     * Loop moves order.
+     */
     @Override
     public void loopMove() {
         this.initBoard();
@@ -86,8 +119,15 @@ public class Game implements Play {
         }
     }
 
-    // дает новую позицию для хода если бот то генерирует в классе AutomaticMove
-    // если пользователь то с консоли принимает
+    /**
+     * Get new position for move.
+     * When player's name is "user" then method treats to Dialogs obj,
+     * for get console input.
+     * When player's name equal "bot" then method treats to AutomaticMove,
+     * for get generating bot's move.
+     * @param subject which move now.
+     * @return position rof move.
+     */
     private Position getNewPosition(Subject subject) {
         if (subject.getName().equals("user")) {
             return new Position(this.dialogs.askNum("По горизонтали:")
@@ -97,7 +137,12 @@ public class Game implements Play {
         }
     }
 
-    // в момент когда игра продолжаться не может смотрит есть ли победитель если да то записывает его в поле win
+    /**
+     * Init winner current round.
+     * @return subject which win.
+     * If case is dead head then method return new User obj,
+     * with color equal empty and name is nobody.
+     */
     @Override
     public Subject initWinner() {
         if (!this.validation.emptyCellExist(board.getBoard()) &&

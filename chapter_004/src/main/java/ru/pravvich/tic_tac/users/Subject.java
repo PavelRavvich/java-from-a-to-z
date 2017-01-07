@@ -1,7 +1,7 @@
 package ru.pravvich.tic_tac.users;
 
-import ru.pravvich.tic_tac.Cell;
-
+/**
+ * Aggregator for Subject's interfaces.
+ */
 public interface Subject extends SubjectColor, SubjectName {
-
 }

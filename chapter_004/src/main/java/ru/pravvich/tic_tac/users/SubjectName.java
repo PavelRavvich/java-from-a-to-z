@@ -1,8 +1,12 @@
 package ru.pravvich.tic_tac.users;
 
 /**
- * Created by pavel on 04.01.17.
+ * Getter for Gamer's name.
  */
-public interface SubjectName {
+interface SubjectName {
+    /**
+     * Getter for Gamer's name.
+     * @return this name.
+     */
     String getName();
 }

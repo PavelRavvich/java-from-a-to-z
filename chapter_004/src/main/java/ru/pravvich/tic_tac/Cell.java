@@ -1,5 +1,8 @@
 package ru.pravvich.tic_tac;
 
+/**
+ * Determines all imposable values which contain desk.
+ */
 public enum Cell {
     EMPTY(" "), X("x"), O("o");
 

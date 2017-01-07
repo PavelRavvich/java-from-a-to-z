@@ -6,6 +6,9 @@ import ru.pravvich.tic_tac.ticTacToe.*;
 
 import static java.lang.String.format;
 
+/**
+ * Start app.
+ */
 public class StartUpp {
     public static void main(String[] args) {
         Input input = new ConsoleInput();
