@@ -2,8 +2,7 @@ package ru.pravvich.isp.menu;
 
 import ru.pravvich.isp.menu.actions.*;
 import ru.pravvich.isp.menu.paragraphs.*;
-import ru.pravvich.isp.menu.paragraphs.paragraph_1.Paragraph_1;
-import ru.pravvich.isp.menu.paragraphs.paragraph_2.Paragraph_2;
+import ru.pravvich.isp.menu.paragraphs.Paragraph;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,7 +20,7 @@ class StartMenu implements Menu, MenuLogic {
     /**
      * Contain paragraphs upper level.
      */
-    private ArrayList<Paragraph> paragraphs = new ArrayList<>();
+    private ArrayList<ParagraphInterface> paragraphs = new ArrayList<>();
 
     /**
      * Init all action this program.
@@ -38,8 +37,12 @@ class StartMenu implements Menu, MenuLogic {
      * Init paragraphs upper level.
      */
     private void initParagraphs() {
-        this.paragraphs.add(new Paragraph_1());
-        this.paragraphs.add(new Paragraph_2());
+        this.paragraphs.add(new Paragraph("1", "Paragraph 1"));
+        this.paragraphs.add(new Paragraph("1.1", "\tParagraph 1.1"));
+        this.paragraphs.add(new Paragraph("1.1.1", "\t\tParagraph 1.1.1"));
+        this.paragraphs.add(new Paragraph("2", "Paragraph 2"));
+        this.paragraphs.add(new Paragraph("2.1", "\tParagraph 2.1"));
+        this.paragraphs.add(new Paragraph("3", "Paragraph 3"));
     }
 
     /**
@@ -51,14 +54,13 @@ class StartMenu implements Menu, MenuLogic {
     }
 
     /**
-     * Print menu. Recursive call all sub paragraph in all paragraph.
-     * @param paragraphs paragraphs and all contain paragraphs.
+     * Print menu.
+     * @param paragraphs all paragraphs.
      */
     @Override
-    public void showMenu(ArrayList<Paragraph> paragraphs) {
-        for (Paragraph paragraph : paragraphs) {
+    public void showMenu(ArrayList<ParagraphInterface> paragraphs) {
+        for (ParagraphInterface paragraph : paragraphs) {
             System.out.println(paragraph.getName());
-            showMenu(paragraph.getParagraphs());
         }
     }
 
