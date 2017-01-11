@@ -2,7 +2,6 @@ package ru.pravvich.isp.menu;
 
 import ru.pravvich.isp.menu.actions.*;
 import ru.pravvich.isp.menu.paragraphs.*;
-import ru.pravvich.isp.menu.paragraphs.Paragraph;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -37,12 +36,20 @@ class StartMenu implements Menu, MenuLogic {
      * Init paragraphs upper level.
      */
     private void initParagraphs() {
-        this.paragraphs.add(new Paragraph("1", "Paragraph 1"));
-        this.paragraphs.add(new Paragraph("1.1", "\tParagraph 1.1"));
-        this.paragraphs.add(new Paragraph("1.1.1", "\t\tParagraph 1.1.1"));
-        this.paragraphs.add(new Paragraph("2", "Paragraph 2"));
-        this.paragraphs.add(new Paragraph("2.1", "\tParagraph 2.1"));
-        this.paragraphs.add(new Paragraph("3", "Paragraph 3"));
+        Paragraph paragraph_1 = new Paragraph("1", "Paragraph 1");
+        Paragraph paragraph_1_1 = new Paragraph("1.1", "\tParagraph 1.1");
+        Paragraph paragraph_1_1_1 = new Paragraph("1.1.1", "\t\tParagraph 1.1.1");
+        paragraph_1_1.add(paragraph_1_1_1);
+        paragraph_1.add(paragraph_1_1);
+        this.paragraphs.add(paragraph_1);
+
+        Paragraph paragraph_2 = new Paragraph("2", "Paragraph 2");
+        Paragraph paragraph_2_1 = new Paragraph("2.1", "\tParagraph 2.1");
+        paragraph_2.add(paragraph_2_1);
+        this.paragraphs.add(paragraph_2);
+
+        Paragraph paragraph_3 = new Paragraph("3", "Paragraph 3");
+        this.paragraphs.add(paragraph_3);
     }
 
     /**
@@ -61,6 +68,7 @@ class StartMenu implements Menu, MenuLogic {
     public void showMenu(ArrayList<ParagraphInterface> paragraphs) {
         for (ParagraphInterface paragraph : paragraphs) {
             System.out.println(paragraph.getName());
+            showMenu(paragraph.getParagraphs());
         }
     }
 
