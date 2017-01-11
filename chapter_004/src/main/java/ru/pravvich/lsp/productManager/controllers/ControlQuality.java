@@ -24,7 +24,7 @@ public class ControlQuality implements Controller {
     /**
      * Contain all repositories type.
      */
-    private ArrayList<Repo> repo = new ArrayList<>();
+    protected ArrayList<Repo> repo = new ArrayList<>();
 
     /**
      * Default constructor.
