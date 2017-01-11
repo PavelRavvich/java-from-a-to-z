@@ -15,6 +15,9 @@ public class Paragraph implements ParagraphInterface {
      */
     private String name;
 
+    /**
+     * Contain sub paragraphs.
+     */
     private ArrayList<ParagraphInterface> paragraphs = new ArrayList<>();
 
     /**
