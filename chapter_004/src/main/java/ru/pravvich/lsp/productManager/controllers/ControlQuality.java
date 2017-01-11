@@ -13,7 +13,7 @@ public class ControlQuality implements Controller {
     /**
      * Markers on every repo.
      */
-    private static Repo warehouse;
+    protected static Repo warehouse;
     private static Repo shop;
     private static Repo trash;
     private static Repo reserveWarehouse;
