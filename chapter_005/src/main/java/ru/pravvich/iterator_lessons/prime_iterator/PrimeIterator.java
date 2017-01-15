@@ -15,7 +15,7 @@ public class PrimeIterator<T extends Number> implements Iterator {
      * тут с сингл респонсобилити для этого индекса как-то не очень получилось но как по другому хз(((
      * Index moves pointer forward after use method next().
      * And contain last index to array by prime value.
-     * @see #getIndexNextPrime().
+     * @see #existMorePrime().
      */
     private int index = 0;
 
@@ -34,7 +34,7 @@ public class PrimeIterator<T extends Number> implements Iterator {
     @Override
     public boolean hasNext() {
         return index < values.length &&
-                this.getIndexNextPrime();
+                this.existMorePrime();
     }
 
     /**
@@ -51,7 +51,7 @@ public class PrimeIterator<T extends Number> implements Iterator {
      * record index (i) by prime number, in this.index.
      * @return prime number more exist - true, not - false.
      */
-    private boolean getIndexNextPrime() {
+    private boolean existMorePrime() {
         for (int i = index; i < values.length; i++) {
             if (isPrime(values[i])) {
                 this.index = i;
