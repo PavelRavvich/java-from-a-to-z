@@ -1,13 +1,13 @@
 package ru.pravvich.generic.store;
 
-abstract class Base {
-    String id;
+public abstract class Base {
+    private final String id;
 
-    String getId() {
-        return id;
+    Base(String id) {
+        this.id = id;
     }
 
-    void setId(String id) {
-        this.id = id;
+    public String getId() {
+        return id;
     }
 }

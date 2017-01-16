@@ -1,5 +1,7 @@
 package ru.pravvich.generic.store;
 
-class User extends Base {
-
+public class User extends Base {
+    public User(String id) {
+        super(id);
+    }
 }
