@@ -2,7 +2,6 @@ package ru.pravvich.generic.store.repo;
 
 import org.junit.Test;
 import ru.pravvich.generic.store.Role;
-import ru.pravvich.generic.store.User;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
