@@ -14,4 +14,26 @@ class RoleStore implements Store<Role> {
     public Simple<Role> getStore() {
         return roles;
     }
+
+    @Override
+    public boolean delete(Role user) {
+        for (int i = 0; i < roles.getSize(); i++) {
+            if (user.getId().equals(roles.get(i).getId())) {
+                roles.delete(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(Role oldObj, Role newObj) {
+        for (int i = 0; i < roles.getSize(); i++) {
+            if (oldObj.getId().equals(roles.get(i).getId())) {
+                roles.update(i, newObj);
+                return true;
+            }
+        }
+        return false;
+    }
 }

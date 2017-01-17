@@ -14,4 +14,26 @@ class UserStore implements Store<User> {
     public Simple<User> getStore() {
         return users;
     }
+
+    @Override
+    public boolean delete(User user) {
+        for (int i = 0; i < users.getSize(); i++) {
+            if (user.getId().equals(users.get(i).getId())) {
+                users.delete(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(User oldObj, User newObj) {
+        for (int i = 0; i < users.getSize(); i++) {
+            if (oldObj.getId().equals(users.get(i).getId())) {
+                users.update(i, newObj);
+                return true;
+            }
+        }
+        return false;
+    }
 }
