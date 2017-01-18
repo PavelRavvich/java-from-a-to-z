@@ -35,18 +35,15 @@ public class EvenIterator<T extends Number> implements Iterator {
      * All work iterator is get from this.evenValues.
      */
     private void initEvenValues() {
-        int lenEven = getLengthEvenValues();
-        Number[] numbers = new Number[lenEven];
         try {
-            evenValues = (T[]) numbers;
+            evenValues = (T[]) new Number[getLengthEvenValues()];
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
 
-        for (int i = 0, j = 0; i < values.length && j < evenValues.length; i++) {
+        for (int i = 0, j = 0; j < evenValues.length; i++) {
             if (isEven(values[i])) {
-                evenValues[j] = values[i];
-                j++;
+                evenValues[j++] = values[i];
             }
         }
     }
