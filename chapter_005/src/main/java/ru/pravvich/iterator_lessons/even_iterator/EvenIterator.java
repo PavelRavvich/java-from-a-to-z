@@ -15,6 +15,11 @@ public class EvenIterator<T extends Number> implements Iterator {
      * Pointer on current cell in this.values.
      */
     private int index = 0;
+    /**
+     * Content only even numbers.
+     * All work iterator is get from this.evenValues.
+     */
+    private T[] evenValues;
 
     /**
      * Default constructor.
@@ -22,7 +27,30 @@ public class EvenIterator<T extends Number> implements Iterator {
      */
     public EvenIterator(final T[] values) {
         this.values = values;
+        initEvenValues();
     }
+
+    /**
+     * Init array to numbers which is even.
+     * All work iterator is get from this.evenValues.
+     */
+    private void initEvenValues() {
+        int lenEven = getLengthEvenValues();
+        Number[] numbers = new Number[lenEven];
+        try {
+            evenValues = (T[]) numbers;
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0, j = 0; i < values.length && j < evenValues.length; i++) {
+            if (isEven(values[i])) {
+                evenValues[j] = values[i];
+                j++;
+            }
+        }
+    }
+
 
     /**
      * Exist in forward cell with even number.
@@ -30,9 +58,7 @@ public class EvenIterator<T extends Number> implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        return index < values.length &&
-                  existMoreEvenNum() &&
-                  isEven(values[index]);
+        return index < evenValues.length;
     }
 
     /**
@@ -41,21 +67,7 @@ public class EvenIterator<T extends Number> implements Iterator {
      */
     @Override
     public T next() {
-        return values[index++];
-    }
-
-    /**
-     * Exist in forward cell with even number.
-     * @return if exist - true, if not exist - false.
-     */
-    private boolean existMoreEvenNum() {
-        for (int i = index; i < values.length; i++) {
-            if (isEven(values[i])) {
-                this.index = i;
-                return true;
-            }
-        }
-        return true;
+        return evenValues[index++];
     }
 
     /**
@@ -67,5 +79,18 @@ public class EvenIterator<T extends Number> implements Iterator {
         int val = value.intValue();
         return !(val == 0 || val == 1) &&
                 (val % 2) == 0;
+    }
+
+    /**
+     * @return amount even number in this.values.
+     */
+    private int getLengthEvenValues() {
+        int result = 0;
+        for (T value : values) {
+            if (isEven(value)) {
+                result++;
+            }
+        }
+        return result;
     }
 }

@@ -35,4 +35,16 @@ public class EvenIteratorTest {
 
         assertThat(list.size(), is(0));
     }
+
+    @Test
+    public void whenTwiceInARowCallNextThenReturnEvenNumbers() {
+        Integer[] numbers = {0, 1, 2, 4, 5};
+        EvenIterator<Integer> evenIterator = new EvenIterator<>(numbers);
+        List<Integer> list = new ArrayList<>();
+
+        list.add(evenIterator.next());
+        list.add(evenIterator.next());
+
+        assertThat(list.size(), is(2));
+    }
 }
