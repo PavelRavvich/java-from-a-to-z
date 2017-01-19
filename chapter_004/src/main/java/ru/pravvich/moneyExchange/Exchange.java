@@ -1,7 +1,6 @@
 package ru.pravvich.moneyExchange;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Exchange big money on less coins.
@@ -109,3 +108,4 @@ public class Exchange implements Exchanging {
         }
     }
 }
+

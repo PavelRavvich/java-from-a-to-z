@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -46,5 +47,14 @@ public class EvenIteratorTest {
         list.add(evenIterator.next());
 
         assertThat(list.size(), is(2));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenCallNextTwiceInARowButEvenNumNotMoreExistThenThrowException() {
+        Integer[] numbers = {0, 1, 2, 5};
+        EvenIterator<Integer> evenIterator = new EvenIterator<>(numbers);
+
+        evenIterator.next();
+        evenIterator.next();
     }
 }
