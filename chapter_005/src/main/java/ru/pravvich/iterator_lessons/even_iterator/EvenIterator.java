@@ -32,9 +32,7 @@ public class EvenIterator<T extends Number> implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        return index < values.length &&
-                existMoreEvenNum() &&
-                isEven(values[index]);
+        return index < values.length && existMoreEvenNum();
     }
 
     /**
@@ -58,9 +56,6 @@ public class EvenIterator<T extends Number> implements Iterator {
      */
     @Override
     public T next() {
-        if (isEven(values[index]))
-            return values[index++];
-
         if (existMoreEvenNum())
             return values[index++];
 
