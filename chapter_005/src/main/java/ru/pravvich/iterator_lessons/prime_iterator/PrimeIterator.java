@@ -1,6 +1,7 @@
 package ru.pravvich.iterator_lessons.prime_iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Iterator which get only prime numbers.
@@ -33,8 +34,7 @@ public class PrimeIterator<T extends Number> implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        return index < values.length &&
-                this.existMorePrime();
+        return index < values.length && existMorePrime();
     }
 
     /**
@@ -43,7 +43,10 @@ public class PrimeIterator<T extends Number> implements Iterator {
      */
     @Override
     public T next() {
-        return values[index++];
+        if (existMorePrime())
+            return values[index++];
+
+        throw new NoSuchElementException();
     }
 
     /**
