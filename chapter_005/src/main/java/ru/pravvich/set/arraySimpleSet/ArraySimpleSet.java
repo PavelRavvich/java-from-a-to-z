@@ -72,17 +72,4 @@ public class ArraySimpleSet<E> implements SetArray<E> {
             }
         }
     }
-
-    public static void main(String[] args) {
-        SetArray<String> setArray = new ArraySimpleSet<>();
-        setArray.add("dfgsdf");
-        setArray.add("abc");
-        setArray.add("dfg");
-        setArray.add("dfg");
-
-        for (String s : setArray) {
-            System.out.println(s);
-        }
-
-    }
 }
