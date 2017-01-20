@@ -4,7 +4,11 @@ import java.util.Iterator;
 
 class ArrayIterator<E> implements Iterator<E> {
     private int index = 0;
-    E[] values;
+    protected E[] values;
+
+    ArrayIterator(E[] values) {
+        this.values = values;
+    }
 
     ArrayIterator() {
         values = (E[]) new Object[0];
