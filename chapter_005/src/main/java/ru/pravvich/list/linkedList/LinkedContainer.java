@@ -45,8 +45,6 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
         return size;
     }
 
-    private int index = 0;
-
     private Node<E> getNextElement(Node<E> current) {
         return current.getNextNode();
     }
@@ -54,14 +52,17 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     @Override
     public Iterator iterator() {
         return new Iterator<E>() {
+
+            int counter = 0;
+
             @Override
             public boolean hasNext() {
-                return index < size;
+                return counter < size;
             }
 
             @Override
             public E next() {
-                return getElementByIndex(index++);
+                return getElementByIndex(counter++);
             }
         };
     }
@@ -69,6 +70,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     @Override
     public Iterator<E> descendingIterator() {
         return new Iterator<E>() {
+
             int counter = size - 1;
 
             @Override
