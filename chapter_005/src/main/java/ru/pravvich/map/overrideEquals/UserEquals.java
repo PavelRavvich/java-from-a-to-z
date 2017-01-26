@@ -4,10 +4,28 @@ import ru.pravvich.map.notOverridesEqualsAndNotHashCode.User;
 
 import java.util.Calendar;
 
-public class UserEquals extends User {
+public class UserEquals {
+
+    public String name;
+    public int children;
+    public Calendar birthday;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getChildren() {
+        return children;
+    }
+
+    public Calendar getBirthday() {
+        return birthday;
+    }
 
     public UserEquals(String name, int children, Calendar birthday) {
-        super(name, children, birthday);
+        this.name = name;
+        this.children = children;
+        this.birthday = birthday;
     }
 
     @Override
@@ -21,11 +39,15 @@ public class UserEquals extends User {
         if (this.getClass() != obj.getClass())
             return false;
 
-        UserEquals ue = (UserEquals) obj;
-        return this.hashCode() == ue.hashCode() ||
 
-                this.birthday.getTimeInMillis() == ue.getBirthday().getTimeInMillis() &&
+        UserEquals ue = (UserEquals) obj;
+
+        System.out.println(this.birthday.getTimeInMillis() == ue.getBirthday().getTimeInMillis());
+        System.out.println(this.children == ue.getChildren());
+        System.out.println(this.name.equals(ue.getName()));
+        return this.hashCode() == ue.hashCode() ||
+                (this.birthday.getTimeInMillis() == ue.getBirthday().getTimeInMillis() &&
                 this.children == ue.getChildren() &&
-                this.name.equals(ue.getName());
+                this.name.equals(ue.getName()));
     }
 }
