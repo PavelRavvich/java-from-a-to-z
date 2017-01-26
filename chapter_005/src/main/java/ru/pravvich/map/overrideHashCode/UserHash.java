@@ -13,7 +13,7 @@ public class UserHash extends User {
     public int hashCode() {
         int hash = 31;
         hash = hash * 17 + name.hashCode();
-        hash = hash *17 + birthday.hashCode();
+        hash = hash * 17 + birthday.hashCode();
         hash = hash * 17 + children;
         return hash;
     }
