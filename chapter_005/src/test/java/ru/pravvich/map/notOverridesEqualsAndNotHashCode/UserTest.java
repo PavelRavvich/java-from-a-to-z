@@ -1,7 +1,6 @@
 package ru.pravvich.map.notOverridesEqualsAndNotHashCode;
 
 import org.junit.Test;
-import ru.pravvich.map.overrideHashCode.UserHash;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -11,9 +10,6 @@ import java.util.Set;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-/**
- * Created by pavel on 26.01.17.
- */
 public class UserTest {
     @Test
     public void whenThen() {

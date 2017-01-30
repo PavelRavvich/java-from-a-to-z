@@ -40,13 +40,13 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
         return target.getCurrentElement();
     }
 
+    private Node<E> getNextElement(Node<E> current) {
+        return current.getNextNode();
+    }
+
     @Override
     public int size() {
         return size;
-    }
-
-    private Node<E> getNextElement(Node<E> current) {
-        return current.getNextNode();
     }
 
     @Override

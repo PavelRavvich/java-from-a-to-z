@@ -1,12 +1,28 @@
 package ru.pravvich.map.overrideHashCode;
 
-import ru.pravvich.map.notOverridesEqualsAndNotHashCode.User;
-
 import java.util.Calendar;
 
-public class UserHash extends User {
+public class UserHash {
+    public String name;
+    public int children;
+    public Calendar birthday;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getChildren() {
+        return children;
+    }
+
+    public Calendar getBirthday() {
+        return birthday;
+    }
+
     public UserHash(String name, int children, Calendar birthday) {
-        super(name, children, birthday);
+        this.name = name;
+        this.children = children;
+        this.birthday = birthday;
     }
 
     @Override

@@ -50,4 +50,9 @@ public class UserEquals {
                 this.children == ue.getChildren() &&
                 this.name.equals(ue.getName()));
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

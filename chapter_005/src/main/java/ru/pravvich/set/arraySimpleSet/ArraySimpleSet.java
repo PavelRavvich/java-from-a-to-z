@@ -55,21 +55,38 @@ public class ArraySimpleSet<E> implements SetArray<E> {
         for (E e : values) {
             if (e.equals(elem))
                 return false;
-
         }
         return true;
     }
 
     private void sortByHashCode() {
-        int len = (values.length - 1);
-        for(int i = len; i >= 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (values[j].hashCode() < values[j + 1].hashCode()) {
-                    E temp = values[j + 1];
-                    values[j + 1] = values[j];
-                    values[j] = temp;
+        quickSort(values, 0, values.length - 1);
+    }
+
+    private void quickSort(E[] array, int left, int right) {
+        if (right > left) {
+            int i = left, j = right;
+            E tmp;
+
+            int v = array[right].hashCode(); //pivot
+
+            do {
+                while (array[i].hashCode() < v)
+                    i++;
+                while (array[j].hashCode() > v)
+                    j--;
+
+                if (i <= j) {
+                    tmp = array[i];
+                    array[i] = array[j];
+                    array[j] = tmp;
+                    i++;
+                    j--;
                 }
-            }
+            } while (i <= j);
+
+            if (left < j) quickSort(array, left, j);
+            if (i < right) quickSort(array, i, right);
         }
     }
 }

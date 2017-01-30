@@ -41,18 +41,18 @@ public class ArraySimpleSetTest {
 
     @Test
     public void whenElementAddNotAscendingOrderByHashCodeThenActionSort() {
-        SetArray<String> container = new ArraySimpleSet<>();
-        container.add("111111111111111");
-        container.add("111111111");
-        container.add("111");
+        SetArray<Integer> container = new ArraySimpleSet<>();
+        container.add(1);
+        container.add(111);
+        container.add(11);
 
-        List<String> result = new ArrayList<>();
-        for (String s : container) {
+        List<Integer> result = new ArrayList<>();
+        for (Integer s : container) {
             result.add(s);
         }
 
-        assertThat(result.get(0), is("111"));
-        assertThat(result.get(1), is("111111111"));
-        assertThat(result.get(2), is("111111111111111"));
+        assertThat(result.get(0), is(1));
+        assertThat(result.get(1), is(11));
+        assertThat(result.get(2), is(111));
     }
 }
