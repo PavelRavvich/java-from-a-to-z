@@ -13,13 +13,6 @@ public class ReferenceBook<K, V> implements Book<K, V> {
         hashTable = new Node[16];
     }
 
-    public static void main(String[] args) {
-        ReferenceBook<String, String> r = new ReferenceBook<>();
-        System.out.println(r.insert("key", "value"));
-
-        System.out.println(r.get("key"));
-
-    }
     @Override
     public boolean insert(K key, V value) {
         Node<K, V> node = new Node<>(key, value);
