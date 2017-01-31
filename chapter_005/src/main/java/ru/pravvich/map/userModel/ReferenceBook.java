@@ -7,17 +7,49 @@ import java.util.Objects;
 
 public class ReferenceBook<K, V> implements Book<K, V> {
     private Node<K, V>[] hashTable;
-    private final float DEFAULT_LOAD_FACTOR = 0.75f;
-    private float threshold = hashTable.length * DEFAULT_LOAD_FACTOR;
     private int size = 0;
 
     ReferenceBook() {
         hashTable = new Node[16];
     }
 
+    public static void main(String[] args) {
+        ReferenceBook<String, String> r = new ReferenceBook<>();
+        System.out.println(r.insert("key", "value"));
 
+        System.out.println(r.get("key"));
+
+    }
     @Override
     public boolean insert(K key, V value) {
+        Node<K, V> node = new Node<>(key, value);
+        int index = node.hash();
+        if (hashTable[index] == null) {
+            hashTable[index] = node;
+            return true;
+        }
+
+        if (hashTable[index].getKey().equals(node.getKey()) &&
+                !hashTable[index].getValue().equals(node.getValue()) // одинаковые ключи перезаписывам
+                ) {
+
+            hashTable[index].setValue(node.getValue());
+            return true;
+        }
+
+        if (node.hashCode() == hashTable[index].hashCode() && // обрабатываем коллизию
+                !node.getKey().equals(hashTable[index].getKey()) &&
+                !node.getValue().equals(hashTable[index].getValue())
+                ) {
+
+            hashTable[index].setNext(node);
+            return true;
+        }
+
+        if (hashTable[index].equals(node)) {
+            return false;
+        }
+
         return false;
     }
 
@@ -30,35 +62,25 @@ public class ReferenceBook<K, V> implements Book<K, V> {
 
     @Override
     public V get(K key) {
-        return null;
+        int hash = hash(key);
+
+        if (hashTable[hash] != null) {
+            return hashTable[hash].getValue();
+        }
+        throw new NullPointerException("Element not found.");
+    }
+
+    private int hash(K key) {
+        int hash;
+        hash = 31;
+        hash = hash * 17 + key.hashCode();
+        return hash % hashTable.length;
     }
 
     @Override
     public Iterator<V> iterator() {
-        return new Iterator<V>() {
-            int countArray = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentCellOfTableHaveMoreElement() || arrayTableHaveMoreCell();
-            }
-
-            private boolean arrayTableHaveMoreCell() {
-                return countArray < hashTable.length;
-            }
-
-            private boolean currentCellOfTableHaveMoreElement() {
-                return hashTable[countArray].getNext().getValue() != null;
-            }
-
-            @Override
-            public V next() {
-                return null;
-            }
-
-        };
+        return null;
     }
-
 
     private class Node<K, V> {
         private Node<K, V> next;
@@ -66,18 +88,13 @@ public class ReferenceBook<K, V> implements Book<K, V> {
         private K key;
         private V value;
 
-        Node(K key, V value, Node<K, V> next) {
+        Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.next = next;
-            initHash();
         }
 
-        private void initHash() {
-            hash = 31;
-            hash = hash * 17 + key.hashCode();
-            hash = hash * 17 + next.hashCode();
-            hash = hash * 17 + value.hashCode();
+        private int hash() {
+            return hashCode() % hashTable.length;
         }
 
         public Node<K, V> getNext() {
@@ -92,9 +109,19 @@ public class ReferenceBook<K, V> implements Book<K, V> {
             return value;
         }
 
+        public void setValue(V value) {
+            this.value = value;
+        }
+
         @Override
         public int hashCode() {
+            hash = 31;
+            hash = hash * 17 + key.hashCode();
             return hash;
+        }
+
+        public void setNext(Node<K, V> next) {
+            this.next = next;
         }
 
         @Override
