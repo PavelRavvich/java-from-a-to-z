@@ -69,7 +69,9 @@ public class ReferenceBook<K, V> implements Book<K, V> {
             final List<Node<K, V>> nodes) {
 
         if (newNode.hashCode() == nodeFromList.hashCode() &&
-                !newNode.equals(nodeFromList)) {
+                !Objects.equals(newNode.key, nodeFromList.key) &&
+                !Objects.equals(newNode.value, nodeFromList.value)
+                ) {
 
             nodes.add(newNode);
             size++;
