@@ -24,16 +24,15 @@ public class SimpleTreeSet<E> implements Tree<E> {
             return false;
         }
 
+        size++;
         // храню элементы для итератора и get
         list.add(newNode.element);
 
         if (lastNode.compareTo(newNode) > 0) {
             lastNode.right = newNode;
-            size++;
             return true;
         } else {
             lastNode.left = newNode;
-            size++;
             return true;
         }
     }
@@ -63,7 +62,6 @@ public class SimpleTreeSet<E> implements Tree<E> {
         return lastLeaf;
     }
 
-
     private boolean initRootLeaf(final E e) {
         root = new Leaf<>(e);
         list.add(e);
@@ -73,7 +71,35 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
     @Override
     public List<E> get() {
-        return list;
+        quickSort(list, 0, list.size() - 1);
+        return new LinkedList<>(list); // чтобы снаружи не поломать было
+    }
+
+    private void quickSort(List<E> list, int left, int right) {
+        if (right > left) {
+            int i = left, j = right;
+            E tmp;
+
+            int v = list.get(right).hashCode(); //pivot
+
+            do {
+                while (list.get(i).hashCode() < v)
+                    i++;
+                while (list.get(j).hashCode() > v)
+                    j--;
+
+                if (i <= j) {
+                    tmp = list.get(i);
+                    list.set(i, list.get(j));
+                    list.set(j, tmp);
+                    i++;
+                    j--;
+                }
+            } while (i <= j);
+
+            if (left < j) quickSort(list, left, j);
+            if (i < right) quickSort(list, i, right);
+        }
     }
 
     @Override
@@ -97,11 +123,8 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
         @Override
         public int compareTo(Object obj) {
-            if (obj instanceof SimpleTreeSet.Leaf) {
-                Leaf<E> node = (Leaf<E>) obj;
-                return this.hashCode() - node.hashCode();
-            }
-            throw new ClassCastException();
+            Leaf<E> node = (Leaf<E>) obj;
+            return this.hashCode() - node.hashCode();
         }
 
         @Override
