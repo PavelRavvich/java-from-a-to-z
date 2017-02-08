@@ -58,7 +58,6 @@ public class SimpleTreeSet<E> implements Tree<E> {
         if (compare == 0)
             return null;
 
-        //System.out.println(lastLeaf.element);
         return lastLeaf;
     }
 
@@ -123,10 +122,12 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
         @Override
         public Leaf<E> next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext())
+                throw new NoSuchElementException();
+
             Leaf<E> r = next;
-            // if you can walk right, walk right, then fully left.
-            // otherwise, walk up until you come from left.
+            // пока можно вправо, потом до упора влево
+            // если нет то вверх пока не дойдем до левой половины
             if (next.right != null) {
                 next = next.right;
                 while (next.left != null)
