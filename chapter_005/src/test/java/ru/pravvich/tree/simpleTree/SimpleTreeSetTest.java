@@ -66,4 +66,39 @@ public class SimpleTreeSetTest {
         int result = integers.size();
         assertThat(result, is(3));
     }
+
+    @Test
+    public void whenAddTwoEqualsElementThenSizeNotChange() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+        integers.add(4);
+        integers.add(4);
+
+        int result = integers.size();
+        assertThat(result, is(1));
+    }
+
+    @Test
+    public void whenAddTwoEqualsElementThenAddOnlyFirst() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+        integers.add(4);
+        integers.add(4);
+
+        List<Integer> result = new LinkedList<>();
+
+        for (Integer i : integers) {
+            result.add(i);
+        }
+
+        assertThat(result.size(), is(1));
+        assertThat(result.get(0), is(4));
+    }
+
+    @Test
+    public void whenNoOneElementExistThenSizeEqualZero() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+        List<Integer> list = integers.get();
+
+        int result = list.size();
+        assertThat(result, is(0));
+    }
 }

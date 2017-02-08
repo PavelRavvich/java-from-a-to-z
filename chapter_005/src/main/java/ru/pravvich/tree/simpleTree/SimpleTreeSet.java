@@ -9,6 +9,7 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
     public SimpleTreeSet() {
         list = new LinkedList<>();
+        root = new Leaf<>(null);
     }
 
     @Override
@@ -62,8 +63,7 @@ public class SimpleTreeSet<E> implements Tree<E> {
     }
 
     private boolean initRootLeaf(final E e) {
-        root = new Leaf<>(e);
-        list.add(e);
+        root.element = e;
         size++;
         return true;
     }
@@ -106,10 +106,10 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
         private TreeIterator(Leaf<E> root) {
             next = root;
-            if (next.left == null) {
-                return;
-            }
+            goToLeftmost();
+        }
 
+        private void goToLeftmost() {
             while (next.left != null) {
                 next = next.left;
             }
@@ -117,31 +117,39 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
         @Override
         public boolean hasNext() {
-            return next != null;
+            return next != null && next.element != null;
         }
 
         @Override
         public Leaf<E> next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
-
             Leaf<E> r = next;
-            // пока можно вправо, потом до упора влево
-            // если нет то вверх пока не дойдем до левой половины
-            if (next.right != null) {
-                next = next.right;
-                while (next.left != null)
-                    next = next.left;
-                return r;
-            } else while (true) {
+
+            if (next.right != null)
+                return goRight(r);
+
+            return goUp(r);
+        }
+
+        private Leaf<E> goRight(Leaf<E> r) {
+            next = next.right;
+            while (next.left != null) {
+                next = next.left;
+            }
+            return r;
+        }
+
+        private Leaf<E> goUp(Leaf<E> r) {
+            while (true) {
                 if (next.parent == null) {
                     next = null;
                     return r;
                 }
+
                 if (next.parent.left == next) {
                     next = next.parent;
                     return r;
                 }
+
                 next = next.parent;
             }
         }
