@@ -25,6 +25,8 @@ public class SimpleTreeSet<E> implements Tree<E> {
         }
 
         size++;
+        newNode.parent = lastNode;
+
         // храню элементы для итератора и get
         list.add(newNode.element);
 
@@ -109,10 +111,49 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return list.iterator();
+        return new Iterator<E>() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public E next() {
+                return null;
+            }
+
+            private Leaf<E> findRightmostFor(final Leaf<E> current) {
+                if (current.right != null)
+                    return findRightmostFor(current.right);
+
+                return current;
+            }
+
+            private Leaf<E> findLeftmostFor(final Leaf<E> current) {
+                if (current.left != null)
+                    return findLeftmostFor(current.left);
+
+                return current;
+            }
+
+            private Leaf<E> getLeftFrom(final Leaf<E> current) {
+                if (current.left != null)
+                    return current.right;
+                else
+                    return current;
+            }
+
+            private Leaf<E> getRiteFrom(final Leaf<E> current) {
+                if (current.right != null)
+                    return current.right;
+                else
+                    return current;
+            }
+        };
     }
 
     private class Leaf<E> implements Comparable<E> {
+        private Leaf<E> parent;
         private Leaf<E> right;
         private Leaf<E> left;
         private E element;
