@@ -9,6 +9,26 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
 public class SimpleTreeSetTest {
+
+    @Test
+    public void whenElementExistThenFindGetLeaf() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+        integers.add(4);
+        integers.add(0);
+        integers.add(13);
+
+        SimpleTreeSet.Leaf leaf = integers.find(13);
+        Integer result = (Integer) leaf.getElement();
+        assertThat(result,is(13));
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void whenElementNotExistThenNullPointerException() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+
+        integers.find(13);
+    }
+
     @Test
     public void whenMethodGetWorkThenListWhichSortReturn() {
         Tree<Integer> integers = new SimpleTreeSet<>();

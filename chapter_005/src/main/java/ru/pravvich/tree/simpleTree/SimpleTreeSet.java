@@ -13,6 +13,30 @@ public class SimpleTreeSet<E> implements Tree<E> {
     }
 
     @Override
+    public Leaf<E> find(E elem) {
+        Leaf<E> eLeaf = new Leaf<>(elem);
+        return binarySearch(root, eLeaf);
+    }
+
+    private Leaf<E> binarySearch(Leaf<E> leaf, Leaf<E> eLeaf) {
+        int compare = leaf.compareTo(eLeaf);
+
+        if (compare < 0 && leaf.right != null) {
+            return binarySearch(leaf.right, eLeaf);
+        }
+
+        if (compare > 0 && leaf.left != null) {
+            return binarySearch(leaf.left, eLeaf);
+        }
+
+        if (compare == 0) {
+            return leaf;
+        }
+
+        return null;
+    }
+
+    @Override
     public boolean add(E e) {
         if (size == 0) {
             return initRootLeaf(e);
@@ -155,7 +179,7 @@ public class SimpleTreeSet<E> implements Tree<E> {
         }
     }
 
-    private class Leaf<E> implements Comparable<E> {
+    class Leaf<E> implements Comparable<E> {
         private Leaf<E> parent;
         private Leaf<E> right;
         private Leaf<E> left;
@@ -163,6 +187,10 @@ public class SimpleTreeSet<E> implements Tree<E> {
 
         private Leaf(E element) {
             this.element = element;
+        }
+
+        public E getElement() {
+            return element;
         }
 
         @Override

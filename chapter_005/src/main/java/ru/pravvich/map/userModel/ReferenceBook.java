@@ -185,7 +185,6 @@ public class ReferenceBook<K, V> implements Book<K, V> {
 
     private class Node<K, V> {
         private List<Node<K, V>> nodes;
-        private int hash;
         private K key;
         private V value;
 
@@ -217,7 +216,7 @@ public class ReferenceBook<K, V> implements Book<K, V> {
 
         @Override
         public int hashCode() {
-            hash = 31;
+            int hash = 31;
             hash = hash * 17 + key.hashCode();
             return hash;
         }
@@ -231,7 +230,7 @@ public class ReferenceBook<K, V> implements Book<K, V> {
                 Node<K, V> node = (Node) obj;
                 return (Objects.equals(key, node.getKey()) &&
                         Objects.equals(value, node.getValue()) ||
-                        Objects.equals(hash, node.hashCode()));
+                        Objects.equals(hashCode(), node.hashCode()));
             }
 
             return false;
