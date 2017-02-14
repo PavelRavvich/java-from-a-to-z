@@ -11,6 +11,14 @@ import static org.junit.Assert.*;
 public class SimpleTreeSetTest {
 
     @Test
+    public void whenThen() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+        boolean result = integers.teeIsBalanced();
+
+        assertFalse(result);
+    }
+
+    @Test
     public void whenElementExistThenFindGetLeaf() {
         Tree<Integer> integers = new SimpleTreeSet<>();
         integers.add(4);

@@ -206,4 +206,44 @@ public class SimpleTreeSet<E> implements Tree<E> {
             return hash;
         }
     }
+
+    @Override
+    public boolean teeIsBalanced() {
+        Tree<Integer> integers = new SimpleTreeSet<>();
+        integers.add(10);
+        integers.add(8);
+        integers.add(6);
+
+        Leaf<E> root = integers.find(10);
+
+        int lengthRightLeaf = lengthRightLeaf(root);
+        int lengthLeftLeaf = lengthLeftLeaf(root);
+
+        if (lengthLeftLeaf > lengthRightLeaf) {
+            return (lengthLeftLeaf - lengthRightLeaf) < 2;
+        } else {
+            return (lengthRightLeaf - lengthLeftLeaf) < 2;
+        }
+
+    }
+
+    private int lengthRightLeaf(Leaf<E> leaf) {
+        int counter = 0;
+        Leaf<E> current = leaf;
+        while (current.right != null) {
+            current = current.right;
+            counter++;
+        }
+        return counter;
+    }
+
+    private int lengthLeftLeaf(Leaf<E> leaf) {
+        int counter = 0;
+        Leaf<E> current = leaf;
+        while (current.left != null) {
+            current = current.left;
+            counter++;
+        }
+        return counter;
+    }
 }

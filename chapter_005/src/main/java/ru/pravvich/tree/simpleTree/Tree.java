@@ -7,4 +7,5 @@ public interface Tree<E> extends Iterable<E> {
     List<E> get();
     int size();
     SimpleTreeSet.Leaf find(E e);
+    boolean teeIsBalanced();
 }
