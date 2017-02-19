@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * Class determines all base elements menu.
  */
-class StartMenu implements Menu, MenuLogic {
+class StartMenu implements Menu, MenuLogic, Balanced {
 
     /**
      * Contain all actions in program.
@@ -100,5 +100,52 @@ class StartMenu implements Menu, MenuLogic {
                 command = scanner.next();
             }
         }
+    }
+
+    @Override
+    public boolean isBalanced() {
+        if (paragraphs.size() == 0) {
+            return true;
+        }
+
+        int[] lengths = new int[paragraphs.size()];
+
+        for (int i = 0; i < paragraphs.size(); i++) {
+            lengths[i] = leafLength(paragraphs.get(i), 0);
+        }
+
+        int min = getMinimumValueOf(lengths);
+        int max = getMaximumValueOf(lengths);
+
+        return max - min < 2;
+    }
+
+    private int leafLength(ParagraphInterface paragraph, int length) {
+        if (paragraph.getParagraphs().size() == 0) {
+            return length;
+        }
+        return leafLength(paragraph.getParagraphs().get(0), ++length);
+    }
+
+    private int getMinimumValueOf(int[] arr) {
+        int min = arr[0];
+
+        for (int val : arr) {
+            if (val < min) {
+                min = val;
+            }
+        }
+        return min;
+    }
+
+    private int getMaximumValueOf(int[] arr) {
+        int max = arr[0];
+
+        for (int val : arr) {
+            if (val > max) {
+                max = val;
+            }
+        }
+        return max;
     }
 }
