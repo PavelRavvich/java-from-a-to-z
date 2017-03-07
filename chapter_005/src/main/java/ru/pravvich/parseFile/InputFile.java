@@ -1,46 +1,50 @@
 package ru.pravvich.parseFile;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-public class InputFile {
+import static ru.pravvich.parseFile.Params.*;
+
+class InputFile implements Input {
     private String pathToFile;
 
-    private List<String> buy = new LinkedList<>();
-    private List<String> sell = new LinkedList<>();
-    private List<String> delete = new LinkedList<>();
-
-    public InputFile(String pathToFile) {
+    InputFile(String pathToFile) {
         this.pathToFile = pathToFile;
     }
 
-    void readFile() {
+    @Override
+    public Collection<Order> readFile() {
         File file = new File(pathToFile);
+        String content;
 
-        try (BufferedReader buff = new BufferedReader(new FileReader(file))){
-
-            String content = buff.readLine();
-
-            while (buff.readLine() != null) {
-
-                if (content.contains("SELL")) {
-                    sell.add(content);
+        HashMap<Integer, Order> originalIdOrders = new HashMap<>();
+        try (BufferedReader buff = new BufferedReader(new FileReader(file))) {
+            while ((content = buff.readLine()) != null) {
+                if (content.contains("AddOrder")) {
+                    Order order = getObjectOrderFrom(content);
+                    originalIdOrders.put(order.getOrderId(), order);
                 }
-
-                if (content.contains("BUY")) {
-                    buy.add(content);
-                }
-
-                if (content.contains("DeleteOrder")) {
-                    delete.add(content);
-                }
-
-                content = buff.readLine();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return originalIdOrders.values();
+    }
+
+    private Order getObjectOrderFrom(String line) {
+        String id = getOrderParam(line, ID);
+        Integer orderId = Integer.parseInt(id);
+        String book = getOrderParam(line, BOOK);
+        String operation = getOrderParam(line, OPERATION);
+        String priseOrder = getOrderParam(line, PRISE);
+        float prise = Float.parseFloat(priseOrder);
+        String volumeOrder = getOrderParam(line, VOLUME);
+        Integer volume = Integer.parseInt(volumeOrder);
+        return new Order(book, operation, volume, prise, orderId);
+    }
+
+    private String getOrderParam(String order, Params param) {
+        String[] orderArr = order.split(param.getValue());
+        return orderArr[1].split("\"")[0];
     }
 }
