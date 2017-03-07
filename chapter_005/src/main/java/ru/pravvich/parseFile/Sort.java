@@ -1,7 +1,9 @@
 package ru.pravvich.parseFile;
 
-import java.util.List;
+import java.util.Collection;
 
 interface Sort {
-    List<Order> getCollectionOfOrdersWith(String book, String operation);
+    Collection<Order> getAllOrders();
+    Collection<Order> mergeEachBook(Collection<Collection<Order>> orders);
+    Collection<Collection<Order>> getCollectionOfCollectionsByBook(Collection<Order> orders);
 }
