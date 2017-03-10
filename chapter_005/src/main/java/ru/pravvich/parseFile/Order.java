@@ -3,14 +3,14 @@ package ru.pravvich.parseFile;
 class Order {
     private String book;
     private String operation;
-    private int volume;
     private float price;
+    private int volume;
     private int orderId;
 
     Order(String book,
           String operation,
-          int volume,
           float price,
+          int volume,
           int orderId) {
 
         this.book = book;
@@ -18,6 +18,11 @@ class Order {
         this.volume = volume;
         this.price = price;
         this.orderId = orderId;
+    }
+
+    Order(String book, int orderId) {
+        this.orderId = orderId;
+        this.book = book;
     }
 
     public String getBook() {

@@ -14,8 +14,8 @@ public class SortDataTest {
     public void whenCollectionOfCollectionsCallAndDifferentBooksInThenEachBookGoInHisSubCollection() {
         Sort sort = new SortData();
         Collection<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-2","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-1","sell", 20, 5.5f, 1));
+        orders.add(new Order("book-2","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 20, 1));
         Collection<Collection<Order>> everyBookHaveHisCollection =
                 sort.getCollectionOfCollectionsByBook(orders);
 
@@ -29,15 +29,15 @@ public class SortDataTest {
         Collection<Collection<Order>> collectionsOrders = new ArrayList<>();
 
         Collection<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-1","sell", 20, 5.5f, 1));
-        orders.add(new Order("book-1","buy", 20, 6.5f, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 20, 1));
+        orders.add(new Order("book-1","buy", 6.5f, 20, 1));
         collectionsOrders.add(orders);
 
         Collection<Order> orders1 = new ArrayList<>();
-        orders1.add(new Order("book-2","buy", 10, 5.5f, 1));
-        orders1.add(new Order("book-2","buy", 20, 5.5f, 1));
-        orders1.add(new Order("book-2","buy", 20, 6.5f, 1));
+        orders1.add(new Order("book-2","buy", 5.5f, 10, 1));
+        orders1.add(new Order("book-2","buy", 5.5f, 20, 1));
+        orders1.add(new Order("book-2","buy", 6.5f, 20, 1));
         collectionsOrders.add(orders1);
 
 
@@ -50,9 +50,9 @@ public class SortDataTest {
     @Test
     public void whenAutomaticDealCallAndAllOrdersWithDifferentBooksOperationAndEqualsPriceThenDealPasses() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.4f, 1));
-        orders.add(new Order("book-1","sell", 20, 5.5f, 1));
-        orders.add(new Order("book-2","buy", 20, 5.5f, 1));
+        orders.add(new Order("book-1","sell", 5.4f, 10, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 20, 1));
+        orders.add(new Order("book-2","buy", 5.5f, 20, 1));
         Deal sort = new SortData();
 
         Collection<Order> res = sort.automaticDeals(orders);
@@ -63,8 +63,8 @@ public class SortDataTest {
     @Test
     public void whenAutomaticDealCallAndOneOrderDeleteThenSizeCollectionReducedByOne() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-2","buy", 20, 5.5f, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-2","buy", 5.5f, 20, 1));
         Deal sort = new SortData();
 
         Collection<Order> collection = sort.automaticDeals(orders);
@@ -75,8 +75,8 @@ public class SortDataTest {
     @Test
     public void whenAutomaticDealCallAndOneOrderDeleteThenVolumesMerge() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-2","buy", 20, 5.5f, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-2","buy", 5.5f, 20, 1));
         Deal sort = new SortData();
 
         Collection<Order> collection = sort.automaticDeals(orders);
@@ -88,8 +88,8 @@ public class SortDataTest {
     @Test
     public void whenAutomaticDealCallAndTwoOrderDeleteThenSizeCollectionReducedByTwo() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-2","buy", 10, 5.5f, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-2","buy", 5.5f, 10, 1));
         Deal sort = new SortData();
 
         Collection<Order> collection = sort.automaticDeals(orders);
@@ -100,10 +100,10 @@ public class SortDataTest {
     @Test
     public void whenAutomaticDealCallAndTreeOrderDeleteThenSizeCollectionReducedByThree() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-2","buy", 10, 5.5f, 1));
-        orders.add(new Order("book-1","sell", 5, 6.5f, 1));
-        orders.add(new Order("book-2","buy", 10, 6.5f, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-2","buy", 5.5f, 10, 1));
+        orders.add(new Order("book-1","sell", 6.5f, 5, 1));
+        orders.add(new Order("book-2","buy", 6.5f, 10, 1));
         Deal sort = new SortData();
 
         Collection<Order> collection = sort.automaticDeals(orders);
@@ -114,10 +114,10 @@ public class SortDataTest {
     @Test
     public void whenAutomaticDealCallAndAllOrdersHaveSameBookThenNothingHappens() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.5f, 1));
-        orders.add(new Order("book-1","buy", 30, 5.5f, 1));
-        orders.add(new Order("book-1","sell", 5, 5.5f, 1));
-        orders.add(new Order("book-1","buy", 20, 5.5f, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 10, 1));
+        orders.add(new Order("book-1","buy", 5.5f, 30, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 5, 1));
+        orders.add(new Order("book-1","buy", 5.5f, 20, 1));
         Deal sort = new SortData();
 
         Collection<Order> collection = sort.automaticDeals(orders);
@@ -128,10 +128,10 @@ public class SortDataTest {
     @Test
     public void whenGetSortedByPriceCallThenReturnListOfOrdersWithSameBook() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.2f, 1));
-        orders.add(new Order("book-1","buy", 30, 7.5f, 1));
-        orders.add(new Order("book-1","sell", 5, 5.5f, 1));
-        orders.add(new Order("book-1","buy", 20, 4.5f, 1));
+        orders.add(new Order("book-1","sell", 5.2f, 10, 1));
+        orders.add(new Order("book-1","buy", 7.5f, 30, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 5, 1));
+        orders.add(new Order("book-1","buy", 4.5f, 20, 1));
         Deal deal = new SortData();
 
         deal.automaticDeals(orders);
@@ -146,10 +146,10 @@ public class SortDataTest {
     @Test
     public void whenGetSortedByPriceCallThenReturnListOfOrdersWithSameOperation() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.2f, 1));
-        orders.add(new Order("book-1","buy", 30, 7.5f, 1));
-        orders.add(new Order("book-1","sell", 5, 5.5f, 1));
-        orders.add(new Order("book-1","buy", 20, 4.5f, 1));
+        orders.add(new Order("book-1","sell", 5.2f, 10, 1));
+        orders.add(new Order("book-1","buy", 7.5f, 30, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 5, 1));
+        orders.add(new Order("book-1","buy", 4.5f, 20, 1));
         Deal deal = new SortData();
 
         deal.automaticDeals(orders);
@@ -164,10 +164,10 @@ public class SortDataTest {
     @Test
     public void whenGetSortedByPriceCallThenReturnListOfOrdersSortedByPrise() {
         ArrayList<Order> orders = new ArrayList<>();
-        orders.add(new Order("book-1","sell", 10, 5.2f, 1));
-        orders.add(new Order("book-1","buy", 30, 7.5f, 1));
-        orders.add(new Order("book-1","sell", 5, 5.5f, 1));
-        orders.add(new Order("book-1","buy", 20, 4.5f, 1));
+        orders.add(new Order("book-1","sell", 5.2f, 10, 1));
+        orders.add(new Order("book-1","buy", 7.5f, 30, 1));
+        orders.add(new Order("book-1","sell", 5.5f, 5, 1));
+        orders.add(new Order("book-1","buy", 4.5f, 20, 1));
         Deal deal = new SortData();
         deal.automaticDeals(orders);
         List<Order> sortedOrders =

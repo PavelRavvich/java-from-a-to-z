@@ -2,22 +2,17 @@ package ru.pravvich.parseFile;
 
 import java.util.*;
 
-public class PrintOrders {
+public class PrintOrders implements Print {
     private Sort sort;
 
-    public List<Order> initDataStructure(String path) {
+    @Override
+    public List<Order> getDataFrom(String path) {
         Input input = new InputFile(path);
-        long start = System.currentTimeMillis();
         Collection<Order> allOrders = input.readFile();
-        long finish = System.currentTimeMillis();
-        System.out.println(finish - start);
-
         sort = new SortData();
 
         Collection<Collection<Order>> collectionCollection =
                 sort.getCollectionOfCollectionsByBook(allOrders);
-
-
 
         Collection<Order> mergedOrders =
                 sort.mergeEachBook(collectionCollection);
@@ -25,28 +20,20 @@ public class PrintOrders {
         return sort.automaticDeals(new ArrayList<>(mergedOrders));
     }
 
-    public void print(String book, String operation) {
+    private void printData(String book, String operation) {
         sort.getSortedByPriceCollectionBooksWith(book, operation)
                 .forEach(System.out::println);
     }
 
+    @Override
     public void start() {
-        print("book-1", "BUY");
-        print("book-1", "SELL");
+        printData("book-1", "BUY");
+        printData("book-1", "SELL");
         System.out.println();
-        print("book-2", "BUY");
-        print("book-2", "SELL");
+        printData("book-2", "BUY");
+        printData("book-2", "SELL");
         System.out.println();
-        print("book-3", "BUY");
-        print("book-3", "SELL");
-    }
-
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-        PrintOrders printOrders = new PrintOrders();
-        printOrders.initDataStructure("/Users/pavel/Desktop/orders.xml");
-        printOrders.start();
-        long finish = System.currentTimeMillis();
-        System.out.println(finish - start);
+        printData("book-3", "BUY");
+        printData("book-3", "SELL");
     }
 }
