@@ -13,7 +13,7 @@ class InputFile implements Input {
 
 
     public Collection<Order> readFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader("/Users/pavel/Desktop/orders.xml"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.charAt(1) == 'A') {
