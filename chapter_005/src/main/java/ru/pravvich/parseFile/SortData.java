@@ -55,7 +55,7 @@ class SortData implements Sort {
     ) {
 
         List<Order> orders =
-                committedDeal.parallelStream().filter(order -> book
+                committedDeal.stream().filter(order -> book
                         .equals(order.getBook()) &&
                         operation.equals(order.getOperation()))
                         .collect(Collectors.toList());
