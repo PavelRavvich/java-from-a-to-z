@@ -13,25 +13,25 @@ class InputFile implements Input {
 
 
     public Collection<Order> readFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.charAt(1) == 'A') {
-                    Order order = getObjectOrderFrom(line);
-                    Map<Integer, Order> mapByID = mapByBook.get(order.getBook());
-                    if (mapByID == null) {
-                        mapByID = new HashMap<>();
-                        mapByBook.put(order.getBook(), mapByID);
+            try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.charAt(1) == 'A') {
+                        Order order = getObjectOrderFrom(line);
+                        Map<Integer, Order> mapByID = mapByBook.get(order.getBook());
+                        if (mapByID == null) {
+                            mapByID = new HashMap<>();
+                            mapByBook.put(order.getBook(), mapByID);
+                        }
+                        mapByID.put(order.getOrderId(), order);
+                    } else if (line.charAt(1) == 'D') {
+                        Order order = getObjectOrderFrom(line);
+                        mapByBook.get(order.getBook()).remove(order.getOrderId());
                     }
-                    mapByID.put(order.getOrderId(), order);
-                } else if (line.charAt(1) == 'D') {
-                    Order order = getObjectOrderFrom(line);
-                    mapByBook.get(order.getBook()).remove(order.getOrderId());
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         List<Order> orders = new LinkedList<>();
         for (Map<Integer, Order> map : mapByBook.values()) {

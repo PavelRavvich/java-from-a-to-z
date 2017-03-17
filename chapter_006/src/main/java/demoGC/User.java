@@ -17,12 +17,12 @@ class GCStart {
     public void checkGC() {
         ArrayList<User> list = new ArrayList<>();
 
-        for (int i = 0; i < 35000; i++) {
+        for (int i = 0; i < 55000; i++) {
             list.add(new User());
         }
 
         info();
-
+        //list = null;
         System.gc();
 
         info();
@@ -49,5 +49,10 @@ class GCStart {
         //Print maximum available memory
         System.out.println("Max memory: "
                 + runtime.maxMemory() / mb);
+    }
+
+    public static void main(String[] args) {
+        GCStart gcStart = new GCStart();
+        gcStart.checkGC();
     }
 }
