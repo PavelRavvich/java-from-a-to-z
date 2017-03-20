@@ -1,11 +1,12 @@
 package cashForFiles;
 
 import java.io.File;
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cash {
-    private Map<String, String> cashOfFiles = new HashMap<>();
+    private Map<SoftReference<String>, SoftReference<String>> cash = new HashMap<>();
     private String pathToFolder;
 
     public Cash(String pathToFolder) {
@@ -13,9 +14,9 @@ public class Cash {
     }
 
     public String getFileContent(String name) {
-        String content = cashOfFiles.get(name);
-        if (content != null) {
-            return content;
+        SoftReference<String> reference = cash.get(new SoftReference<>(name));
+        if (reference != null) {
+            return reference.get();
         }
 
         String pathToFile = String.format("%s%s%s",
@@ -27,10 +28,9 @@ public class Cash {
         }
 
         FileRead reader = new FileRead(file);
-        content = reader.read();
+        String content = reader.read();
 
-        cashOfFiles.put(name, content);
-
+        cash.put(new SoftReference<>(name), new SoftReference<>(content));
         return content;
     }
 }
