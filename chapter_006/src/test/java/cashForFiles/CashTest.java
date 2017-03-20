@@ -23,7 +23,7 @@ public class CashTest {
 
     @Test
     public void whenFileNotExistThenReturnStringMassageIsFileNotExist() {
-        String fileName = "fileName";
+        String fileName = "fileName1";
         File directory = new File(dir, "test");
         directory.mkdir();
 
