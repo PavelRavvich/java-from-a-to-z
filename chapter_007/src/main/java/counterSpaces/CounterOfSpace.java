@@ -90,24 +90,24 @@ public class CounterOfSpace {
         this.threadForSpaceCount = new Thread(new Runnable() {
             @Override
             public void run() {
-                startProcess = true;
+                CounterOfSpace.this.startProcess = true;
 
-                if (textForAnalysis.length() == 0) {
+                if (CounterOfSpace.this.textForAnalysis.length() == 0) {
                     return;
                 }
 
-                for (char c : textForAnalysis.toCharArray()) {
-                    if (threadForSpaceCount.isInterrupted() ||
-                            threadForWordsCount.isInterrupted()) {
+                for (char c : CounterOfSpace.this.textForAnalysis.toCharArray()) {
+                    if (CounterOfSpace.this.threadForSpaceCount.isInterrupted() ||
+                            CounterOfSpace.this.threadForWordsCount.isInterrupted()) {
 
-                        finishProcess = true;
+                        CounterOfSpace.this.finishProcess = true;
                         return;
                     }
 
                     if (c == ' ') {
-                        counterOfSpaces++;
+                        CounterOfSpace.this.counterOfSpaces++;
                         System.out.println(String.format(
-                                "counterOfSpaces %s", counterOfSpaces));
+                                "counterOfSpaces %s", CounterOfSpace.this.counterOfSpaces));
                     }
                 }
             }
@@ -124,25 +124,25 @@ public class CounterOfSpace {
         this.threadForWordsCount = new Thread(new Runnable() {
             @Override
             public void run() {
-                startProcess = true;
+                CounterOfSpace.this.startProcess = true;
 
-                if (textForAnalysis.length() == 0) {
+                if (CounterOfSpace.this.textForAnalysis.length() == 0) {
                     return;
                 }
 
-                String[] words = textForAnalysis.split(" ");
+                String[] words = CounterOfSpace.this.textForAnalysis.split(" ");
                 for (String word : words) {
-                    if (threadForSpaceCount.isInterrupted() ||
-                            threadForWordsCount.isInterrupted()) {
+                    if (CounterOfSpace.this.threadForSpaceCount.isInterrupted() ||
+                            CounterOfSpace.this.threadForWordsCount.isInterrupted()) {
 
-                        finishProcess = true;
+                        CounterOfSpace.this.finishProcess = true;
                         return;
                     }
 
                     if (!word.equals(" ")) {
-                        counterOfWords++;
+                        CounterOfSpace.this.counterOfWords++;
                         System.out.println(String.format(
-                                "counterOfWords %s", counterOfWords));
+                                "counterOfWords %s", CounterOfSpace.this.counterOfWords));
                     }
                 }
             }
@@ -157,7 +157,7 @@ public class CounterOfSpace {
     private class MyTimer extends TimerTask {
         @Override
         public void run() {
-            while (!startProcess) {
+            while (!CounterOfSpace.this.startProcess) {
                 try {
                     this.wait(1);
                 } catch (InterruptedException e) {
@@ -165,12 +165,12 @@ public class CounterOfSpace {
                 }
             }
 
-            threadForSpaceCount.interrupt();
-            threadForWordsCount.interrupt();
+            CounterOfSpace.this.threadForSpaceCount.interrupt();
+            CounterOfSpace.this.threadForWordsCount.interrupt();
         }
 
         private void interruptMassage() {
-            if (finishProcess) {
+            if (CounterOfSpace.this.finishProcess) {
                 System.out.println(
                         "Time is over! Threads have been stopped.");
             }
