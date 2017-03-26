@@ -67,7 +67,6 @@ public class CounterOfSpace {
 
         this.timer.schedule(this.stop, this.timeLimiter);
 
-
         this.threadForSpaceCount.start();
         this.threadForWordsCount.start();
 
