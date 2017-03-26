@@ -13,6 +13,7 @@
         <module>chapter_004</module>
         <module>chapter_005</module>
         <module>chapter_006</module>
+        <module>chapter_007</module>
     </modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

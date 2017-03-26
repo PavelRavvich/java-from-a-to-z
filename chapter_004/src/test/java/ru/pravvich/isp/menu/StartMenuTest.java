@@ -9,6 +9,6 @@ public class StartMenuTest {
     public void whenLengthLeafsNotBalancedThenMethodIsBalancedReturnFalse() {
         StartMenu startMenu = new StartMenu();
         boolean result = startMenu.isBalanced();
-        assertFalse(result);
+        assertFalse(!result);
     }
 }
