@@ -1,7 +1,7 @@
 package multithredCounter;
 
 public class Counter01 {
-    private transient int counter = 0;
+    private volatile int counter = 0;
 
     public int getCounter() {
         this.start();
