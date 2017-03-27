@@ -17,7 +17,7 @@ public class Consumer {
     public boolean addAccount(BigDecimal amount, String name, Integer id) throws InterruptedException {
         ThreadAdd thread = new ThreadAdd(amount, name, id);
         thread.start();
-        thread.join();
+        thread.join(); // ????????????????????????????????????? не работает без него((((
         return thread.added;
     }
 

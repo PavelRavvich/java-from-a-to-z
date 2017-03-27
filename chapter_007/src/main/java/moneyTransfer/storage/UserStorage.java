@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserStorage implements Storage {
-    private final Map<Integer, Account> accounts;
+    private final transient Map<Integer, Account> accounts;
     private final Object monitor;
 
     public UserStorage() {
@@ -17,8 +17,8 @@ public class UserStorage implements Storage {
     }
 
     @Override
-    public boolean addAccount(final Account account) {
-        synchronized (this.monitor) {
+    public synchronized boolean addAccount(final Account account) {
+        //synchronized (this.monitor) {
             final Account a = this.accounts.get(account.getId());
             if (a != null) {
                 return false;
@@ -26,7 +26,7 @@ public class UserStorage implements Storage {
 
             this.accounts.put(account.getId(), account);
             return true;
-        }
+        //}
     }
 
     @Override
