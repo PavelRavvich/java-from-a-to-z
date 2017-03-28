@@ -24,7 +24,7 @@ public class ParallelCallableStorageTest {
             consumer.addAccount(new BigDecimal("32"), "name", i);
         }
 
-        Map<Integer, Boolean> results = consumer.getSuccessOfOperations();
+        Map<Integer, Boolean> results = consumer.getSuccessOfAdd();
         results.values().forEach(Assert::assertTrue);
     }
 
@@ -34,7 +34,7 @@ public class ParallelCallableStorageTest {
             consumer.delAccount(i);
         }
 
-        Map<Integer, Boolean> results = consumer.getSuccessOfOperations();
+        Map<Integer, Boolean> results = consumer.getSuccessOfAdd();
         results.values().forEach(Assert::assertTrue);
     }
 }
