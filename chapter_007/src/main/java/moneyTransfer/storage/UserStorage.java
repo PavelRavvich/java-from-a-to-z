@@ -5,30 +5,33 @@ import moneyTransfer.user.User;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class UserStorage implements Storage {
     private volatile Map<Integer, Account> accounts;
     private final Object monitor;
 
     public UserStorage() {
-        this.accounts = new HashMap<>();
+        this.accounts = new ConcurrentHashMap<>();
         this.monitor = new Object();
     }
 
     @Override
-    public boolean addAccount(final Account account) {
-        synchronized (this) {
+    public synchronized boolean addAccount(final Account account) {
+        //synchronized (this) {
 
                 final Account a = this.accounts.get(account.getId());
                 if (a != null) {
+                    System.out.println("UserStorage = " + a);
                     return false;
                 }
 
                 this.accounts.put(account.getId(), account);
                 return true;
 
-        }
+        //}
     }
 
     @Override

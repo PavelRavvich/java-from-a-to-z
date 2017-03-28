@@ -24,7 +24,9 @@ public class ConsumerTest {
     public void whenAddWithOriginalIdThenAddAccountReturnTrue() throws InterruptedException {
         List<Boolean> result = new LinkedList<>();
         for (int i = 0; i < 100; i++) {
-            result.add(consumer.addAccount(new BigDecimal("32"), "name", i));
+            boolean a;
+            result.add(a = consumer.addAccount(new BigDecimal("32"), "name", i));
+            System.out.println(a);
         }
 
         result.forEach(Assert::assertTrue);
