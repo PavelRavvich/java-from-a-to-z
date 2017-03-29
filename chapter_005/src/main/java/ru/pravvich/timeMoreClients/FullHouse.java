@@ -4,45 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 class FullHouse {
+    private int count = 1;
+
     TimeZoneCline getFullHouse(List<TimeZoneCline> timeZones) {
         List<TimeZoneCline> list = new ArrayList<>();
 
         for (int i = 0; (i + 1) < timeZones.size(); i++) {
-            TimeZoneCline collective = getCollectiveZone(
-                    timeZones.get(i), timeZones.get(i + 1));
+            // получаю время двух поситителей. start=вошел; finish=ушел
+            float startFst = timeZones.get(i).getStart();
+            float finishFst = timeZones.get(i).getFinish();
+            float startSnd = timeZones.get(i + 1).getStart();
+            float finishSnd = timeZones.get(i + 1).getFinish();
 
-            if (collective.getStart() != 0 &&
-                    collective.getFinish() != 0) {
-                list.add(collective);
+            // тут сливаю зоны по общему времени. если общего нет то добавляю в лист обе
+            if (startFst < finishSnd && startSnd < startFst) {
+                // создается новая зона и у нее вызывается инклемент колличества
+                // поситителей за этот промежуток времени.
+                list.add(new TimeZoneCline(startFst, finishSnd).increment());
+            } else if (startSnd < finishFst && startSnd > startFst) {
+                list.add(new TimeZoneCline(startSnd, finishFst).increment());
+            } else if (startFst == startSnd && finishFst < finishSnd) {
+                list.add(new TimeZoneCline(startFst, finishFst).increment());
+            } else if (startFst == startSnd && finishFst > finishSnd) {
+                list.add(new TimeZoneCline(startSnd, finishSnd).increment());
+            } else if (startFst == startSnd && finishFst == finishSnd) {
+                list.add(new TimeZoneCline(startFst, finishFst).increment());
+            } else if (finishFst < startSnd) {
+                list.add(timeZones.get(i));
+                list.add(timeZones.get(i + 1));
+                this.count++;
+            } else {
+                list.add(timeZones.get(i + 1));
+                list.add(timeZones.get(i));
+                this.count++;
             }
         }
 
-        if (list.size() == 1) {
-            return list.get(0);
+        if (list.size() == count) {
+            TimeZoneCline result = list.get(0);
+            for (TimeZoneCline t : list) {
+                if (t.getAmountCline() > result.getAmountCline()) {
+                    result = t;
+                }
+            }
+            return result;
         }
 
         return getFullHouse(list);
-    }
-
-    private TimeZoneCline getCollectiveZone(TimeZoneCline fst, TimeZoneCline snd) {
-        float startFst = fst.getStart();
-        float finishFst = fst.getFinish();
-
-        float startSnd = snd.getStart();
-        float finishSnd = snd.getFinish();
-
-        if (startFst < finishSnd && startSnd < startFst) {
-            return new TimeZoneCline(startFst, finishSnd);
-        } else if (startSnd < finishFst && startSnd > startFst) {
-            return new TimeZoneCline(startSnd, finishFst);
-        } else if (startFst == startSnd && finishFst < finishSnd) {
-            return new TimeZoneCline(startFst, finishFst);
-        } else if (startFst == startSnd && finishFst > finishSnd) {
-            return new TimeZoneCline(startSnd, finishSnd);
-        } else if (startFst == startSnd && finishFst == finishSnd) {
-            return new TimeZoneCline(startFst, finishFst);
-        }
-
-        return new TimeZoneCline(0f ,0f);
     }
 }

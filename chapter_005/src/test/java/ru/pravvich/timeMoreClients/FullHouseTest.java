@@ -103,22 +103,22 @@ public class FullHouseTest {
 
     @Test
     public void whenManyClientsThen() {
-        TimeZoneCline zone01 = new TimeZoneCline(12.00f, 15.00f);
         TimeZoneCline zone05 = new TimeZoneCline(11.00f, 13.00f);
         TimeZoneCline zone03 = new TimeZoneCline(14.00f, 18.00f);
+        TimeZoneCline zone01 = new TimeZoneCline(12.00f, 15.00f);
         TimeZoneCline zone04 = new TimeZoneCline(14.00f, 17.00f);
         TimeZoneCline zone02 = new TimeZoneCline(13.00f, 17.00f);
 
         List<TimeZoneCline> zones = new ArrayList<>();
+        zones.add(zone05);
+        zones.add(zone03);
         zones.add(zone01);
         zones.add(zone02);
-        zones.add(zone03);
         zones.add(zone04);
-        zones.add(zone05);
 
         FullHouse fullHouse = new FullHouse();
         TimeZoneCline result = fullHouse.getFullHouse(zones);
-
+        System.out.println(result.toString());
         assertThat(result.getStart(), is(14.00f));
         assertThat(result.getFinish(), is(15.00f));
     }
