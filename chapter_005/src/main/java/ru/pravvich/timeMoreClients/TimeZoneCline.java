@@ -14,7 +14,7 @@ class TimeZoneCline {
         this.finish = finish;
     }
 
-    TimeZoneCline increment() {
+    TimeZoneCline incrementAmountClients() {
         ++this.amountCline;
         return this;
     }
