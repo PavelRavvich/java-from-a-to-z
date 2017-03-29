@@ -120,7 +120,7 @@ public class ParallelCallableStorage implements ParallelStorage {
      */
     @Override
     public void delAccount(final Integer id) {
-        Future<Boolean> future = this.threadPool.submit(new Deleting(id));
+        final Future<Boolean> future = this.threadPool.submit(new Deleting(id));
         this.resultsOfDeletes.put(id, future);
     }
 
@@ -179,8 +179,8 @@ public class ParallelCallableStorage implements ParallelStorage {
      */
     @Override
     public void updateAccount(final Integer id, final String name) {
-        Callable<Boolean> task = new UpdateAccount(id, name);
-        Future<Boolean> result = ParallelCallableStorage.this.threadPool.submit(task);
+        final Callable<Boolean> task = new UpdateAccount(id, name);
+        final Future<Boolean> result = ParallelCallableStorage.this.threadPool.submit(task);
         ParallelCallableStorage.this.resultsUpdates.put(id, result);
     }
 
