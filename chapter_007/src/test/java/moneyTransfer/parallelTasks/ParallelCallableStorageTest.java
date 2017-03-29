@@ -137,7 +137,7 @@ public class ParallelCallableStorageTest {
     }
 
     @Test
-    public void whenThen() {
+    public void whenManyParallelUpdateAccountNotWhichExistThenReturnAllValuesFalse() {
         final ParallelStorage consumer = new ParallelCallableStorage();
 
         for (int i = 100; i < 200; i++) {
