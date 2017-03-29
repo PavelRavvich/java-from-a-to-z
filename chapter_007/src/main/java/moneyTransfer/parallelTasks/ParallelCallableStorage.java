@@ -42,7 +42,7 @@ public class ParallelCallableStorage implements ParallelStorage {
 
     @Override
     public Map<Integer, Boolean> getSuccessOfUpdate() {
-        return null;
+        return getSuccessOf(this.resultsUpdates);
     }
 
     @Override

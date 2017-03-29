@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class UserStorage implements Storage {
-    private volatile Map<Integer, Account> accounts;
+    private Map<Integer, Account> accounts;
 
     public UserStorage() {
         this.accounts = new ConcurrentHashMap<>();
