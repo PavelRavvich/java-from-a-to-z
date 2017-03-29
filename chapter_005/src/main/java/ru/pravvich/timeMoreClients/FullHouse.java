@@ -20,16 +20,17 @@ class FullHouse {
             if (startFst < finishSnd && startSnd < startFst) {
                 // создается новая зона и у нее вызывается инклемент колличества
                 // поситителей за этот промежуток времени.
-                list.add(new TimeZoneCline(startFst, finishSnd).increment());
+                list.add(new TimeZoneCline(startFst, finishSnd).incrementAmountClients());
             } else if (startSnd < finishFst && startSnd > startFst) {
-                list.add(new TimeZoneCline(startSnd, finishFst).increment());
+                list.add(new TimeZoneCline(startSnd, finishFst).incrementAmountClients());
             } else if (startFst == startSnd && finishFst < finishSnd) {
-                list.add(new TimeZoneCline(startFst, finishFst).increment());
+                list.add(new TimeZoneCline(startFst, finishFst).incrementAmountClients());
             } else if (startFst == startSnd && finishFst > finishSnd) {
-                list.add(new TimeZoneCline(startSnd, finishSnd).increment());
+                list.add(new TimeZoneCline(startSnd, finishSnd).incrementAmountClients());
             } else if (startFst == startSnd && finishFst == finishSnd) {
-                list.add(new TimeZoneCline(startFst, finishFst).increment());
+                list.add(new TimeZoneCline(startFst, finishFst).incrementAmountClients());
             } else if (finishFst < startSnd) {
+                // вот тут добавляю обе если зоны не пересекаются, в этом случае инкремент у них не вызывается
                 list.add(timeZones.get(i));
                 list.add(timeZones.get(i + 1));
                 this.count++;
@@ -40,7 +41,7 @@ class FullHouse {
             }
         }
 
-        if (list.size() == count) {
+        if (list.size() == this.count) {
             TimeZoneCline result = list.get(0);
             for (TimeZoneCline t : list) {
                 if (t.getAmountCline() > result.getAmountCline()) {
