@@ -5,7 +5,7 @@ import org.junit.Test;
 public class CounterOfSpaceTest {
     @Test
     public void whenThen() {
-        CounterOfSpace count = new CounterOfSpace(text, 10);
+        CounterOfSpace count = new CounterOfSpace(text, 20);
         count.startProgram();
     }
 
