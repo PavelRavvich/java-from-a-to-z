@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class ArraySimpleSet<E> implements SetArray<E> {
 
-    private E[] values;
+    private volatile E[] values;
 
     public ArraySimpleSet() {
         values = (E[]) new Object[0];
@@ -29,7 +29,7 @@ public class ArraySimpleSet<E> implements SetArray<E> {
     }
 
     @Override
-    public boolean add(E e) {
+    public synchronized boolean add(E e) {
         Objects.requireNonNull(e);
         if (notExistDuplicate(e)) {
             try {
