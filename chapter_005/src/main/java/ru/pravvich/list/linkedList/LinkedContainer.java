@@ -6,7 +6,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
 
     private Node<E> fstNode;
     private Node<E> lstNode;
-    private int size = 0;
+    private volatile int size = 0;
 
     public LinkedContainer() {
         lstNode = new Node<E>(null, fstNode, null);
@@ -14,7 +14,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     }
 
     @Override
-    public void addLast(E e) {
+    public synchronized void addLast(E e) {
         Node<E> prev = lstNode;
         prev.setCurrentElement(e);
         lstNode = new Node<>(null, prev, null);
@@ -23,7 +23,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     }
 
     @Override
-    public void addFirst(E e) {
+    public synchronized void addFirst(E e) {
         Node<E> next = fstNode;
         next.setCurrentElement(e);
         fstNode = new Node<>(null, null, next);
@@ -32,7 +32,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     }
 
     @Override
-    public E getElementByIndex(int counter) {
+    public synchronized E getElementByIndex(int counter) {
         Node<E> target = fstNode.getNextNode();
         for (int i = 0; i < counter; i++) {
             target = getNextElement(target);
@@ -50,7 +50,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     }
 
     @Override
-    public Iterator iterator() {
+    public synchronized Iterator iterator() {
         return new Iterator<E>() {
 
             int counter = 0;
@@ -68,7 +68,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
     }
 
     @Override
-    public Iterator<E> descendingIterator() {
+    public synchronized Iterator<E> descendingIterator() {
         return new Iterator<E>() {
 
             int counter = size - 1;
@@ -85,7 +85,7 @@ public class LinkedContainer<E> implements Linked<E>, Iterable<E>, DescendingIte
         };
     }
 
-    private class Node<E> {
+    private final class Node<E> {
         private E currentElement;
         private Node<E> nextElement;
         private Node<E> prevElement;
