@@ -5,7 +5,8 @@ import java.util.Objects;
 
 public class ArraySimpleSet<E> implements SetArray<E> {
 
-    private volatile E[] values;
+    private static final Object lock = new Object();
+    private E[] values;
 
     public ArraySimpleSet() {
         values = (E[]) new Object[0];
@@ -13,37 +14,42 @@ public class ArraySimpleSet<E> implements SetArray<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private int index = 0;
+        synchronized (lock) {
+            return new Iterator<E>() {
+                private int index = 0;
 
-            @Override
-            public boolean hasNext() {
-                return index < values.length;
-            }
+                @Override
+                public boolean hasNext() {
+                    return index < values.length;
+                }
 
-            @Override
-            public E next() {
-                return values[index++];
-            }
-        };
+                @Override
+                public E next() {
+                    return values[index++];
+                }
+            };
+        }
     }
 
     @Override
-    public synchronized boolean add(E e) {
-        Objects.requireNonNull(e);
-        if (notExistDuplicate(e)) {
-            try {
-                E[] temp = values;
-                values = (E[]) new Object[temp.length + 1]; // ??? ClassCastException ???
-                System.arraycopy(temp, 0, values, 0, temp.length);
-                values[values.length - 1] = e;
-                sortByHashCode();
-                return true;
-            } catch (ClassCastException ex) {
-                ex.printStackTrace();
+    public boolean add(E e) {
+        synchronized (lock) {
+            Objects.requireNonNull(e);
+            if (notExistDuplicate(e)) {
+                try {
+                    E[] temp = values;
+                    values = (E[]) new Object[temp.length + 1]; // ??? ClassCastException ???
+                    System.arraycopy(temp, 0, values, 0, temp.length);
+                    values[values.length - 1] = e;
+                    sortByHashCode();
+                    return true;
+                } catch (ClassCastException ex) {
+                    ex.printStackTrace();
+                }
             }
+            return false;
         }
-        return false;
+
     }
 
     @Override
