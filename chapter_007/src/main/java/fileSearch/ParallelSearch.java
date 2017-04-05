@@ -72,6 +72,7 @@ public class ParallelSearch implements Parallel {
     // добавляем в пул потоки для поиска строки по содержимому txt файлов
     private void searchByFilesContent(final String targetText) {
         for (int i = 0; i < (this.amountThreads - 1); i++) {
+            if (service.isShutdown()) break;
             final Future<File> taskRead =
                     this.service.submit(new Callable<File>() {
                         @Override
