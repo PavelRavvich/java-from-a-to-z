@@ -33,18 +33,18 @@ public class CounterOfSpace {
     /**
      * Stop timer.
      */
-    private final Timer timer = new Timer();
-    private final MyTimer stop = new MyTimer();
+    private final Timer timer;
+    private final TimerUntilInterruptAll stop;
 
     /**
      * Guarantees synchronous start of timer and counter-threads.
      */
-    private transient boolean startProcess = false;
+    private volatile boolean startProcess = false;
 
     /**
      * Guarantees out in console message of interrupt penultimate before "Finish program" massage.
      */
-    private transient boolean finishProcess = false;
+    private volatile boolean finishProcess = false;
 
     /**
      * Default constructor.
@@ -54,6 +54,8 @@ public class CounterOfSpace {
     public CounterOfSpace(final String textForAnalysis, final long timeLimiter) {
         this.textForAnalysis = textForAnalysis;
         this.timeLimiter = timeLimiter;
+        this.timer = new Timer();
+        this.stop = new TimerUntilInterruptAll();
     }
 
     /**
@@ -90,24 +92,23 @@ public class CounterOfSpace {
         this.threadForSpaceCount = new Thread(new Runnable() {
             @Override
             public void run() {
-                CounterOfSpace.this.startProcess = true;
-
-                if (CounterOfSpace.this.textForAnalysis.length() == 0) {
+                if (textForAnalysis.length() == 0) {
                     return;
                 }
 
-                for (char c : CounterOfSpace.this.textForAnalysis.toCharArray()) {
-                    if (CounterOfSpace.this.threadForSpaceCount.isInterrupted() ||
-                            CounterOfSpace.this.threadForWordsCount.isInterrupted()) {
+                startProcess = true;
+                for (char c : textForAnalysis.toCharArray()) {
+                    if (threadForSpaceCount.isInterrupted() ||
+                            threadForWordsCount.isInterrupted()) {
 
-                        CounterOfSpace.this.finishProcess = true;
+                        finishProcess = true;
                         return;
                     }
 
                     if (c == ' ') {
-                        CounterOfSpace.this.counterOfSpaces++;
+                        counterOfSpaces++;
                         System.out.println(String.format(
-                                "counterOfSpaces %s", CounterOfSpace.this.counterOfSpaces));
+                                "counterOfSpaces %s", counterOfSpaces));
                     }
                 }
             }
@@ -124,25 +125,24 @@ public class CounterOfSpace {
         this.threadForWordsCount = new Thread(new Runnable() {
             @Override
             public void run() {
-                CounterOfSpace.this.startProcess = true;
-
-                if (CounterOfSpace.this.textForAnalysis.length() == 0) {
+                if (textForAnalysis.length() == 0) {
                     return;
                 }
 
-                String[] words = CounterOfSpace.this.textForAnalysis.split(" ");
+                startProcess = true;
+                String[] words = textForAnalysis.split(" ");
                 for (String word : words) {
-                    if (CounterOfSpace.this.threadForSpaceCount.isInterrupted() ||
-                            CounterOfSpace.this.threadForWordsCount.isInterrupted()) {
+                    if (threadForSpaceCount.isInterrupted() ||
+                            threadForWordsCount.isInterrupted()) {
 
-                        CounterOfSpace.this.finishProcess = true;
+                        finishProcess = true;
                         return;
                     }
 
                     if (!word.equals(" ")) {
-                        CounterOfSpace.this.counterOfWords++;
+                        counterOfWords++;
                         System.out.println(String.format(
-                                "counterOfWords %s", CounterOfSpace.this.counterOfWords));
+                                "counterOfWords %s", counterOfWords));
                     }
                 }
             }
@@ -154,10 +154,10 @@ public class CounterOfSpace {
     /**
      * Class stop threads threadForWordsCount and threadForSpaceCount.
      */
-    private class MyTimer extends TimerTask {
+    private class TimerUntilInterruptAll extends TimerTask {
         @Override
         public void run() {
-            while (!CounterOfSpace.this.startProcess) {
+            while (!startProcess) {
                 try {
                     this.wait(1);
                 } catch (InterruptedException e) {
@@ -165,12 +165,12 @@ public class CounterOfSpace {
                 }
             }
 
-            CounterOfSpace.this.threadForSpaceCount.interrupt();
-            CounterOfSpace.this.threadForWordsCount.interrupt();
+            threadForSpaceCount.interrupt();
+            threadForWordsCount.interrupt();
         }
 
         private void interruptMassage() {
-            if (CounterOfSpace.this.finishProcess) {
+            if (finishProcess) {
                 System.out.println(
                         "Time is over! Threads have been stopped.");
             }
