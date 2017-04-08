@@ -36,7 +36,6 @@ public class ThreadPool implements Pool {
         this.actual = new CopyOnWriteArrayList<>();
         this.future = new LinkedBlockingQueue<>();
         this.shutdown = new AtomicBoolean(false);
-        //this.rotationDeadThreads();
     }
 
     /**
