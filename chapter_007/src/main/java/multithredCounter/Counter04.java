@@ -1,7 +1,9 @@
 package multithredCounter;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Counter04 {
-    private int counter = 0;
+    private AtomicInteger counter = new AtomicInteger(0);
 
     int start() {
         Thread t1 = getParallelThread();
@@ -21,7 +23,7 @@ public class Counter04 {
             e.printStackTrace();
         }
 
-        return this.counter;
+        return this.counter.get();
     }
 
     private Thread getParallelThread() {
@@ -35,7 +37,7 @@ public class Counter04 {
 
     private void increment() {
         for (int i = 0; i < 1_000_000; i++) {
-            Counter04.this.counter++;
+            Counter04.this.counter.incrementAndGet();
         }
     }
 }
