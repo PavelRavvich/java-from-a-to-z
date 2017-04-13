@@ -17,7 +17,7 @@ public class User <K extends Number, V extends Task> implements Account<K, V> {
      */
     private final Cash<K, V> globalCash;
     /**
-     * Local cash belongs this User. For match version of tasks.
+     * Local cash belongs this Walker. For match version of tasks.
      */
     private final Map<K, V> localCash;
 

@@ -1,4 +1,4 @@
-package bomberman.user;
+package bomberman.units;
 
 import bomberman.gameBoard.Board;
 
@@ -12,9 +12,9 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class Gamer implements Walker {
     final AtomicReference<Board> board;
-    final AtomicBoolean unitIsLive;
     private final AtomicInteger currentX;
     private final AtomicInteger currentY;
+    final AtomicBoolean unitIsLive;
 
     public Gamer(final AtomicReference<Board> board,
                  final AtomicInteger startX,
@@ -28,9 +28,9 @@ public class Gamer implements Walker {
 
     @Override
     public void run() {
-        while (this.unitIsLive.get()) {
+        while (this.unitIsLive.get() && !Thread.currentThread().isInterrupted()) {
             System.out.println("Game is start!");
-            // TODO: 12.04.17 move game by inner data
+            // TODO: 12.04.17 move gamer by inner data
         }
     }
 
@@ -95,8 +95,10 @@ public class Gamer implements Walker {
         final Unit unit = board.get().getBoard()[y][x];
         this.board.get().getBoard()[y][x - 1] = unit;
         this.board.get().getBoard()[y][x] = null;
+        this.currentX.set(x - 1);
         return true;
     }
+
 
     protected boolean pointNotClear(final int futureX, final int futureY) {
         return this.board.get().getBoard()[futureY][futureX] == null;

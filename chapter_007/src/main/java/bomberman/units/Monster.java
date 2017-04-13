@@ -1,8 +1,8 @@
-package bomberman.user;
+package bomberman.units;
 
 import bomberman.gameBoard.Board;
-import bomberman.user.Gamer;
 
+import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,9 +32,10 @@ public class Monster extends Gamer {
             e.printStackTrace();
         }
 
-        this.goMonsterAutomaticMove();
+        new MonsterAutomaticMoveAlgorithm().go();
     }
 
+    @Override
     protected boolean pointNotClear(final int futureX, final int futureY) {
         int waitTime = 5000;
         while (this.board.get().getBoard()[futureY][futureX] != null) {
@@ -49,23 +50,55 @@ public class Monster extends Gamer {
         return false;
     }
 
-    private void goMonsterAutomaticMove() {
-        while (gameMustGoOn()) {
-            boolean left = true;
-            while (left && gameMustGoOn()) {
-                left = moveLeft();
-            }
+    final private class MonsterAutomaticMoveAlgorithm {
+        private final Random random;
 
+        private MonsterAutomaticMoveAlgorithm() {
+            this.random = new Random();
+        }
+
+        private void go() {
+            int lastRote = 0;
+            while (!Thread.currentThread().isInterrupted() && unitIsLive.get()) {
+                int currentRote = this.random.nextInt(4) + 1;
+                while (lastRote == currentRote) {
+                    currentRote = this.random.nextInt(4) + 1;
+                }
+                lastRote = currentRote;
+                if (currentRote == 1) loopMoveRight();
+                if (currentRote == 2) loopMoveDown();
+                if (currentRote == 3) loopMoveLeft();
+                if (currentRote == 4) loopMoveUp();
+            }
+        }
+
+        private void loopMoveRight() {
             boolean right = true;
-            while (right && gameMustGoOn()) {
+            while (right) {
                 right = moveRight();
             }
         }
 
-        // TODO: 12.04.17 use all move type.
-    }
+        private void loopMoveLeft() {
+            boolean left = true;
+            while (left) {
+                left = moveLeft();
+            }
+        }
 
-    private boolean gameMustGoOn() {
-        return !Thread.currentThread().isInterrupted() && unitIsLive.get();
+        private void loopMoveUp() {
+            boolean up = true;
+            while (up) {
+                up = moveLeft();
+            }
+        }
+
+        private void loopMoveDown() {
+            boolean down = true;
+            while (down) {
+                down = moveLeft();
+            }
+        }
     }
 }
+

@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 
-public class UserTest {
+public class WalkerTest {
     @Test
     public void whenUserAddNewTaskThenReturnTrue() {
         final Cash<Integer, Task> cash = new NonBlockingCash();

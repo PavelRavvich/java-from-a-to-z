@@ -63,7 +63,7 @@ public class Consumer<E> implements Runnable {
             }
         }
 
-        //If not empty consume element and notify waiting producer
+        //If not empty consuming element and notify waiting producer
         synchronized (sharedQueue) {
             sharedQueue.notifyAll();
             return sharedQueue.poll();

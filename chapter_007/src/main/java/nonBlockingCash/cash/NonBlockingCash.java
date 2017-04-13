@@ -40,7 +40,7 @@ public class NonBlockingCash<K extends Number, V extends Task> implements Cash<K
 
         assert newValue != null;
         if (oldValue.getVersion() != newValue.getVersion()) {
-            //User which wanted update did increment version. It's backup.
+            //Walker which wanted update did increment version. It's backup.
             oldValue.decrementVersion();
             throw new DataIsLostException();
         }
@@ -60,7 +60,7 @@ public class NonBlockingCash<K extends Number, V extends Task> implements Cash<K
     }
 
     /**
-     * Overload method for get from User.
+     * Overload method for get from Walker.
      * @return value, or null.
      */
     @Override

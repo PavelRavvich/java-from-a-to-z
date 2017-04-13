@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class UserStorageTest {
+public class WalkerStorageTest {
     @Test
     public void whenAddNewAccountThenMethodAddAccountReturnTrue() {
         Account account = new User(new BigDecimal("1"), "name", 1);

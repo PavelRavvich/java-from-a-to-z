@@ -51,7 +51,7 @@ public class User implements Account {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Walker{" +
                 "amount=" + amount +
                 ", name='" + name + '\'' +
                 ", id=" + id +

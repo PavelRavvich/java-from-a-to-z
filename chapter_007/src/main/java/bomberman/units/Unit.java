@@ -1,4 +1,4 @@
-package bomberman.user;
+package bomberman.units;
 
 /**
  * Created by pavel on 11.04.17.

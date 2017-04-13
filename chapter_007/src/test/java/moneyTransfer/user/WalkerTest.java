@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
-public class UserTest {
+public class WalkerTest {
     @Test
     public void whenGetAmountReturnThen() {
         Account account = new User(new BigDecimal("1"), "name", 1);
