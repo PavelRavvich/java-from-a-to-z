@@ -15,7 +15,7 @@ public class UserStorage implements Storage {
     }
 
     @Override
-    public synchronized boolean addAccount(final Account account) {
+    public boolean addAccount(final Account account) {
         final Account a = this.accounts.get(account.getId());
         if (a != null) {
             System.out.println("UserStorage = " + a);
