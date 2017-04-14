@@ -126,7 +126,6 @@ public class Game implements Round {
     private final class CheckEndGame extends TimerTask {
         @Override
         public void run() {
-            final List<Thread> monsters = getMonsters();
             int counter = 0;
             for (Thread monster: monsters) {
                 if (monster.isAlive()) {
@@ -137,13 +136,6 @@ public class Game implements Round {
             if (counter == monsters.size()) {
                 endGame.set(this.cancel());
             }
-        }
-    }
-
-
-    private List<Thread> getMonsters() {
-        synchronized (this.monsters) {
-            return new ArrayList<>(this.monsters);
         }
     }
 }
