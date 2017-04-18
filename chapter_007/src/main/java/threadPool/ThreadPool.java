@@ -83,7 +83,7 @@ public class ThreadPool implements Pool {
      * Service check statement threads every 10 milliseconds.
      */
     private void rotationDeadThreads() {
-        new Thread(new Runnable() {
+        this.rotate = new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -109,7 +109,9 @@ public class ThreadPool implements Pool {
                 }
             }
 
-        }).start();
+        });
+
+        this.rotate.start();
     }
 }
 
