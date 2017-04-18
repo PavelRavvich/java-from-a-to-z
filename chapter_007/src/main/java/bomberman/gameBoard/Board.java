@@ -7,5 +7,4 @@ import bomberman.units.Unit;
  */
 public interface Board {
     Unit[][] getBoard();
-    boolean setCell(final int x, final int y, final Unit unit);
 }

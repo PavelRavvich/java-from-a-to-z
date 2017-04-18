@@ -6,7 +6,6 @@ import bomberman.units.Gamer;
 import bomberman.units.Monster;
 import bomberman.units.Unit;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,29 +28,47 @@ public class Game implements Round {
      */
     private final int TARGET_AMOUNT_MONSTERS;
     /**
-     * Barrier falls only when
+     * Barrier will falls only when all monsters call run().
      */
     private final CyclicBarrier BARRIER;
+    /**
+     * Thread save monster's threads for regular checking end game.
+     */
     private final List<Thread> monsters;
+    /**
+     * Default value this flag is false.
+     * When all monsters will death or user will die, flag will be true.
+     */
     private final AtomicBoolean endGame;
-    private final ExecutorService executor;
+    /**
+     * Thread pool start all monster thread. Only monsters thread.
+     */
+    private final ExecutorService executorOfMonsters;
+    private final Unit user;
 
+    /**
+     * Default constructor.
+     * @param widthBoard is 'X'.
+     * @param heightBoard is 'Y'.
+     * @param amountMonsters which will be in current game.
+     */
     public Game(final int widthBoard,
                 final int heightBoard,
                 final int amountMonsters) {
 
         this.TARGET_AMOUNT_MONSTERS = amountMonsters;
+
         //User waits until runs all monsters.
         this.BARRIER = new CyclicBarrier(
-                amountMonsters, this.getUserRunnable()
-        );
+                amountMonsters, this.user = this.createUserRunnable());
 
-        this.executor = Executors.newFixedThreadPool(amountMonsters);
+        //Size determines by amount monsters.
+        this.executorOfMonsters = Executors.newFixedThreadPool(amountMonsters);
 
         this.monsters = new CopyOnWriteArrayList<>();
         //Flag for ending game.
         this.endGame = new AtomicBoolean(false);
-
+        //Init game's board.
         this.board = new AtomicReference<>(
                 new GameBoard(
                         heightBoard,
@@ -60,6 +77,9 @@ public class Game implements Round {
         );
     }
 
+    /**
+     * Create all monsters and send them in executor service.
+     */
     @Override
     public void initMonsters() {
         for (int i = 0; i < this.TARGET_AMOUNT_MONSTERS; i++) {
@@ -75,7 +95,7 @@ public class Game implements Round {
 
             this.board.get().getBoard()[y][x] = monster;
             final Thread t = new Thread(monster);
-            this.executor.execute(t);
+            this.executorOfMonsters.execute(t);
             this.monsters.add(t);
         }
 
@@ -98,11 +118,13 @@ public class Game implements Round {
         throw new IllegalArgumentException("Too much monsters for desk size!");
     }
 
-
-
-    private Unit getUserRunnable() {
+    /**
+     * Create cline user object, determines start position of user on board.
+     * @return Runnable User object.
+     */
+    private Unit createUserRunnable() {
         final int startGamerX = (this.board.get().getBoard()[0].length - 1) / 2;
-        final int startGamerY = (this.board.get().getBoard().length - 2);
+        final int startGamerY = (this.board.get().getBoard().length - 1);
         return new Gamer(this.board,
                 new AtomicInteger(startGamerX),
                 new AtomicInteger(startGamerY));
@@ -114,27 +136,28 @@ public class Game implements Round {
      * Initialize and run loop for check game over.
      */
     private void loopCheckingEndGame() {
-        final TimerTask check = new CheckEndGame();
+        final TimerTask loopCheck = new FollowerOfEndGame();
         final Timer timer = new Timer();
-        timer.schedule(check, 5_000, 1_000);
+        timer.schedule(loopCheck, 5_000, 1_000);
     }
 
     /**
      * Thread which look for end game.
      * When all monsters is die, or hero is die, then game over.
      */
-    private final class CheckEndGame extends TimerTask {
+    private final class FollowerOfEndGame extends TimerTask {
         @Override
         public void run() {
-            int counter = 0;
+            int countOfDieMonsters = 0;
             for (Thread monster: monsters) {
-                if (monster.isAlive()) {
-                    counter++;
+                if (!monster.isAlive()) {
+                    countOfDieMonsters++;
                 }
             }
 
-            if (counter == monsters.size()) {
-                endGame.set(this.cancel());
+            if (user.isDie().get() || countOfDieMonsters == monsters.size()) {
+                endGame.set(true);
+                this.cancel();
             }
         }
     }

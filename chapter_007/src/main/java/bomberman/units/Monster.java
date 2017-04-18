@@ -10,22 +10,33 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by pavel on 11.04.17.
- *
+ * Determines specific for monsters attributes.
  */
-public class Monster extends Gamer {
+public class Monster extends Member {
+    /**
+     * Link on barrier for monster. When all monsters run then game begin.
+     */
     private final CyclicBarrier BARRIER;
 
+    /**
+     * Default constructor.
+     * @param board game's board.
+     * @param startPosX position on board by 'Y'.
+     * @param startPosY position on board by 'X'.
+     * @param BARRIER link on barrier.
+     */
     public Monster(final AtomicReference<Board> board,
-                   final AtomicInteger startPosX,
                    final AtomicInteger startPosY,
+                   final AtomicInteger startPosX,
                    final CyclicBarrier BARRIER) {
 
-        super(board, startPosX, startPosY);
+        super(board, startPosY, startPosX);
         this.BARRIER = BARRIER;
     }
 
     @Override
     public void run() {
+        //wait while start all monsters.
         try {
             this.BARRIER.await();
         } catch (InterruptedException | BrokenBarrierException e) {
@@ -35,13 +46,23 @@ public class Monster extends Gamer {
         new MonsterAutomaticMoveAlgorithm().go();
     }
 
+    /**
+     * Check Is the cell occupied.
+     * @param futureX position checking cell by X.
+     * @param futureY position checking cell by Y.
+     * @return if the cell occupied then unit try 5 seconds.
+     * If 5 seconds cell is occupied return true.
+     * Else - false.
+     */
     @Override
     protected boolean pointNotClear(final int futureX, final int futureY) {
         int waitTime = 5000;
-        while (this.board.get().getBoard()[futureY][futureX] != null) {
+        while (this.board.get().getBoard()[futureY][futureX] != null &&
+                !Thread.currentThread().isInterrupted()) {
+
             if (waitTime == 0) return true;
             try {
-                wait(250);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -50,6 +71,9 @@ public class Monster extends Gamer {
         return false;
     }
 
+    /**
+     * Algorithm determines automatic moves of monsters.
+     */
     final private class MonsterAutomaticMoveAlgorithm {
         private final Random random;
 
@@ -101,4 +125,3 @@ public class Monster extends Gamer {
         }
     }
 }
-
