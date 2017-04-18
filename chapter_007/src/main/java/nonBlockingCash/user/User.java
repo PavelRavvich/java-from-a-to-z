@@ -7,10 +7,7 @@ import nonBlockingCash.taskModel.Task;
 
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.function.Consumer;
 
 public class User <K extends Number, V extends Task> implements Account<K, V> {
     /**
@@ -58,18 +55,18 @@ public class User <K extends Number, V extends Task> implements Account<K, V> {
      */
     @Override
     public boolean update(final K idKey, final String name) {
+        final V globalVersion = this.globalCash.contains(idKey);
+        if (globalVersion == null && this.localCash.get(idKey) == null) return false;
+
         //если в локаотном кэше нет то добавить из глобольного последнюю версию
         if (!this.localCash.containsKey(idKey)) {
-            final V globalVersion = this.globalCash.contains(idKey);
-            if (globalVersion == null) {
-                return false;
-            }
-
             this.localCash.put(idKey, (V) new ModelTask(globalVersion));
         }
 
         final V userVersion = this.localCash.get(idKey);
         userVersion.setName(name);
+
+        this.checkDataLostByVersions(idKey, userVersion);
 
         //increment version in both cashes.
         this.localCash.get(idKey).incrementVersion();
@@ -85,12 +82,19 @@ public class User <K extends Number, V extends Task> implements Account<K, V> {
      */
     @Override
     public V get(final K idKey) {
-        final V userVersion = this.localCash.get(idKey);
+        V userVersion = this.localCash.get(idKey);
+
+        if (userVersion == null && this.globalCash.contains(idKey) == null) return null;
+
+        if (userVersion == null && this.globalCash.contains(idKey) != null) {
+            this.localCash.put(idKey, userVersion = this.globalCash.contains(idKey));
+        }
+
+        this.checkDataLostByVersions(idKey, userVersion);
+
         if (userVersion == null && this.globalCash.contains(idKey) != null) {
             this.localCash.put(idKey, this.globalCash.contains(idKey));
         }
-
-        if (userVersion == null && this.globalCash.contains(idKey) == null) return null;
 
         return this.globalCash.get(idKey, userVersion);
     }
@@ -103,6 +107,17 @@ public class User <K extends Number, V extends Task> implements Account<K, V> {
      */
     @Override
     public boolean delete(final K idKey) {
+        this.localCash.remove(idKey);
         return this.globalCash.delete(idKey);
+    }
+
+    private void checkDataLostByVersions(final K key, final V newValue) {
+        final V globalVersion = globalCash.contains(key);
+
+        if (newValue  == null || globalVersion == null ||
+                globalVersion.getVersion() != newValue.getVersion()) {
+
+            throw new DataIsLostException();
+        }
     }
 }

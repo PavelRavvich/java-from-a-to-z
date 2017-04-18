@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 
-public class WalkerTest {
+public class UserTest {
     @Test
     public void whenUserAddNewTaskThenReturnTrue() {
         final Cash<Integer, Task> cash = new NonBlockingCash();
@@ -59,7 +59,7 @@ public class WalkerTest {
     }
 
     @Test
-    public void whenThen() {
+    public void whenInLocalCashTaskNotExistAndGlobalCashIsExistThenTaskLoadInLocalCashAndGetReturnTask() {
         final Cash<Integer, Task> cash = new NonBlockingCash();
         final User<Integer, Task> user = new User<>(cash);
         final Task task = new ModelTask(1, "test");

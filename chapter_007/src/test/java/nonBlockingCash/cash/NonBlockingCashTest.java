@@ -35,16 +35,6 @@ public class NonBlockingCashTest {
         Assert.assertThat(result, is(true));
     }
 
-    @Test(expected = DataIsLostException.class)
-    public void whenVersionOldTaskAndUpdatedTaskNotEqualsThenTrowException() {
-        final Cash<Integer, Task> cash = new NonBlockingCash();
-        final Task task1 = new ModelTask(1, "name1");
-        cash.add(task1.getId(), task1);
-        final Task task1version2 = new ModelTask(1, "name1");
-        task1version2.incrementVersion();
-        cash.update(task1version2.getId(), task1version2);
-    }
-
     @Test
     public void whenGetTaskWhichExistThenReturnTask() {
         final Cash<Integer, Task> cash = new NonBlockingCash();
@@ -52,12 +42,6 @@ public class NonBlockingCashTest {
         cash.add(task.getId(), task);
         final Task result = cash.get(task.getId(), task);
         Assert.assertThat(result, is(task));
-    }
-
-    @Test(expected = DataIsLostException.class)
-    public void whenTryGetTaskWhichNotExistThenTrowException() {
-        final Cash<Integer, Task> cash = new NonBlockingCash();
-        cash.get(1, new ModelTask(1, ""));
     }
 
     @Test
