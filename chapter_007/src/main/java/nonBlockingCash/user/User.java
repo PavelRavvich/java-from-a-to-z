@@ -1,6 +1,7 @@
 package nonBlockingCash.user;
 
 import nonBlockingCash.cash.Cash;
+import nonBlockingCash.cash.DataIsLostException;
 import nonBlockingCash.taskModel.ModelTask;
 import nonBlockingCash.taskModel.Task;
 
@@ -56,7 +57,7 @@ public class User <K extends Number, V extends Task> implements Account<K, V> {
      * @return true if success, else false.
      */
     @Override
-    public boolean update(K idKey, final String name) {
+    public boolean update(final K idKey, final String name) {
         //если в локаотном кэше нет то добавить из глобольного последнюю версию
         if (!this.localCash.containsKey(idKey)) {
             final V globalVersion = this.globalCash.contains(idKey);
@@ -104,6 +105,4 @@ public class User <K extends Number, V extends Task> implements Account<K, V> {
     public boolean delete(final K idKey) {
         return this.globalCash.delete(idKey);
     }
-
-
 }
