@@ -3,7 +3,10 @@
 *.DS_Store
 .idea
 targetText
-
+com
+java
+*/target
+*/*/target
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
