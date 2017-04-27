@@ -33,22 +33,29 @@ package jcstress;
 import org.openjdk.jcstress.annotations.*;
 import org.openjdk.jcstress.infra.results.IntResult2;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 // See jcstress-samples or existing tests for API introduction and testing guidelines
 
 @JCStressTest
 // Outline the outcomes here. The default outcome is provided, you need to remove it:
+@Outcome(id = "1, 1", expect = Expect.ACCEPTABLE_INTERESTING, desc = "Both actors came up with the same value: atomicity failure.")
+@Outcome(id = "1, 2", expect = Expect.ACCEPTABLE, desc = "actor1 incremented, then actor2.")
+@Outcome(id = "2, 1", expect = Expect.ACCEPTABLE, desc = "actor2 incremented, then actor1.")
 @Outcome(id = "0, 0", expect = Expect.ACCEPTABLE, desc = "Default outcome.")
 @State
 public class ConcurrencyTest {
 
+    AtomicInteger v = new AtomicInteger(0);
+
     @Actor
     public void actor1(IntResult2 r) {
-        // Put the code for first thread here
+        r.r1 = v.incrementAndGet();
     }
 
     @Actor
     public void actor2(IntResult2 r) {
-        // Put the code for second thread here
+        r.r1 = v.incrementAndGet();
     }
 
 }
