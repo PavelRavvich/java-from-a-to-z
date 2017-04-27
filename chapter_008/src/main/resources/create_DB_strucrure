@@ -16,13 +16,13 @@ create table users if not exist(
     username char(20),
     password char(20),
     email char(30),
-    role char(10),
+    role char(10)
 );
 
 --create table with tasks.
 create table tasks if not exist(
-    user_id integer PRIMARY KEY,
-    code_task integer,
+    code_task serial PRIMARY KEY,
+    user_id integer,
     name_task char(50),
     description char(5000),
     state char(10),
@@ -32,14 +32,22 @@ create table tasks if not exist(
 
 --create table with comments.
 create table comments if not exist(
-    code_task integer PRIMARY KEY,
+    code_comment serial PRIMARY KEY,
+    code_task integer,
     body_comment char(2000),
-    create timestamp,
+    create timestamp
 );
 
---create table with files paths.
-create table files if not exist(
+--create table with files of tasks paths.
+create table files_tasks if not exist(
     file_id serial PRIMARY KEY,
     file_path text NOT NULL,
     code_task integer
+);
+
+--create table with files of comments paths.
+create table files_comments if not exist(
+    file_id serial PRIMARY KEY,
+    file_path text NOT NULL,
+    code_comment integer
 );
