@@ -1,0 +1,45 @@
+create database tracker;
+
+--move to tracker data base.
+\c tracker;
+
+--create roles table. Privilege determines boolean flags.
+create table privilege_roles if not exist(
+    role char(10) PRIMARY KEY,
+    data_view boolean,
+    data_injection boolean
+);
+
+--create table with users.
+create table users if not exist(
+    user_id serial PRIMARY KEY,
+    username char(20),
+    password char(20),
+    email char(30),
+    role char(10),
+);
+
+--create table with tasks.
+create table tasks if not exist(
+    user_id integer PRIMARY KEY,
+    code_task integer,
+    name_task char(50),
+    description char(5000),
+    state char(10),
+    category char(20),
+    create timestamp
+);
+
+--create table with comments.
+create table comments if not exist(
+    code_task integer PRIMARY KEY,
+    body_comment char(2000),
+    create timestamp,
+);
+
+--create table with files paths.
+create table files if not exist(
+    file_id serial PRIMARY KEY,
+    file_path text NOT NULL,
+    code_task integer
+);
