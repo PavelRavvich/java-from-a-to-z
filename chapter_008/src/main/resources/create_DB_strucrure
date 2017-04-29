@@ -27,7 +27,7 @@ create table if not exists tasks(
     description char(5000),
     state char(10),
     category char(20),
-    create timestamp
+    create_time timestamp
 );
 
 --create table with comments.
@@ -35,7 +35,7 @@ create table if not exists comments(
     code_comment serial PRIMARY KEY,
     code_task integer,
     body_comment char(2000),
-    create timestamp
+    create_time timestamp
 );
 
 --create table with files of tasks paths.
