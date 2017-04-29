@@ -4,14 +4,14 @@ create database tracker;
 \c tracker;
 
 --create roles table. Privilege determines boolean flags.
-create table privilege_roles if not exist(
+create table if not exist privilege_roles(
     role char(10) PRIMARY KEY,
     data_view boolean,
     data_injection boolean
 );
 
 --create table with users.
-create table users if not exist(
+create table if not exist users(
     user_id serial PRIMARY KEY,
     username char(20),
     password char(20),
@@ -20,7 +20,7 @@ create table users if not exist(
 );
 
 --create table with tasks.
-create table tasks if not exist(
+create table if not exist tasks(
     code_task serial PRIMARY KEY,
     user_id integer,
     name_task char(50),
@@ -31,7 +31,7 @@ create table tasks if not exist(
 );
 
 --create table with comments.
-create table comments if not exist(
+create table if not exist comments(
     code_comment serial PRIMARY KEY,
     code_task integer,
     body_comment char(2000),
@@ -39,14 +39,14 @@ create table comments if not exist(
 );
 
 --create table with files of tasks paths.
-create table files_tasks if not exist(
+create table if not exist files_tasks(
     file_id serial PRIMARY KEY,
     file_path text NOT NULL,
     code_task integer
 );
 
 --create table with files of comments paths.
-create table files_comments if not exist(
+create table if not exist files_comments(
     file_id serial PRIMARY KEY,
     file_path text NOT NULL,
     code_comment integer
