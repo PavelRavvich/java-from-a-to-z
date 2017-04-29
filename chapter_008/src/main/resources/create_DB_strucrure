@@ -35,7 +35,8 @@ create table if not exists comments(
     code_comment serial PRIMARY KEY,
     code_task integer,
     body_comment char(2000),
-    create_time timestamp
+    create_time timestamp,
+    user_id integer
 );
 
 --create table with files of tasks paths.
