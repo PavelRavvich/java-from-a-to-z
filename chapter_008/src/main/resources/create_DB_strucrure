@@ -5,56 +5,60 @@ create database tracker;
 
 --create roles table. Privilege determines boolean flags.
 create table if not exists privilege_roles(
-    role char(10) PRIMARY KEY,
-    data_view boolean,
-    data_injection boolean,
-    role_id integer not null
+    role char(10) PRIMARY KEY NOT NULL,
+    data_view boolean NOT NULL,
+    data_injection boolean NOT NULL
 );
 
 --create table with users.
 create table if not exists users(
-    user_id serial PRIMARY KEY,
-    username char(20),
-    password char(20),
+    user_id serial NOT NULL,
+    role char(10) NOT NULL,
+    username char(20) NOT NULL,
+    password char(20) NOT NULL,
     email char(30),
-    role char(10),
-    role_id integer not null
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (role) references privilege_roles(role)
 );
 
 --create table with tasks.
 create table if not exists tasks(
-    code_task serial PRIMARY KEY,
-    user_id integer,
-    name_task char(50),
-    description text,
-    state char(10),
-    category char(20),
-    create_time timestamp,
-    role_id integer not null
+    code_task serial NOT NULL,
+    user_id integer NOT NULL,
+    name_task char(50) NOT NULL,
+    description text NOT NULL,
+    state char(10) NOT NULL,
+    category char(20) NOT NULL,
+    create_time timestamp NOT NULL,
+    PRIMARY KEY (code_task),
+    FOREIGN KEY (user_id) references users(user_id)
 );
 
 --create table with comments.
 create table if not exists comments(
-    code_comment serial PRIMARY KEY,
-    code_task integer,
-    body_comment text,
-    create_time timestamp,
-    user_id integer,
-    role_id integer not null
+    code_comment serial NOT NULL,
+    code_task integer NOT NULL,
+    body_comment text NOT NULL,
+    create_time timestamp NOT NULL,
+    user_id integer NOT NULL,
+    PRIMARY KEY (code_comment),
+    FOREIGN KEY (code_task) references tasks(code_task)
 );
 
 --create table with files of tasks paths.
 create table if not exists files_tasks(
-    file_id serial PRIMARY KEY,
-    file_path text NOT NULL,
-    code_task integer,
-    role_id integer not null
+    file_id serial NOT NULL,
+    file_task_path text NOT NULL,
+    code_task integer NOT NULL,
+    PRIMARY KEY (file_id),
+    FOREIGN KEY (code_task) references tasks(code_task)
 );
 
 --create table with files of comments paths.
-create table if not exists files_comments(
-    file_id serial PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS files_comments(
+    file_id serial NOT NULL,
+    code_comment integer NOT NULL,
     file_path text NOT NULL,
-    code_comment integer,
-    role_id integer not null
+    PRIMARY KEY (file_id),
+    FOREIGN KEY (code_comment) references comments(code_comment)
 );
