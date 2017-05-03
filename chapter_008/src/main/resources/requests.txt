@@ -1,0 +1,28 @@
+
+
+username | task name | description | state | body of comment | files of task | files of comments
+
+
+
+select u.username, t.name_task, t.description, t.state, c.body_comment, ft.file_path, fc.file_path from users as u
+inner join tasks as t on t.code_task = '2'
+inner join files_tasks as ft on ft.code_task = t.code_task
+inner join comments as c on t.code_task = c.code_task and t.user_id = c.user_id
+inner join files_comments as fc on c.code_comment = fc.code_comment;
+
+
+
+
+  SELECT u.username, t.name_task, t.description, t.state, c.body_comment, ft.file_path, fc.file_path, c.user_id
+  FROM users u
+  INNER JOIN tasks t ON u.user_id = t.user_id AND t.code_task = '2'
+  LEFT JOIN files_tasks ft ON t.code_task = ft.code_task
+  LEFT JOIN comments c ON c.code_task = t.code_task
+  INNER JOIN users u2 ON c.user_id = u2.user_id
+  LEFT JOIN files_comments fc ON c.code_comment = fc.code_comment;
+
+
+
+
+
+insert into files_comments(file_id, file_path, code_comment) values(default, '\path', '2');
