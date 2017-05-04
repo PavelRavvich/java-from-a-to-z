@@ -90,4 +90,4 @@ SELECT 'transmission', t.name
 FROM transmission t
 LEFT JOIN car c ON t.id_transmission = c.id_transmission
 WHERE c.id_transmission IS NULL
-ORDER BY 1, 2
+ORDER BY 1, 2;
