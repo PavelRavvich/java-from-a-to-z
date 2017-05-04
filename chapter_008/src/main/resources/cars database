@@ -64,13 +64,30 @@ left outer join transmission as t on c.id_transmission = t.id_transmission;
 
 --select all unused details
 select m.name from motor as m
-left outer join car as c on m.id_motor = c.id_motor 
+left outer join car as c on m.id_motor = c.id_motor
 where c.name is null
 UNION ALL --may be separate
 select t.name from transmission as t
-left outer join car as c on c.id_transmission = t.id_transmission 
+left outer join car as c on c.id_transmission = t.id_transmission
 where c.name is null
 UNION ALL
 select w.name from wheel as w
-left outer join car as c on c.id_wheel = w.id_wheel 
+left outer join car as c on c.id_wheel = w.id_wheel
 where c.name is null;
+
+--or this for get type details. ps thanks StackOverflow.com )))
+SELECT 'motor' part_type, m.name part_name
+FROM motor m
+LEFT JOIN car c ON m.id_motor = c.id_motor
+WHERE c.id_motor IS NULL
+UNION ALL
+SELECT 'wheel', w.name
+FROM wheel w
+LEFT JOIN car c ON w.id_wheel = c.id_wheel
+WHERE c.id_wheel IS NULL
+UNION ALL
+SELECT 'transmission', t.name
+FROM transmission t
+LEFT JOIN car c ON t.id_transmission = c.id_transmission
+WHERE c.id_transmission IS NULL
+ORDER BY 1, 2
