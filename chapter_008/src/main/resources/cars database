@@ -1,0 +1,76 @@
+create database auto_services;
+
+\c auto_services
+
+--create table transmission
+create table if not exists transmission(
+        id_transmission serial not null,
+        name text not null,
+        PRIMARY KEY (id_transmission)
+);
+
+--create table motor
+create table if not exists motor(
+        id_motor serial not null,
+        name text not null,
+        primary key (id_motor)
+);
+
+--create table wheel
+create table if not exists wheel(
+        id_wheel serial not null,
+        name text not null,
+        primary key (id_wheel)
+);
+
+--create table car
+create table if not exists car(
+        id_car serial not null,
+        name text not null,
+        id_wheel integer not null,
+        id_motor integer not null,
+        id_transmission integer not null,
+        primary key (id_car),
+        foreign key (id_wheel) references wheel (id_wheel),
+        foreign key (id_motor) references motor (id_motor),
+        foreign key (id_transmission) references transmission (id_transmission)
+);
+
+--insert in transmission
+insert into transmission (id_transmission, name) values (default, 'trans_01');
+insert into transmission (id_transmission, name) values (default, 'trans_02');
+insert into transmission (id_transmission, name) values (default, 'trans_03');
+
+--insert in motor
+insert into motor (id_motor, name) values (default, 'motor_01');
+insert into motor (id_motor, name) values (default, 'motor_02');
+insert into motor (id_motor, name) values (default, 'motor_03');
+
+--insert in wheel
+insert into wheel (id_wheel, name) values (default, 'wheel_01');
+insert into wheel (id_wheel, name) values (default, 'wheel_02');
+insert into wheel (id_wheel, name) values (default, 'wheel_03');
+
+--last values by id = 3 in tables  transmission, motor, wheel is free
+--insert in car
+insert into car (id_car, name, id_wheel, id_motor, id_transmission) values (default, 'car_1','1', '1', '1');
+insert into car (id_car, name, id_wheel, id_motor, id_transmission) values (default, 'car_2','2', '2', '2');
+
+--select all cars with them details
+select c.name, t.name, m.name, w.name from car as c
+left outer join motor as m on c.id_motor = m.id_motor
+left outer join wheel as w on c.id_wheel = w.id_wheel
+left outer join transmission as t on c.id_transmission = t.id_transmission;
+
+--select all unused details
+select m.name from motor as m
+left outer join car as c on m.id_motor = c.id_motor 
+where c.name is null
+UNION ALL --may be separate
+select t.name from transmission as t
+left outer join car as c on c.id_transmission = t.id_transmission 
+where c.name is null
+UNION ALL
+select w.name from wheel as w
+left outer join car as c on c.id_wheel = w.id_wheel 
+where c.name is null;
