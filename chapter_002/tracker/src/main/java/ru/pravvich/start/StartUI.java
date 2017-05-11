@@ -1,6 +1,7 @@
 package ru.pravvich.start;
 
-import ru.pravvich.models.*;
+import ru.pravvich.models.Item;
+import ru.pravvich.models.Task;
 
 /**
  * @since Pavel Ravvich
@@ -140,7 +141,7 @@ public class StartUI {
                 findByHeader();
             } else if (answer.equals("d -t")) {
                 deleteTask();
-            } else if (answer.equals("n -d")) {
+            } else if (answer.equals("n -d")) { //+
                 addDescription();
             }else if (answer.equals("q")) {
                 this.start = false;

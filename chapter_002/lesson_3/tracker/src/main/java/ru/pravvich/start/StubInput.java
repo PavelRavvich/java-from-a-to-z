@@ -18,8 +18,7 @@ public class StubInput implements Input {
     public int askInt(String question) {
         String idS = this.answers[position++];
         if (!idS.contains(" ") && idS.matches("[0-9]+")) {
-            int id = Integer.parseInt(idS);
-            return id;
+            return Integer.parseInt(idS);
         }
         return -1;
     }

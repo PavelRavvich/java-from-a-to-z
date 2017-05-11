@@ -2,9 +2,9 @@ package ru.pravvich.start;
 
 import java.util.Scanner;
 
-public class ConsoleInput implements Input {
+class ConsoleInput implements Input {
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     @Override
     public String ask(String question) {
@@ -14,12 +14,22 @@ public class ConsoleInput implements Input {
 
     @Override
     public int askInt(String question) {
+
         System.out.println(question);
         String forParse = this.scanner.nextLine();
-        if (forParse.length() != 0 && !(forParse.contains(" ")) && forParse.matches("[0-9]+")) {
-            int ask = Integer.parseInt(forParse);
-            return ask;
+
+        if (forParse.length() != 0 &&
+
+                !(forParse.contains(" ")) &&
+
+                forParse.matches("[0-9]+")
+
+                ) {
+
+            return Integer.parseInt(forParse);
         }
+
         return -1;
+
     }
 }

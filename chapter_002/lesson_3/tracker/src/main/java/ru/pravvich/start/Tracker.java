@@ -23,18 +23,29 @@ import java.util.Random;
  * @see #getArrPrintFilter() print with filter revers order
  */
 public class Tracker {
-    int position = 0;
-    public Item[] items = new Item[100];
+    Item[] items = new Item[100];
+    private int position = 0;
     private static final Random RN = new Random();
     // for messages
     private String message;
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    Item[] getItems() {
+        return this.items;
+    }
+
+    int getPosition() {
+        return this.position;
+    }
+
     /**
      * add description in item
      * @param id need item
-     * @see TrackerTest#whenIdAndDescriptionInThenItemAddDescription() test
      */
-    public void addDescription(int id, String description) {
+    void addDescription(final int id, final String description) {
         if (description.length() != 0) {
             for (Item item : this.items) {
                 if (item != null && item.getId() == id) {
@@ -49,13 +60,12 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenItemInThenItemUpdate() test
      * @param item - item for update
      */
-    public void updateItem(Item item) {
+    void updateItem(final Item item) {
         for (int i = 0; i != this.position; i++) {
-            if (this.items[i].getId() == item.getId() && item != null) {
-                String oldName = this.items[i].getHeader();
+            if (item != null && this.items[i].getId() == item.getId()) {
+                final String oldName = this.items[i].getHeader();
                 this.items[i] = item;
                 this.message = String.format("%s %s %s %s %s", "Update", oldName, "on",
                         this.items[i].getHeader(), "success");
@@ -70,13 +80,11 @@ public class Tracker {
      * Delete task (null replacement)
      * @param item - for deleted object
      * @see #nullPushInEnd() - using SWAP for new null
-     * test:
-     * @see TrackerTest#whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray()
      */
-    public void delete(Item item) {
+    void delete(final Item item) {
         for (int i = 0; i != this.position; i++) {
             if (this.items[i].getId() == item.getId()) {
-                items[i] = null;
+                this.items[i] = null;
                 nullPushInEnd();
                 this.position--;
                 this.message = "Task have been deleted.";
@@ -89,11 +97,10 @@ public class Tracker {
 
     /**
      * Addition item in items array
-     * @see TrackerTest#whenObjectTypeItemInThenInArrayItemsInitOneCell() test
      * @param item new item for init in array
      */
-    public void add(Item item) {
-        if (item != null && !(item.getHeader().equals("")) && item.getHeader().length() > 1) {
+    void add(final Item item) {
+        if (item != null && item.getHeader().length() > 1) {
             item.setId(generateId());
             this.items[this.position] = item;
             this.position++;
@@ -103,11 +110,7 @@ public class Tracker {
         }
     }
 
-    /**
-     * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
-     * @see TrackerTest#whenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
-     */
-    public Item findByHeader(String header) {
+    Item findByHeader(final String header) {
         Item result = new Item();
         result.setHeader("does not exist");
         for (Item item : this.items) {
@@ -128,11 +131,10 @@ public class Tracker {
 
     /**
      * Addition commit in ArrayList commits
-     * @see TrackerTest#whenCommitAddThenCommitAddInLists() test
      * @param item for find needed item
      * @param commit - commit for add
      */
-    public void addCommit(Item item, String commit) {
+    void addCommit(final Item item, final String commit) {
         for (int i = 0; i != this.position; i++) {
             if (this.items[i].getId() == item.getId() && commit != null) {
                 item.getCommits().add(commit);
@@ -143,9 +145,8 @@ public class Tracker {
 
     /**
      * Replace oldCommit on newCommit
-     * @see TrackerTest#whenNewCommitAndOldCommitInThenMethodFindCommitByOldCommitAndReplaceCommit() test
      */
-    public void editionCommit(String oldCommit, String newCommit) {
+    void editionCommit(final String oldCommit, final String newCommit) {
         for (int i = 0; i != this.position; i++) {
             for (int j = 0; j != this.items[i].getCommits().size(); j++) {
                 String commit = this.items[i].getCommits().get(j);
@@ -161,10 +162,9 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenCommitOfStringInThenThisCommitDelete() test
      * @param commit - Commit For Delete
      */
-    public void deleteCommit(String commit) {
+    void deleteCommit(final String commit) {
         for (int i = 0; i != this.position; i++) {
             for (int j = 0; j != this.items[i].getCommits().size(); j++) {
                 if (commit.equals(this.items[i].getCommits().get(j))) {
@@ -179,11 +179,10 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenIdInThenItemWithThisIdOut() test
      * @param id - id on which we look for an item
      * @return - found by id item
      */
-    public Item findById(int id) {
+    Item findById(final int id) {
         Item result = new Item();
         result.setHeader("does not exist");
         for (Item item : this.items) {
@@ -208,7 +207,7 @@ public class Tracker {
     /**
      * @return unique id
      */
-    int generateId() {
+    private int generateId() {
         int result = RN.nextInt() + ((int) System.currentTimeMillis());
         if (result < 0) {
             result *= -1;
@@ -219,7 +218,7 @@ public class Tracker {
     /**
      * @return - init message for user
      */
-    public String getMessage() {
+    String getMessage() {
         return this.message;
     }
 
@@ -235,10 +234,9 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenMethodWorkThenReturnListHeadersAllListsWeHave() test method
      * @return arrPrint list for out to User
      */
-    public Item[] getPrintArray() {
+    Item[] getPrintArray() {
         initArrPrint();
         this.message = String.format("%s %s %s", "We found",this.arrPrint.length,"tasks.");
         return this.arrPrint;
@@ -258,10 +256,9 @@ public class Tracker {
 
     /**
      * Filter Reverse Order
-     * @see TrackerTest#whenMethodWorkThenReturnListHeadersInReverseOrder()
      * @return Item list for out to User with Reverse Order
      */
-    public Item[] getArrPrintFilter() {
+    Item[] getArrPrintFilter() {
         initArrPrint();
         Item[] arrPrintFilter = new Item[this.arrPrint.length];
         for (int i = 0, j = (arrPrintFilter.length - 1);
@@ -272,15 +269,5 @@ public class Tracker {
         return arrPrintFilter;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
-    public Item[] getItems() {
-        return this.items;
-    }
-
-    public int getPosition() {
-        return this.position;
-    }
 }

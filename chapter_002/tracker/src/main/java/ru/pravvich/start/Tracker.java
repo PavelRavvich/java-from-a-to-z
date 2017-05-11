@@ -1,6 +1,6 @@
 package ru.pravvich.start;
 
-import ru.pravvich.models.*;
+import ru.pravvich.models.Item;
 
 import java.util.Random;
 
@@ -32,7 +32,6 @@ public class Tracker {
     /**
      * add description in item
      * @param id need item
-     * @see TrackerTest#whenIdAndDescriptionInThenItemAddDescription() test
      */
     public void addDescription(int id, String description) {
         if (description.length() != 0) {
@@ -49,7 +48,6 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenItemInThenItemUpdate() test
      * @param item - item for update
      */
     public void updateItem(Item item) {
@@ -71,7 +69,6 @@ public class Tracker {
      * @param item - for deleted object
      * @see #nullPushInEnd() - using SWAP for new null
      * test:
-     * @see TrackerTest#whenMethodWorkThenItemReplacementOnNullAndNullPushInAndArray()
      */
     public void delete(Item item) {
         for (int i = 0; i != this.position; i++) {
@@ -87,10 +84,9 @@ public class Tracker {
 
     /**
      * Addition item in items array
-     * @see TrackerTest#whenObjectTypeItemInThenInArrayItemsInitOneCell() test
      * @param item new item for init in array
      */
-    protected void add(Item item) {
+    public void add(Item item) {
         if (item != null && !(item.getHeader().equals("")) && item.getHeader().length() > 1) {
             item.setId(generateId());
             this.items[this.position] = item;
@@ -102,10 +98,8 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenHeaderInThenItemWithThisHeaderOut() test
-     * @see TrackerTest#whenItemWithThisHeaderNotExistThenVariableMassageInit() - if header does not exist
      */
-    protected Item findByHeader(String header) {
+    public Item findByHeader(String header) {
         Item result = new Item();
         result.setHeader("does not exist");
         for (Item item : this.items) {
@@ -126,7 +120,6 @@ public class Tracker {
 
     /**
      * Addition commit in ArrayList commits
-     * @see TrackerTest#whenCommitAddThenCommitAddInLists() test
      * @param item for find needed item
      * @param commit - commit for add
      */
@@ -141,7 +134,6 @@ public class Tracker {
 
     /**
      * Replace oldCommit on newCommit
-     * @see TrackerTest#whenNewCommitAndOldCommitInThenMethodFindCommitByOldCommitAndReplaceCommit() test
      */
     public void editionCommit(String oldCommit, String newCommit) {
         for (int i = 0; i != this.position; i++) {
@@ -159,7 +151,6 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenCommitOfStringInThenThisCommitDelete() test
      * @param commit - Commit For Delete
      */
     public void deleteCommit(String commit) {
@@ -174,11 +165,10 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenIdInThenItemWithThisIdOut() test
      * @param id - id on which we look for an item
      * @return - found by id item
      */
-    protected Item findById(int id) {
+    public Item findById(int id) {
         Item result = new Item();
         result.setHeader("does not exist");
         for (Item item : this.items) {
@@ -230,7 +220,6 @@ public class Tracker {
     }
 
     /**
-     * @see TrackerTest#whenMethodWorkThenReturnListHeadersAllListsWeHave() test method
      * @return arrPrint list for out to User
      */
     public Item[] getPrintArray() {
@@ -253,7 +242,6 @@ public class Tracker {
 
     /**
      * Filter Reverse Order
-     * @see TrackerTest#whenMethodWorkThenReturnListHeadersInReverseOrder()
      * @return Item list for out to User with Reverse Order
      */
     public Item[] getArrPrintFilter() {

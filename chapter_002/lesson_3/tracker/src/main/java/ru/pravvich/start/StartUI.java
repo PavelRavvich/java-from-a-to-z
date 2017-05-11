@@ -18,7 +18,7 @@ public class StartUI {
      * каким-то не правильным. Не знаю почему но что-то не то. Так что в итоге так сделал, хотя этот
      * BaseAction actions = new BaseAction("Welcome to task manager!") ну откровенный костыль.
      */
-    BaseAction actions = new BaseAction("Welcome to task manager!") {
+    private BaseAction actions = new BaseAction("Welcome to task manager!") {
 
         @Override
         public int key() {

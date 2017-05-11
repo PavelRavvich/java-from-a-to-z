@@ -1,0 +1,57 @@
+--get task with all comments by task_id
+select
+t.task_id, t.author, t.header, t.description, t.create_time, c.comment_id, c.content
+from tasks as t
+left join comments as c on t.task_id = c.task_id where t.task_id = (?);
+
+--get task by header
+select
+t.task_id, t.author, t.header, t.description, t.create_time, c.comment_id, c.content
+from tasks as t
+left join comments as c on t.task_id = c.task_id where t.header = 'want dress';
+
+--add task
+insert into tasks (task_id, author, header, description, create_time)
+values (default, 'name', 'task', 'header', now()::timestamp) returning task_id;
+
+--update header task by id
+update tasks set header = 'new header' where task_id = 1;
+
+--add(replace) description by id
+update tasks set description = 'new description' where task_id = 1;
+
+--replace header
+update tasks set header = (?) where task_id = (?);
+
+--delete task with all her comments by id
+delete from tasks where task_id = (?);
+
+--add comments
+insert into comments (comment_id, content, task_id) values (default, 'comment for second', '4');
+
+--concat for description by task id
+update tasks set description = description || 'my value' where task_id = 3;
+
+--edit comment by value of old comment version
+update comments set content = 'updated comment' where content = 'comment for second task';
+
+--delete comment by content
+delete from comments where content = 'updated comment';
+
+--вероятносное создание базы, если база с таки именем существует ошибки не будет.
+DO
+$do$
+DECLARE
+_db TEXT := 'tracker'; --имя базы
+_user TEXT := 'postgres'; --имя пользователя
+_password TEXT := '1'; --пароль
+BEGIN
+  CREATE EXTENSION IF NOT EXISTS dblink; -- jdbc:postgresql://localhost:5432 dblink --ссылка на корень базы
+  IF EXISTS (SELECT 1 FROM pg_database WHERE datname = _db) THEN
+    RAISE NOTICE 'Database already exists';
+  ELSE
+    PERFORM dblink_connect('host=localhost user=' || _user || ' password=' || _password || ' dbname=' || current_database());
+    PERFORM dblink_exec('CREATE DATABASE ' || _db);
+  END IF;
+END
+$do$

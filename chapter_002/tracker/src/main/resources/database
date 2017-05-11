@@ -1,0 +1,27 @@
+url=jdbc:postgresql://localhost:5432/auto_services
+rootDB=jdbc:postgresql://localhost:5432
+username=postgres
+password=1
+createDB=create database auto_services
+
+
+createTasks=\
+  create table if not exists tasks (\
+  task_id serial not null, \
+  author text, \
+  header text not null, \
+  description text, \
+  create_time \
+  timestamp, \
+  primary key (task_id)\
+  )
+
+createComments=\
+  create table if not exists comments(\
+  comment_id serial not null,\
+  content text not null,\
+  task_id integer not null,\
+  primary key (comment_id),\
+  foreign key (task_id) references tasks (task_id) on delete cascade\
+  )
+

@@ -1,22 +1,24 @@
 package ru.pravvich.start;
 
-import ru.pravvich.models.*;
+import ru.pravvich.models.Item;
+import ru.pravvich.models.Task;
+
 import java.util.ArrayList;
 
-public abstract class BaseAction implements UserAction {
+abstract class BaseAction implements UserAction {
     private String nameAction;
 
     private ArrayList<BaseAction> actions = new ArrayList<>();
 
-    public ArrayList<BaseAction> getActions() {
+    ArrayList<BaseAction> getActions() {
         return this.actions;
     }
 
-    public BaseAction(String name) {
+    BaseAction(String name) {
         this.nameAction = name;
     }
 
-    public String getNameAction() {
+    String getNameAction() {
         return this.nameAction;
     }
 
@@ -31,7 +33,7 @@ public abstract class BaseAction implements UserAction {
         return String.format("%s. %s", this.key(), this.nameAction);
     }
 
-    public void initActions() {
+    void initActions() {
         BaseAction addTask = new AddTask("Add new task");
         this.actions.add(addTask);
 
@@ -78,11 +80,12 @@ public abstract class BaseAction implements UserAction {
                 }
             }
         };
+
         this.actions.add(viewAllTasksFilter);
     }
 
     private class AddTask extends BaseAction {
-        public AddTask(String name) {
+        AddTask(String name) {
             super(name);
         }
 
@@ -101,7 +104,7 @@ public abstract class BaseAction implements UserAction {
     }
 
     private class UpdateTask extends BaseAction {
-        public UpdateTask(String name) {
+        UpdateTask(String name) {
             super(name);
         }
 
@@ -123,8 +126,8 @@ public abstract class BaseAction implements UserAction {
         }
     }
 
-    public class EditDescription extends BaseAction {
-        public EditDescription(String name) {
+    private class EditDescription extends BaseAction {
+        EditDescription(String name) {
             super(name);
         }
 
@@ -143,8 +146,8 @@ public abstract class BaseAction implements UserAction {
         }
     }
 
-    class AddCommit extends BaseAction {
-        public AddCommit(String name) {
+    private class AddCommit extends BaseAction {
+        AddCommit(String name) {
             super(name);
         }
 
@@ -164,7 +167,7 @@ public abstract class BaseAction implements UserAction {
     }
 
     private class EditCommit extends BaseAction {
-        public EditCommit(String name) {
+        EditCommit(String name) {
             super(name);
         }
 
@@ -182,8 +185,8 @@ public abstract class BaseAction implements UserAction {
         }
     }
 
-    class DeleteCommit extends BaseAction {
-        public DeleteCommit(String name) {
+    private class DeleteCommit extends BaseAction {
+        DeleteCommit(String name) {
             super(name);
         }
 
@@ -202,7 +205,7 @@ public abstract class BaseAction implements UserAction {
 
     private class FindById extends BaseAction {
 
-        public FindById(String name) {
+        FindById(String name) {
             super(name);
         }
 
@@ -227,7 +230,7 @@ public abstract class BaseAction implements UserAction {
     }
 
     private class FindByHeader extends BaseAction {
-        public FindByHeader(String name) {
+        FindByHeader(String name) {
             super(name);
         }
 
@@ -244,8 +247,8 @@ public abstract class BaseAction implements UserAction {
         }
     }
 
-    class DeleteTask extends BaseAction {
-        public DeleteTask(String name) {
+    private class DeleteTask extends BaseAction {
+        DeleteTask(String name) {
             super(name);
         }
 
@@ -263,8 +266,8 @@ public abstract class BaseAction implements UserAction {
         }
     }
 
-    class ViewAllTasks extends BaseAction {
-        public ViewAllTasks(String name) {
+    private class ViewAllTasks extends BaseAction {
+        ViewAllTasks(String name) {
             super(name);
         }
 

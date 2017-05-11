@@ -3,12 +3,12 @@ package ru.pravvich.models;
 import java.util.ArrayList;
 
 public class Item {
-    public String nameUser;
-    public long create;
-    public String header;
-    public String description;
-    public int id;
-    public ArrayList<String> commit = new ArrayList<>();
+    private String nameUser;
+    private long create;
+    private String header;
+    private String description;
+    private int id;
+    private ArrayList<String> commit = new ArrayList<>();
 
     public Item() {
     }

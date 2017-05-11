@@ -80,4 +80,15 @@ public class Item {
     public ArrayList<String> getCommits() {
         return commit;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "nameUser='" + nameUser + '\'' +
+                ", create=" + create +
+                ", header='" + header + '\'' +
+                ", description='" + description + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
