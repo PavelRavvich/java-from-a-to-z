@@ -1,0 +1,41 @@
+CREATE TABLE company(
+    id integer NOT NULL,
+    name character varying,
+    CONSTRAINT company_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE person(
+    id integer NOT NULL,
+    name character varying,
+    company_id integer,
+    CONSTRAINT person_pkey PRIMARY KEY (id)
+);
+
+
+--вставить компанию
+insert into company (id, name) values ('1', 'com_01');
+
+--вставить сотрудника
+insert into person (id, name, company_id) values ('1', 'p1', '1');
+
+--выбрать имена всех person которые не относятся к company c id = 5 и с названиями компаний.
+select p.name, c.name from person as p inner join company as c on c.id = p.company_id where p.company_id != 5;
+
+
+--выбрать имя компании с максимальным количеством person и колличество person в этой компании. Если их несколько выведется любой но 1.
+SELECT c.name, COUNT(*) cnt --счетчик
+FROM company c, person p
+WHERE c.id = p.company_id
+GROUP BY c.name
+ORDER BY 2 DESC LIMIT 1 --сортировка по второму столбцу в результате и лимит ()
+
+--то же самое но если будет несколько компаний с одинаковым колличеством сотрудников то вывести все:
+ SELECT c.name, COUNT(*) cnt
+ FROM company c, person p
+ WHERE c.id = p.company_id
+ GROUP BY c.name
+ HAVING COUNT(*) = (SELECT COUNT(pp.*)
+                    FROM person pp
+                    GROUP BY pp.company_id
+                    ORDER BY 1 DESC LIMIT 1
+                   );
