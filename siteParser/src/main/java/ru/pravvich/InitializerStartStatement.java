@@ -44,11 +44,11 @@ class InitializerStartStatement {
      */
     InitializerStartStatement() {
 
-        initConfigForLog4j();
-
         proposals = new LinkedList<>();
 
         timer = new Timer();
+
+        initConfigForLog4j();
 
         initParser();
 
