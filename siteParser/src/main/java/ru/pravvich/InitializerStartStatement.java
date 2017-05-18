@@ -66,7 +66,7 @@ class InitializerStartStatement {
 
             BasicConfigurator.configure(new ConsoleAppender(new PatternLayout("%m%n")));
 
-            new CollectorDataForFirstStart(proposals, breaker, parser, channelDB).run();
+            timer.schedule(new CollectorDataForFirstStart(proposals, breaker, parser, channelDB), 0);
 
             startCycleCollectData(86_400_000L, period);
 
