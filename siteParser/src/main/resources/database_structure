@@ -1,0 +1,66 @@
+CREATE DATABASE parser;
+
+CREATE TABLE recruiter (
+        nickname TEXT PRIMARY KEY NOT NULL,
+        url_account TEXT NOT NULL,
+        UNIQUE (nickname)
+);
+
+CREATE TABLE proposal (
+        header TEXT NOT NULL,
+        url_proposal TEXT NOT NULL,
+        time_addition TIMESTAMP NOT NULL,
+        nickname TEXT NOT NULL,
+        UNIQUE (url_proposal, header),
+        FOREIGN KEY (nickname) REFERENCES recruiter (nickname)
+);
+
+
+--получить полную информацию о записи
+SELECT p.nickname, p.header, p.url_proposal, p.time_addition, r.url_account FROM proposal AS p
+LEFT OUTER JOIN recruiter AS r ON p.nickname = r.nickname WHERE p.nickname = (?)
+
+
+--Проверить что рекрутер есть и если да, то вставить сразу предложение с ссылкой на рекрутера
+--а если нет то сначала рекрутера а потом предложение
+WITH Q(nick) as(
+ INSERT INTO recruiter (nickname, url_account)
+  VALUES ('name_01', 'www.url_account.test')
+ RETURNING nickname
+)
+INSERT INTO proposal (header, url_proposal, time_addition, nickname)
+  values('welcome at work', 'www.url_proposal.test', now()::timestamp, 'name_01');
+
+
+--есть ли такой рекрутер в базе
+SELECT nickname FROM recruiter WHERE nickname = (?) LIMIT 1;
+
+--вставить рекрутера
+INSERT INTO recruiter (nickname, url_account) VALUES ('name_03', 'http://www.site.com')
+
+--вставить предложение
+INSERT INTO proposal (
+    header,
+    url_proposal,
+    time_addition,
+    nickname)
+VALUES (
+    'abc',
+    'www.a.b',
+    '2017-01-19 00:03:04',
+    'name_03'
+);
+
+
+
+
+--запрос за последней записью в предложениях
+SELECT time_addition FROM proposal ORDER BY time_addition DESC LIMIT 1;
+
+--запрос на существования имя рекрутера
+SELECT nickname FROM recruiter WHERE nickname = 'name_01' LIMIT 1;
+
+--выбор рекрутера по имени
+select * from recruiter where nickname = (?)
+
+

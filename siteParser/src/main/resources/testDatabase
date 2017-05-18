@@ -1,0 +1,36 @@
+#PostgresSQL script for create test table with recruiters.
+create_recruiter_test=\
+\
+  CREATE TABLE recruiter (\
+    nickname TEXT PRIMARY KEY NOT NULL,\
+    url_account TEXT NOT NULL,\
+    UNIQUE (nickname)\
+);
+
+#PostgresSQL script for create test table with proposal.
+create_proposal_test=\
+  \
+  CREATE TABLE proposal (\
+    header TEXT NOT NULL,\
+    url_proposal TEXT NOT NULL,\
+    time_addition TIMESTAMP NOT NULL,\
+    nickname TEXT NOT NULL,\
+    UNIQUE (url_proposal, header),\
+    FOREIGN KEY (nickname) REFERENCES recruiter (nickname)\
+);
+
+
+#PostgresSQL script for delete  test table with recruiter.
+delete_recruiter_test=drop table recruiter
+
+#PostgresSQL script for delete  test table with proposal.
+delete_proposal_test=drop table proposal
+
+#Database in.
+url_database=jdbc:postgresql://localhost:5432
+login_parser=postgres
+password_parser=1
+
+
+
+

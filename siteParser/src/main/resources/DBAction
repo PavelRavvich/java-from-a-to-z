@@ -1,0 +1,25 @@
+#Insert in table proposal.
+add_to_proposal=INSERT INTO proposal (header, url_proposal, time_addition, nickname) VALUES ((?), (?), (?), (?)) ON CONFLICT (url_proposal, header) DO NOTHING
+
+#Insert in table recruiter.
+add_to_recruiter=INSERT INTO recruiter (nickname, url_account) VALUES ((?), (?))
+
+#Check recruiter name is exist in table recruiter.
+recruiter_is_exist=SELECT COUNT(*) FROM recruiter WHERE nickname = (?) LIMIT 1
+
+#Get time last propose.
+last_date=SELECT time_addition FROM proposal ORDER BY time_addition DESC LIMIT 1
+
+#Get recruiter by nickname.
+get_recruiter_by_username=SELECT * FROM recruiter WHERE nickname = (?) LIMIT 1
+
+#Get proposal's url_proposal by header.
+get_url_propose_by_header=SELECT url_proposal FROM proposal WHERE header = (?)
+
+#Amount rows in recruiter table.
+recruiter_is_empty=SELECT COUNT(*) FROM recruiter LIMIT 1
+
+#Join to database.
+url_database=jdbc:postgresql://localhost:5432/parser
+login_parser=postgres
+password_parser=1
