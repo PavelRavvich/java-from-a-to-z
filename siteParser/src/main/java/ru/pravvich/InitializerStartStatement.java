@@ -44,6 +44,8 @@ class InitializerStartStatement {
      */
     InitializerStartStatement() {
 
+        initConfigForLog4j();
+
         proposals = new LinkedList<>();
 
         timer = new Timer();
@@ -64,7 +66,6 @@ class InitializerStartStatement {
 
         if (channelDB.firstStart()) {
 
-            BasicConfigurator.configure(new ConsoleAppender(new PatternLayout("%m%n")));
 
             timer.schedule(new CollectorDataForFirstStart(proposals, breaker, parser, channelDB), 0);
 
@@ -75,6 +76,23 @@ class InitializerStartStatement {
             startCycleCollectData(0, period);
 
         }
+
+    }
+
+    /**
+     * Initialization rules for logger.
+     */
+    private void initConfigForLog4j() {
+
+        BasicConfigurator.configure(
+                new ConsoleAppender(
+                        new PatternLayout(
+                                new PropertiesLoader("log4j").getValue(
+                                        "log4j.appender.stdout.layout.conversionPattern"
+                                )
+                        )
+                )
+        );
 
     }
 
