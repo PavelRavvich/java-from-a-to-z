@@ -18,8 +18,9 @@
     	<module>jcstress</module>
         <module>chapter_008</module>
         <module>siteParser</module>
+		<module>chapter_009</module>
+	</modules>
 
-    </modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
