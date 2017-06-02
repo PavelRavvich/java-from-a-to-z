@@ -1,6 +1,6 @@
 #Add user in table users.
 add=\
-  INSERT INTO users (id, username, fileLogin, email, create_date)\
+  INSERT INTO users (id, username, login, email, create_date)\
   VALUES (DEFAULT, (?), (?), (?), now()::timestamp)
 
 
@@ -13,4 +13,4 @@ get=SELECT * FROM users WHERE id = (?)
 
 
 #Update old user.
-update=UPDATE users SET  username = (?), fileLogin = (?), email = (?) WHERE id = (?)
+update=UPDATE users SET  username = (?), login = (?), email = (?) WHERE id = (?)

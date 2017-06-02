@@ -1,7 +1,7 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.jdbc.DBJointHandler;
+import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,13 +17,10 @@ public class EditUserServlet extends HttpServlet {
 
     private DBJoint db;
 
-    public EditUserServlet() {
-        super();
-        db = new DBJointHandler("database_scripts", "authentication_database");
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        db = (DBJoint) getServletContext().getAttribute("db");
 
         req.setCharacterEncoding("UTF8");
 
@@ -43,9 +40,18 @@ public class EditUserServlet extends HttpServlet {
         final String login = req.getParameter("login");
         final String email = req.getParameter("email");
 
-        //db.getDBExecutor().updateUser(new User(Integer.parseInt(id), name, login, email));
+        final User user = db.getDBExecutor().getUser(Integer.parseInt(id));
 
-        req.setAttribute("warning", "такого пользователя не существует");
-        req.getRequestDispatcher("edition.jsp").forward(req, resp);
+        if (user.getId() == 0) {
+
+            req.setAttribute("warning", "такого пользователя не существует");
+            req.getRequestDispatcher("edition.jsp").forward(req, resp);
+
+        } else {
+
+            db.getDBExecutor().updateUser(new User(Integer.parseInt(id), name, login, email));
+            req.setAttribute("user", new User(user.getId(),name,login,email,user.getCreateAccount()));
+            req.getRequestDispatcher("user.jsp").forward(req, resp);
+        }
     }
 }

@@ -15,11 +15,11 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-//        try {
-//            Class.forName("com.example.jdbc.Driver");
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         final ServletContext servletContext = servletContextEvent.getServletContext();
 
         servletContext.setAttribute("db", new DBJointHandler("database_scripts", "authentication_database"));

@@ -17,13 +17,10 @@ public class AddUserServlet extends HttpServlet {
 
     private DBJoint db;
 
-    public AddUserServlet() {
-        super();
-        this.db = (DBJoint) getServletContext().getAttribute("db");
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        db = (DBJoint) getServletContext().getAttribute("db");
 
         req.setCharacterEncoding("UTF8");
 

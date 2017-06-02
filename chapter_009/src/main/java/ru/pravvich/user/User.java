@@ -47,6 +47,10 @@ public class User {
         this.createAccount = createAccount;
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

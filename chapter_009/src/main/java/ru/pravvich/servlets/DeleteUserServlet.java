@@ -1,7 +1,7 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.jdbc.DBJointHandler;
+import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,17 +17,11 @@ public class DeleteUserServlet extends HttpServlet {
 
     private DBJoint db;
 
-    public DeleteUserServlet() {
-        super();
-        db = new DBJointHandler("database_scripts", "authentication_database");
-    }
-
-    public void setDb(DBJoint db) {
-        this.db = db;
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        db = (DBJoint) getServletContext().getAttribute("db");
+
         try {
 
             delUserFromDB(req, resp);
@@ -39,16 +33,14 @@ public class DeleteUserServlet extends HttpServlet {
 
     private void delUserFromDB(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
         final int id = Integer.parseInt(req.getParameter("id"));
-        System.out.println(id);
-
-        //db.getDBExecutor().deleteUser(new User());
 
         String answer;
 
         if (id <= 0) {
-            answer = "Пользователя с таким id не существует";
+            answer = "Пользователя с таким id не может существовать";
         } else {
-            answer = String.format("%s %s %s", "Пользователь с id =", id, "удален.");
+            answer = String.format("%s %s %s", "Пользователья с id =", id, "точно больше не существует.");
+            db.getDBExecutor().deleteUser(new User(id));
         }
 
         req.setAttribute("serverAnswer", answer);
