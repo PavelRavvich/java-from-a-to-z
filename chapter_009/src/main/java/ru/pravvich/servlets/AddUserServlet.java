@@ -1,7 +1,7 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.jdbc.DBJointFactory;
+import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +19,7 @@ public class AddUserServlet extends HttpServlet {
 
     public AddUserServlet() {
         super();
-        db = new DBJointFactory("database_scripts", "authentication_database");
-    }
-
-    public void setDb(DBJoint db) {
-        this.db = db;
+        this.db = (DBJoint) getServletContext().getAttribute("db");
     }
 
     @Override
@@ -44,14 +40,14 @@ public class AddUserServlet extends HttpServlet {
     private void addUserToDB(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
 
+
         final String name = req.getParameter("name");
         final String login = req.getParameter("login");
         final String email = req.getParameter("email");
 
-        //db.getDBExecutor().addUser(new User(name, login, email));
+        db.getDBExecutor().addUser(new User(name, login, email));
 
         req.setAttribute("serverAnswer", "Пользователь успешно добавлен");
         req.getRequestDispatcher("answer.jsp").forward(req, resp);
     }
-
 }

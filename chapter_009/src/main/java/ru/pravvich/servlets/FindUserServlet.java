@@ -1,7 +1,7 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.jdbc.DBJointFactory;
+import ru.pravvich.jdbc.DBJointHandler;
 import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
@@ -21,7 +21,7 @@ public class FindUserServlet extends HttpServlet {
 
     public FindUserServlet() {
         super();
-        db = new DBJointFactory("database_scripts", "authentication_database");
+        db = new DBJointHandler("database_scripts", "authentication_database");
     }
 
     @Override

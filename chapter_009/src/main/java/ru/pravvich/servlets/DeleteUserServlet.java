@@ -1,7 +1,7 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.jdbc.DBJointFactory;
+import ru.pravvich.jdbc.DBJointHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +19,7 @@ public class DeleteUserServlet extends HttpServlet {
 
     public DeleteUserServlet() {
         super();
-        db = new DBJointFactory("database_scripts", "authentication_database");
+        db = new DBJointHandler("database_scripts", "authentication_database");
     }
 
     public void setDb(DBJoint db) {

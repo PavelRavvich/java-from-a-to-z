@@ -6,7 +6,7 @@ import java.sql.SQLException;
 /**
  * Factory for database connection.
  */
-public class DBJointFactory implements DBJoint {
+public class DBJointHandler implements DBJoint {
     /**
      * Connection to database.
      */
@@ -30,7 +30,7 @@ public class DBJointFactory implements DBJoint {
      * @param fileScripts filename which contains database fileScripts for all transactions.
      * @param fileLogin   filename which contains url, fileLogin, passwords to database.
      */
-    public DBJointFactory(final String fileScripts, final String fileLogin) {
+    public DBJointHandler(final String fileScripts, final String fileLogin) {
 
         this.fileScripts = fileScripts;
 
