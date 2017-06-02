@@ -1,0 +1,5 @@
+#Authentication database.
+
+url=jdbc:postgresql://localhost:5432/user_storage
+username=postgres
+password=1

@@ -4,14 +4,50 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!--Add user in database.-->
     <servlet>
-        <servlet-name>EchoServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.EchoServlet</servlet-class>
+        <servlet-name>AddUserServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.AddUserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>EchoServlet</servlet-name>
-        <url-pattern>/echo</url-pattern>
+        <servlet-name>AddUserServlet</servlet-name>
+        <url-pattern>/addition</url-pattern>
     </servlet-mapping>
 
+
+    <!--Find user by id-->
+    <servlet>
+        <servlet-name>FindUserServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.FindUserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FindUserServlet</servlet-name>
+        <url-pattern>/find</url-pattern>
+    </servlet-mapping>
+
+
+    <!--Delete user by id-->
+    <servlet>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.DeleteUserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+
+    <!--Edition user-->
+    <servlet>
+        <servlet-name>EditUserServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.EditUserServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditUserServlet</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
 </web-app>

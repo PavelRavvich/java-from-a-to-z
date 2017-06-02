@@ -1,0 +1,35 @@
+CREATE DATABASE user_storage;
+
+CREATE TABLE users (
+        id SERIAL UNIQUE NOT NULL,
+        username TEXT NOT NULL,
+        fileLogin TEXT UNIQUE NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        create_date Timestamp,
+        CONSTRAINT user_primary_key PRIMARY KEY (id)
+);
+
+
+
+--get user by id
+SELECT * FROM users WHERE id = 1;
+
+
+
+--delete user
+DELETE FROM users WHERE id = 1;
+
+
+--add new user
+INSERT INTO users (id, username, fileLogin, email, create_date)
+VALUES (DEFAULT, 'pavel', 'my_login', 'my_email', now()::timestamp);
+
+
+
+--update old user
+UPDATE users
+SET  username = 'new_name', fileLogin = 'new_login', email = 'new+email'
+WHERE id = 1;
+
+
+

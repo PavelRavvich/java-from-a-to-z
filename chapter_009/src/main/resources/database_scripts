@@ -1,0 +1,16 @@
+#Add user in table users.
+add=\
+  INSERT INTO users (id, username, fileLogin, email, create_date)\
+  VALUES (DEFAULT, (?), (?), (?), now()::timestamp)
+
+
+#Delete user from table users.
+delete=DELETE FROM users WHERE id = (?)
+
+
+#Get user by id.
+get=SELECT * FROM users WHERE id = (?)
+
+
+#Update old user.
+update=UPDATE users SET  username = (?), fileLogin = (?), email = (?) WHERE id = (?)
