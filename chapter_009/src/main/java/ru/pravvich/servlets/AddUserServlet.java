@@ -15,14 +15,16 @@ import java.sql.SQLException;
  */
 public class AddUserServlet extends HttpServlet {
 
-    private DBJoint db;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF8");
+        req.getRequestDispatcher("/WEB-INF/views/addition.jsp").forward(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        db = (DBJoint) getServletContext().getAttribute("db");
-
-        req.setCharacterEncoding("UTF8");
+        if (moveToAddition(req, resp)) return;
 
         try {
 
@@ -34,17 +36,48 @@ public class AddUserServlet extends HttpServlet {
 
     }
 
+    /**
+     * Move to /WEB-INF/views/addition.jsp.
+     *
+     * @return true if request should get addition's page. Else false.
+     */
+    private boolean moveToAddition(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        final String[] acts = req.getParameterValues("act");
+
+        if (acts == null) return false;
+
+        for (final String act : acts) {
+
+            if (act != null) {
+
+                req.getRequestDispatcher("/WEB-INF/views/addition.jsp").forward(req, resp);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Add user in database.
+     */
     private void addUserToDB(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException, ServletException {
 
+        req.setCharacterEncoding("UTF8");
 
-        final String name = req.getParameter("name");
-        final String login = req.getParameter("login");
-        final String email = req.getParameter("email");
+        DBJoint db = (DBJoint) getServletContext().getAttribute("db");
 
-        db.getDBExecutor().addUser(new User(name, login, email));
+        db.getDBExecutor().addUser(
+                new User(
+                        req.getParameter("name"),
+                        req.getParameter("login"),
+                        req.getParameter("email")));
 
         req.setAttribute("serverAnswer", "Пользователь успешно добавлен");
-        req.getRequestDispatcher("answer.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/answer.jsp").forward(req, resp);
     }
 }
