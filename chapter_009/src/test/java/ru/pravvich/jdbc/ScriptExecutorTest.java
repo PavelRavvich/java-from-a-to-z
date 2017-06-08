@@ -7,6 +7,7 @@ import org.junit.Test;
 import ru.pravvich.user.User;
 
 import java.sql.*;
+import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 
@@ -122,6 +123,30 @@ public class ScriptExecutorTest {
         Assert.assertThat(result.getEmail(), is(newVersion.getEmail()));
     }
 
+
+    @Test
+    public void whenGetAllUserCallThenReturnAllUserWhichExistInTableUsers() {
+
+        final ScriptExecutor scriptExecutor = new ScriptExecutor(
+                connection, new PropertiesLoader("database_scripts"));
+
+        final User user1 =  new User(
+                0, "user1", "login1", "email1",
+                new Timestamp(System.currentTimeMillis()));
+
+        final User user2 =  new User(
+                0, "user2", "login2", "email2",
+                new Timestamp(System.currentTimeMillis()));
+
+        scriptExecutor.addUser(user1);
+        scriptExecutor.addUser(user2);
+
+        // test.
+        final List<User> result = scriptExecutor.getAllUsers();
+
+        Assert.assertThat(result.get(0).getName(), is("user1"));
+        Assert.assertThat(result.get(1).getName(), is("user2"));
+    }
 
     @After
     public void after() {

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: pavel
-  Date: 29.05.17
-  Time: 1:43
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,6 +12,5 @@
 
     </form>
 
-    <p style="color: red">${result}</p>
 </body>
 </html>

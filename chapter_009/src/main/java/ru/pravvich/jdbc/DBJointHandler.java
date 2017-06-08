@@ -51,7 +51,7 @@ public class DBJointHandler implements DBJoint {
      * @throws SQLException when fail create connection.
      */
     @Override
-    public ScriptExecutor getDBExecutor() throws SQLException {
+    public ScriptExecutor getDBScriptExecutor() throws SQLException {
 
         return executor;
 

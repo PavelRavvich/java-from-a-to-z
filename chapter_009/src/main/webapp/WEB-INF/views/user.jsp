@@ -31,7 +31,9 @@
 
         </ul><br />
 
-        <a href="index.jsp">Меню</a>
+    <form action="answer" method="get">
+        <input type="submit" value="Меню">
+    </form>
 
 </body>
 </html>

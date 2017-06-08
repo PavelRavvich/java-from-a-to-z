@@ -14,3 +14,7 @@ get=SELECT * FROM users WHERE id = (?)
 
 #Update old user.
 update=UPDATE users SET  username = (?), login = (?), email = (?) WHERE id = (?)
+
+
+#Get all users.
+getAll=SELECT * FROM users

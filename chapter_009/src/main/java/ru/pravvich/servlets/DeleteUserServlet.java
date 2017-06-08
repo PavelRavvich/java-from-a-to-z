@@ -11,27 +11,28 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Delete user from database by id..
+ * Delete user from database by id.
  */
 public class DeleteUserServlet extends HttpServlet {
 
-    private DBJoint db;
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        db = (DBJoint) getServletContext().getAttribute("db");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
 
         try {
 
-            delUserFromDB(req, resp);
+            deleteUserById(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void delUserFromDB(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
+    private void deleteUserById(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException, SQLException {
+
+        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+
         final int id = Integer.parseInt(req.getParameter("id"));
 
         String answer;
@@ -40,12 +41,12 @@ public class DeleteUserServlet extends HttpServlet {
             answer = "Пользователя с таким id не может существовать";
         } else {
             answer = String.format("%s %s %s", "Пользователья с id =", id, "точно больше не существует.");
-            db.getDBExecutor().deleteUser(new User(id));
+            db.getDBScriptExecutor().deleteUser(new User(id));
         }
 
+
         req.setAttribute("serverAnswer", answer);
-        req.getRequestDispatcher("answer.jsp").forward(req, resp);
 
-
+        req.getRequestDispatcher("/WEB-INF/views/answer.jsp").forward(req, resp);
     }
 }

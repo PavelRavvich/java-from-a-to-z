@@ -7,7 +7,7 @@ import java.sql.SQLException;
  */
 public interface DBJoint {
 
-    ScriptExecutor getDBExecutor() throws SQLException;
+    ScriptExecutor getDBScriptExecutor() throws SQLException;
 
     void closeConnection();
 

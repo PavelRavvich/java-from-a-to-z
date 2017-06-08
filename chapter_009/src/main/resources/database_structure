@@ -3,7 +3,7 @@ CREATE DATABASE user_storage;
 CREATE TABLE users (
         id SERIAL UNIQUE NOT NULL,
         username TEXT NOT NULL,
-        fileLogin TEXT UNIQUE NOT NULL,
+        file TEXT UNIQUE NOT NULL,
         email TEXT UNIQUE NOT NULL,
         create_date Timestamp,
         CONSTRAINT user_primary_key PRIMARY KEY (id)

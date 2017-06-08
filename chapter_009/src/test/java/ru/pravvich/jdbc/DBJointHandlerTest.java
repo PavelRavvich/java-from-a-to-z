@@ -13,7 +13,7 @@ public class DBJointHandlerTest {
     @Test
     public void whenCreateDBJoinInstanceThenResultOfMethodGetDBExecutorNotNull() throws SQLException {
         final DBJoint db = new DBJointHandler("database_scripts", "authentication_database");
-        final ScriptExecutor dbExecutor = db.getDBExecutor();
+        final ScriptExecutor dbExecutor = db.getDBScriptExecutor();
 
         Assert.assertNotNull(dbExecutor);
         db.closeConnection();

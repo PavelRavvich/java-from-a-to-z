@@ -21,6 +21,5 @@
 
     </form>
 
-    <p style="color: red">${warning}</p>
 </body>
 </html>

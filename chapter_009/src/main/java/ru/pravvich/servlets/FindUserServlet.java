@@ -15,12 +15,8 @@ import java.sql.SQLException;
  */
 public class FindUserServlet extends HttpServlet {
 
-    private DBJoint db;
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        db = (DBJoint) getServletContext().getAttribute("db");
 
         req.setCharacterEncoding("UTF8");
 
@@ -38,14 +34,16 @@ public class FindUserServlet extends HttpServlet {
 
         final String id = req.getParameter("id");
 
-        final User result = db.getDBExecutor().getUser(Integer.parseInt(id));
+        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+
+        final User result = db.getDBScriptExecutor().getUser(Integer.parseInt(id));
 
         if (result.getId() == 0) {
             req.setAttribute("fail", "Такого пользователя не существует");
-            req.getRequestDispatcher("find.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/find.jsp").forward(req, resp);
         }
 
         req.setAttribute("user", result);
-        req.getRequestDispatcher("user.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(req, resp);
     }
 }

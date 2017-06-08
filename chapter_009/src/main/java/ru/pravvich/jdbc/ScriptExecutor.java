@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * All transactions to database.
@@ -38,13 +40,13 @@ public class ScriptExecutor {
      *
      * @param user for addition.
      */
-    public synchronized void addUser(final User user) {
+    public void addUser(final User user) {
 
         try (final PreparedStatement statement =
 
                      connection.prepareStatement(
 
-                        properties.get("add"))
+                             properties.get("add"))
         ) {
 
 
@@ -67,7 +69,7 @@ public class ScriptExecutor {
      *
      * @param user for delete.
      */
-    public synchronized void deleteUser(final User user) {
+    public void deleteUser(final User user) {
 
         try (final PreparedStatement statement =
 
@@ -92,7 +94,7 @@ public class ScriptExecutor {
      * @param id of user.
      * @return User with param id.
      */
-    public synchronized User getUser(final int id) {
+    public User getUser(final int id) {
 
         try (final PreparedStatement statement =
 
@@ -100,7 +102,6 @@ public class ScriptExecutor {
 
                              properties.get("get"))
         ) {
-
 
 
             statement.setInt(1, id);
@@ -130,7 +131,7 @@ public class ScriptExecutor {
      *
      * @param user for update.
      */
-    public synchronized void updateUser(final User user) {
+    public void updateUser(final User user) {
 
         try (final PreparedStatement statement =
 
@@ -152,5 +153,44 @@ public class ScriptExecutor {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Get all user which exists in database.
+     *
+     * @return all user.
+     */
+    public List<User> getAllUsers() {
+
+        final List<User> allUsers = new ArrayList<>();
+
+        try (final PreparedStatement statement =
+
+                     connection.prepareStatement(
+
+                             properties.get("getAll"))
+        ) {
+
+
+            final ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+
+                allUsers.add(
+                        new User(
+                                resultSet.getInt(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getTimestamp(5))
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allUsers;
+
     }
 }

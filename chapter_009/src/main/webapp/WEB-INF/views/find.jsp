@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: pavel
-  Date: 29.05.17
-  Time: 1:31
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,7 +13,6 @@
 
     </form>
 
-    <p style="color: red">${fail}</p>
-
+    <p style="color: red"><c:out value="${requestScope.fail}"/></p>
 </body>
 </html>

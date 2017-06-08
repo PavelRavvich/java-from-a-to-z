@@ -3,6 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+
     <!--Homepage.-->
     <servlet>
         <servlet-name>HomePageServlet</servlet-name>
@@ -13,6 +15,7 @@
         <servlet-name>HomePageServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
 
     <!--menu-->
     <servlet>
@@ -71,5 +74,29 @@
     <servlet-mapping>
         <servlet-name>EditUserServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+
+    <!--Notify about result user's action-->
+    <servlet>
+        <servlet-name>AnswerServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.AnswerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AnswerServlet</servlet-name>
+        <url-pattern>/answer</url-pattern>
+    </servlet-mapping>
+
+
+    <!--Get all users which contains in database-->
+    <servlet>
+        <servlet-name>GetAllUsersServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.GetAllUsersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetAllUsersServlet</servlet-name>
+        <url-pattern>/getall</url-pattern>
     </servlet-mapping>
 </web-app>
