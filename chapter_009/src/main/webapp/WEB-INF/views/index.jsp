@@ -14,7 +14,7 @@
 
     <h2>Меню</h2><br />
 
-    <form method="POST" action="">
+    <form method="POST" action="menu">
 
         <label for="find">Найти пользователя по id</label>
         <input type="radio" name="act" value="find" id="find"><br>

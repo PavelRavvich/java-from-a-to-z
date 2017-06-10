@@ -148,6 +148,43 @@ public class ScriptExecutorTest {
         Assert.assertThat(result.get(1).getName(), is("user2"));
     }
 
+
+    @Test
+    public void whenUserExistInDBThenCallUserIsExistMethodReturnTrue() {
+
+        final ScriptExecutor scriptExecutor = new ScriptExecutor(
+                connection, new PropertiesLoader("database_scripts"));
+
+        final User user =  new User(
+                0, "user", "login", "email",
+                new Timestamp(System.currentTimeMillis()));
+
+        scriptExecutor.addUser(user);
+
+
+        //test.
+        final boolean result = scriptExecutor.userIsExist(user);
+        Assert.assertTrue(result);
+    }
+
+
+    @Test
+    public void whenUserNotExistInDBThenCallUserIsExistMethodReturnFalse() {
+
+        final ScriptExecutor scriptExecutor = new ScriptExecutor(
+                connection, new PropertiesLoader("database_scripts"));
+
+        final User user =  new User(
+                0, "user", "login", "email",
+                new Timestamp(System.currentTimeMillis()));
+
+
+        //test.
+        final boolean result = scriptExecutor.userIsExist(user);
+        Assert.assertFalse(result);
+    }
+
+
     @After
     public void after() {
         deleteTable();

@@ -18,3 +18,7 @@ update=UPDATE users SET  username = (?), login = (?), email = (?) WHERE id = (?)
 
 #Get all users.
 getAll=SELECT * FROM users
+
+
+#Check user exist
+exist=SELECT count(*) FROM users WHERE username = (?) AND email = (?)

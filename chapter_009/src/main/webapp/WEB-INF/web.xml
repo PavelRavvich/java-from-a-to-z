@@ -4,6 +4,17 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!--Sign in-->
+    <servlet>
+        <servlet-name>SignInServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.SignInServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignInServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
 
     <!--Homepage.-->
     <servlet>
@@ -13,7 +24,7 @@
 
     <servlet-mapping>
         <servlet-name>HomePageServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/menu</url-pattern>
     </servlet-mapping>
 
 

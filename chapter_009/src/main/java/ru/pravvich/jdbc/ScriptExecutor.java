@@ -193,4 +193,38 @@ public class ScriptExecutor {
         return allUsers;
 
     }
+
+    /**
+     * Check exist user in database by name and email set.
+     *
+     * @param user for checking.
+     * @return true if user exist in DB, else false.
+     */
+    public boolean userIsExist(final User user) {
+        boolean exist = false;
+
+        try (final PreparedStatement statement =
+
+                     connection.prepareStatement(
+
+                             properties.get("exist"))
+        ) {
+
+
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getEmail());
+
+
+            final ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+
+            exist = resultSet.getInt(1) == 1;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exist;
+    }
 }

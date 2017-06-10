@@ -14,7 +14,7 @@ public class AnswerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF8");
-        req.getRequestDispatcher("/").forward(req, resp);
+        resp.sendRedirect(req.getContextPath());
     }
 
     @Override

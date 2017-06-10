@@ -31,7 +31,7 @@
 
         </ul><br />
 
-    <form action="answer" method="get">
+    <form action="answer" method="post">
         <input type="submit" value="Меню">
     </form>
 

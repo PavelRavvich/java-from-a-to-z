@@ -34,7 +34,7 @@
     </c:forEach>
 
 
-    <form action="" method="get">
+    <form action="answer" method="post">
         <input type="submit" value="Меню">
     </form>
 
