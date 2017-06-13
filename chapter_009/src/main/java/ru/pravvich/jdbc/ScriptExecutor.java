@@ -1,12 +1,9 @@
 package ru.pravvich.jdbc;
 
+import ru.pravvich.jdbc.actions.*;
 import ru.pravvich.user.User;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,194 +34,72 @@ public class ScriptExecutor {
 
     /**
      * Add user in database.
-     *
-     * @param user for addition.
      */
     public void addUser(final User user) {
-
-        try (final PreparedStatement statement =
-
-                     connection.prepareStatement(
-
-                             properties.get("add"))
-        ) {
-
-
-            statement.setString(1, user.getName());
-
-            statement.setString(2, user.getLogin());
-
-            statement.setString(3, user.getEmail());
-
-
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new UserAdder(connection, properties).addUser(user);
     }
 
     /**
      * Delete user from users table by id.
-     *
-     * @param user for delete.
      */
-    public void deleteUser(final User user) {
+    public void deleteUserById(final int id) {
+        new UserDeleter(connection, properties).deleteUserBy(id);
 
-        try (final PreparedStatement statement =
-
-                     connection.prepareStatement(
-
-                             properties.get("delete"))
-        ) {
-
-
-            statement.setInt(1, user.getId());
-
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
-     * Get user from table users.
-     *
-     * @param id of user.
-     * @return User with param id.
+     * Delete user by login-password set.
      */
-    public User getUser(final int id) {
-
-        try (final PreparedStatement statement =
-
-                     connection.prepareStatement(
-
-                             properties.get("get"))
-        ) {
-
-
-            statement.setInt(1, id);
-
-
-            final ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-
-                return new User(
-                        id,
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getTimestamp(5));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return new User();
+    public void deleteUserByLoginPassword(final String login, final String password) {
+        new UserDeleter(connection, properties).deleteUserBy(login, password);
     }
 
     /**
-     * Update user.
-     *
-     * @param user for update.
+     * Get user by id.
      */
-    public void updateUser(final User user) {
-
-        try (final PreparedStatement statement =
-
-                     connection.prepareStatement(
-
-                             properties.get("update"))
-        ) {
-
-            statement.setInt(4, user.getId());
-
-
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getEmail());
-
-
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public User getUserById(final int id) {
+        return new SingleUserGetter(connection, properties).getUserBy(id);
     }
 
     /**
-     * Get all user which exists in database.
+     * Get user by login-password set.
+     */
+    public User getUserByLoginPassword(final String login, final String password) {
+        return new SingleUserGetter(connection, properties).getUserBy(login, password);
+    }
+
+    /**
+     * Update user by id.
      *
-     * @return all user.
+     * @param id user for update.
+     * @param user object contains new state for user in database.
+     */
+    public void updateUser(final int id, final User user) {
+        new UserUpdater(connection, properties).updateUserById(id, user);
+    }
+
+    /**
+     * Get List of all user which exists in database.
      */
     public List<User> getAllUsers() {
-
-        final List<User> allUsers = new ArrayList<>();
-
-        try (final PreparedStatement statement =
-
-                     connection.prepareStatement(
-
-                             properties.get("getAll"))
-        ) {
-
-
-            final ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-
-                allUsers.add(
-                        new User(
-                                resultSet.getInt(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getString(4),
-                                resultSet.getTimestamp(5))
-                );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return allUsers;
-
+        return new GetterAllUsers(connection, properties).getAllUsers();
     }
 
     /**
-     * Check exist user in database by name and email set.
+     * Check exist user in database by id.
      *
-     * @param user for checking.
      * @return true if user exist in DB, else false.
      */
-    public boolean userIsExist(final User user) {
-        boolean exist = false;
+    public boolean userIsExist(final int id) {
+        return new UserExistChecker(connection, properties).userIsExist(id);
+    }
 
-        try (final PreparedStatement statement =
-
-                     connection.prepareStatement(
-
-                             properties.get("exist"))
-        ) {
-
-
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getEmail());
-
-
-            final ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-
-
-            exist = resultSet.getInt(1) == 1;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return exist;
+    /**
+     * Check exist user in database by login password set.
+     *
+     * @return true if user exist in DB, else false.
+     */
+    public boolean userIsExist(final String login, final String password) {
+        return new UserExistChecker(connection, properties).userIsExist(login, password);
     }
 }

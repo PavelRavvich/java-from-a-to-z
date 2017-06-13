@@ -34,5 +34,11 @@
         <input type="submit" value="Ok" name="Ok"><br>
     </form>
     <br />
+
+
+    <form method="post" action="logout">
+        <input type="submit" value="logout" name="logout"><br>
+    </form>
+
 </body>
 </html>

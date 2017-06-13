@@ -10,9 +10,28 @@ public class User {
     private String name;
     private String login;
     private String email;
+    private String password;
     private Timestamp createAccount;
+    private String successLevel;
 
     public User() {}
+
+    public User(final int id,
+                final String name,
+                final String login,
+                final String password,
+                final String email,
+                final Timestamp createAccount,
+                final String successLevel) {
+
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.createAccount = createAccount;
+        this.successLevel = successLevel;
+    }
 
     public User(final String name,
                 final String login,
@@ -45,6 +64,14 @@ public class User {
         this.login = login;
         this.email = email;
         this.createAccount = createAccount;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getSuccessLevel() {
+        return successLevel;
     }
 
     public User(int id) {

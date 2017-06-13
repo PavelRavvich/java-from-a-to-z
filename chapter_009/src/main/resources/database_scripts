@@ -1,24 +1,39 @@
 #Add user in table users.
 add=\
-  INSERT INTO users (id, username, login, email, create_date)\
-  VALUES (DEFAULT, (?), (?), (?), now()::timestamp)
+  INSERT INTO users (id, username, login, password, email, create_date, success_level)\
+  VALUES (DEFAULT, (?), (?), (?), (?), now()::timestamp, (?))
 
 
-#Delete user from table users.
-delete=DELETE FROM users WHERE id = (?)
+#Delete user by id.
+del_user_by_id=DELETE FROM users WHERE id = (?)
+
+
+#Delete user by login - password set.
+del_user_by_log_pas=DELETE FROM users WHERE login = (?) AND password = (?)
 
 
 #Get user by id.
-get=SELECT * FROM users WHERE id = (?)
+get_by_id=SELECT * FROM users WHERE id = (?)
+
+
+#Get user by login & password set
+get_by_login_password=\
+ SELECT id, username, email, create_date, success_level FROM users \
+ WHERE login = (?) AND password = (?) LIMIT 1;
 
 
 #Update old user.
-update=UPDATE users SET  username = (?), login = (?), email = (?) WHERE id = (?)
+update=UPDATE users \
+    SET  username = (?), login = (?), password = (?), email = (?) \
+    WHERE id = (?)
 
 
 #Get all users.
-getAll=SELECT * FROM users
+get_all_users=SELECT * FROM users
 
 
-#Check user exist
-exist=SELECT count(*) FROM users WHERE username = (?) AND email = (?)
+#Check user exist by login & password.
+exist=SELECT exists (select true FROM users WHERE login = (?) AND password = (?))
+
+#Check user exist by id.
+exist_id=SELECT exists (select true FROM users WHERE id = (?))

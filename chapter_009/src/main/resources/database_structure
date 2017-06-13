@@ -1,35 +1,48 @@
 CREATE DATABASE user_storage;
 
-CREATE TABLE users (
+CREATE TABLE test (
         id SERIAL UNIQUE NOT NULL,
         username TEXT NOT NULL,
-        file TEXT UNIQUE NOT NULL,
+        login TEXT NOT NULL,
+        password TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         create_date Timestamp,
-        CONSTRAINT user_primary_key PRIMARY KEY (id)
+        success_level CHARACTER(10) NOT NULL,
+        CONSTRAINT primary_key PRIMARY KEY (id),
+        CONSTRAINT user_unique UNIQUE (login, password)
 );
 
 
 
 --get user by id
-SELECT * FROM users WHERE id = 1;
+SELECT * FROM test WHERE id = 1;
+
+--get yser by username and password
+SELECT id, username, email, create_date, success_level FROM test WHERE login = 'my_login' AND password = 'my_password' LIMIT 1;
 
 
+--get all users
+SELECT * FROM test;
 
 --delete user
-DELETE FROM users WHERE id = 1;
+DELETE FROM test WHERE id = 1;
 
 
 --add new user
-INSERT INTO users (id, username, fileLogin, email, create_date)
-VALUES (DEFAULT, 'pavel', 'my_login', 'my_email', now()::timestamp);
+INSERT INTO test (id, username, login, password, email, create_date, success_level)
+VALUES (DEFAULT, 'pavel', 'my_login', 'my_password', 'my_email', now()::timestamp, 'user');
 
 
 
 --update old user
-UPDATE users
-SET  username = 'new_name', fileLogin = 'new_login', email = 'new+email'
+UPDATE test
+SET  username = 'new_username', login = 'new_login', password = 'new_password', email = 'new_email'
 WHERE id = 1;
 
 
+--get success level
+SELECT success_level FROM test WHERE login = 'new_login' AND password = 'new_password';
 
+
+--user is exist return true or false
+SELECT exists (select true FROM test WHERE login = 'new_login' AND password = 'new_password');

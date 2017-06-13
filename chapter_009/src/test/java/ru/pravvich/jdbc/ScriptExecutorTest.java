@@ -1,215 +1,254 @@
 package ru.pravvich.jdbc;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+import ru.pravvich.jdbc.actions.TestDatabase;
 import ru.pravvich.user.User;
 
-import java.sql.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 
-public class ScriptExecutorTest {
-
-    private Connection connection;
-    private PropertiesLoader properties;
-
-    private void initProperties() {
-        properties = new PropertiesLoader("test_database");
-    }
-
-    private void openConnection() {
-        try {
-
-            connection = DriverManager.getConnection(
-                    properties.get("url"),
-                    properties.get("username"),
-                    properties.get("password")
-            );
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createTable() {
-        try (final PreparedStatement statement =
-                     connection.prepareStatement(
-                             properties.get("create_table")
-                     )
-        ) {
-
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Before
-    public void before() {
-        initProperties();
-        openConnection();
-        createTable();
-    }
-
-
+public class ScriptExecutorTest extends TestDatabase {
 
     @Test
-    public void whenCallAddUserAndCallGetUserThenReturnSameUser() {
-        final ScriptExecutor scriptExecutor = new ScriptExecutor(
-                connection, new PropertiesLoader("database_scripts"));
+    public void whenDatabaseContainsTwoUsersThenAllTwoUsersReturnInList() {
 
-        final User user =  new User(
-                0, "name", "login", "email",
-                new Timestamp(System.currentTimeMillis()));
+        final User user1 = new User(1, "test1","test1","test1","test1",
+                new Timestamp(System.currentTimeMillis()), "test1");
 
-        scriptExecutor.addUser(user);
+        final User user2 = new User(2, "test2","test2","test2","test2",
+                new Timestamp(System.currentTimeMillis()), "test2");
 
-        final User result = scriptExecutor.getUser(1);
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
 
-        Assert.assertThat(result.getEmail(), is(user.getEmail()));
-    }
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
 
-    @Test
-    public void whenDeleteUserThenUserIsDeleted() {
-
-        final ScriptExecutor scriptExecutor = new ScriptExecutor(
-                connection, new PropertiesLoader("database_scripts"));
-
-        final User user =  new User(
-                1, "name", "login", "email",
-                new Timestamp(System.currentTimeMillis()));
-
-        scriptExecutor.addUser(user);
-
-        final User before = scriptExecutor.getUser(1);
-
-        //Test.
-        scriptExecutor.deleteUser(user);
-
-        final User after = scriptExecutor.getUser(1);
-
-        Assert.assertNotNull(before.getEmail());
-        Assert.assertNull(after.getEmail());
-    }
-
-    @Test
-    public void whenUserUpdateThenNameLoginAndEmailUpdated() {
-
-        final ScriptExecutor scriptExecutor = new ScriptExecutor(
-                connection, new PropertiesLoader("database_scripts"));
-
-        final User oldVersion =  new User(
-                1, "name", "login", "email",
-                new Timestamp(System.currentTimeMillis()));
-
-        scriptExecutor.addUser(oldVersion);
-
-
-
-        final User newVersion = new User(
-                1, "new_name", "new_login", "new_email",
-                new Timestamp(System.currentTimeMillis()));
-
-        //Test.
-        scriptExecutor.updateUser(newVersion);
-
-
-        final User result = scriptExecutor.getUser(1);
-
-        Assert.assertThat(result.getEmail(), is(newVersion.getEmail()));
-    }
-
-
-    @Test
-    public void whenGetAllUserCallThenReturnAllUserWhichExistInTableUsers() {
-
-        final ScriptExecutor scriptExecutor = new ScriptExecutor(
-                connection, new PropertiesLoader("database_scripts"));
-
-        final User user1 =  new User(
-                0, "user1", "login1", "email1",
-                new Timestamp(System.currentTimeMillis()));
-
-        final User user2 =  new User(
-                0, "user2", "login2", "email2",
-                new Timestamp(System.currentTimeMillis()));
-
-        scriptExecutor.addUser(user1);
-        scriptExecutor.addUser(user2);
-
-        // test.
-        final List<User> result = scriptExecutor.getAllUsers();
-
-        Assert.assertThat(result.get(0).getName(), is("user1"));
-        Assert.assertThat(result.get(1).getName(), is("user2"));
-    }
-
-
-    @Test
-    public void whenUserExistInDBThenCallUserIsExistMethodReturnTrue() {
-
-        final ScriptExecutor scriptExecutor = new ScriptExecutor(
-                connection, new PropertiesLoader("database_scripts"));
-
-        final User user =  new User(
-                0, "user", "login", "email",
-                new Timestamp(System.currentTimeMillis()));
-
-        scriptExecutor.addUser(user);
-
+        executor.addUser(user1);
+        executor.addUser(user2);
 
         //test.
-        final boolean result = scriptExecutor.userIsExist(user);
+        final List<User> result = executor.getAllUsers();
+
+        Assert.assertThat(result.size(), is(2));
+        Assert.assertThat(result.get(0).getName(), is("test1"));
+        Assert.assertThat(result.get(1).getName(), is("test2"));
+    }
+
+    @Test
+    public void whenDatabaseIsEmptyThenReturnEmptyList() {
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        //test.
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        final List<User> result = executor.getAllUsers();
+
+        Assert.assertThat(result.size(), is(0));
+    }
+
+    @Test
+    public void whenGetUserByIdWhichExistThenGetUser() {
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+        //test.
+        final User result = executor.getUserById(1);
+
+        Assert.assertThat(result.getName(), is("test"));
+    }
+
+
+    @Test
+    public void whenGetUserByLoginAndPasswordCallThenUserWithSameLoginAndPasswordReturn() {
+        final User user = new User(1, "name","login","password","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+        //test.
+        final User result = executor.getUserByLoginPassword("login", "password");
+        Assert.assertThat(result.getName(), is("name"));
+    }
+
+
+    @Test
+    public void whenUserAdditionSuccessThenUserExistInDatabase() {
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+        final boolean result = executor.userIsExist("test", "test");
+
         Assert.assertTrue(result);
     }
 
 
     @Test
-    public void whenUserNotExistInDBThenCallUserIsExistMethodReturnFalse() {
+    public void whenDeleteUserByIdThenUserIsDeleted() {
 
-        final ScriptExecutor scriptExecutor = new ScriptExecutor(
-                connection, new PropertiesLoader("database_scripts"));
+        final User user = new User(1, "test1","test1","test1","test1",
+                new Timestamp(System.currentTimeMillis()), "test1");
 
-        final User user =  new User(
-                0, "user", "login", "email",
-                new Timestamp(System.currentTimeMillis()));
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+
+        final boolean before = executor.userIsExist("test1", "test1");
 
 
         //test.
-        final boolean result = scriptExecutor.userIsExist(user);
+
+        executor.deleteUserById(1);
+
+        final boolean after = executor.userIsExist("test1", "test1");
+
+        Assert.assertTrue(before);
+        Assert.assertFalse(after);
+    }
+
+
+    @Test
+    public void whenDeleteByLoginAndPasswordThenUserIsDeleted() {
+
+        final User user = new User(1, "username","login","password","email",
+                new Timestamp(System.currentTimeMillis()), "test1");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+        final boolean before = executor.userIsExist("login", "password");
+
+
+        //test.
+
+        executor.deleteUserByLoginPassword(user.getLogin(), user.getPassword());
+
+
+        final boolean after = executor.userIsExist("login", "password");
+
+        Assert.assertTrue(before);
+        Assert.assertFalse(after);
+    }
+
+
+    @Test
+    public void whenUserExistInDatabaseByLoginPasswordThenReturnTrue() {
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+
+        final boolean result = executor.userIsExist("test", "test");
+
+        Assert.assertTrue(result);
+    }
+
+
+    @Test
+    public void whenUserNotExistInDatabaseByLoginPasswordThenReturnFalse() {
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        final boolean result = executor.userIsExist("test", "test");
+
         Assert.assertFalse(result);
     }
 
 
-    @After
-    public void after() {
-        deleteTable();
-        closeConnection();
+    @Test
+    public void whenUserExistInDatabaseByIdThenReturnTrue() {
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+
+        final boolean result = executor.userIsExist(1);
+
+        Assert.assertTrue(result);
     }
 
-    private void deleteTable() {
-        try (final PreparedStatement statement =
-                     connection.prepareStatement(
-                             properties.get("drop_table")
-                     )
-        ) {
+    @Test
+    public void whenUserNotExistInDatabaseByIdThenReturnFalse() {
 
-            statement.executeUpdate();
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        final boolean result = executor.userIsExist("test", "test");
+
+        Assert.assertFalse(result);
     }
 
-    private void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Test
+    public void whenUserUpdateThenUserUpdated() {
+
+        final User user = new User(0, "username","login","password","email",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+
+        executor.addUser(user);
+
+        //test.
+
+        final User updatedUser = new User(0, "new_username","new_login","new_password","new_email",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+
+        //get user before update.
+        final User before = executor.getUserById(1);
+
+        //tested method.
+        executor.updateUser(1, updatedUser);
+
+        //get user after update.
+        final User after = executor.getUserById(1);
+
+
+        Assert.assertThat(before.getName(), is("username"));
+        Assert.assertThat(after.getName(), is("new_username"));
+
     }
 }
