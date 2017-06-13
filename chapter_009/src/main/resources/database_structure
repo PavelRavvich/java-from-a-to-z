@@ -46,3 +46,13 @@ SELECT success_level FROM test WHERE login = 'new_login' AND password = 'new_pas
 
 --user is exist return true or false
 SELECT exists (select true FROM test WHERE login = 'new_login' AND password = 'new_password');
+
+
+--добавление с возвратом получилось/нет = true/false
+with ins as (
+  INSERT INTO test (id, username, login, password, email, create_date, success_level)
+  VALUES (DEFAULT, 'asd', 'asd', 'asd', 'asd', now()::timestamp, 'asd')
+  on conflict on constraint user_unique do nothing
+  returning id
+)
+select exists(select from ins) as success;
