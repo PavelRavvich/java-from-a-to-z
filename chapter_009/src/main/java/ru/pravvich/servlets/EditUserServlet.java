@@ -1,7 +1,6 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,18 +39,18 @@ public class EditUserServlet extends HttpServlet {
         final String login = req.getParameter("login");
         final String email = req.getParameter("email");
 
-        final User user = db.getDBScriptExecutor().getUser(Integer.parseInt(id));
-
-        if (user.getId() == 0) {
-
-            req.setAttribute("warning", "такого пользователя не существует");
-            req.getRequestDispatcher("/WEB-INF/views/edition.jsp").forward(req, resp);
-
-        } else {
-
-            db.getDBScriptExecutor().updateUser(new User(Integer.parseInt(id), name, login, email));
-            req.setAttribute("user", new User(user.getId(),name,login,email,user.getCreateAccount()));
-            req.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(req, resp);
-        }
+//        final User user = db.getDBScriptExecutor().getUser(Integer.parseInt(id));
+//
+//        if (user.getId() == 0) {
+//
+//            req.setAttribute("warning", "такого пользователя не существует");
+//            req.getRequestDispatcher("/WEB-INF/views/edition.jsp").forward(req, resp);
+//
+//        } else {
+//
+//            db.getDBScriptExecutor().updateUser(new User(Integer.parseInt(id), name, login, email));
+//            req.setAttribute("user", new User(user.getId(),name,login,email,user.getCreateAccount()));
+//            req.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(req, resp);
+//        }
     }
 }

@@ -40,6 +40,16 @@ public class ScriptExecutor {
     }
 
     /**
+     * Add user and get success.
+     *
+     * @return true if user was addition, false if pair login password exist,
+     * and addition fail.
+     */
+    public boolean addUserAndGetSuccess(final User user) {
+        return new UserAdder(connection, properties).addAndGetResult(user);
+    }
+
+    /**
      * Delete user from users table by id.
      */
     public void deleteUserById(final int id) {
@@ -50,7 +60,8 @@ public class ScriptExecutor {
     /**
      * Delete user by login-password set.
      */
-    public void deleteUserByLoginPassword(final String login, final String password) {
+    public void deleteUserByLoginPassword(final String login,
+                                          final String password) {
         new UserDeleter(connection, properties).deleteUserBy(login, password);
     }
 
@@ -64,8 +75,11 @@ public class ScriptExecutor {
     /**
      * Get user by login-password set.
      */
-    public User getUserByLoginPassword(final String login, final String password) {
-        return new SingleUserGetter(connection, properties).getUserBy(login, password);
+    public User getUserByLoginPassword(final String login,
+                                       final String password) {
+
+        return new SingleUserGetter(connection, properties)
+                .getUserBy(login, password);
     }
 
     /**
@@ -100,6 +114,7 @@ public class ScriptExecutor {
      * @return true if user exist in DB, else false.
      */
     public boolean userIsExist(final String login, final String password) {
-        return new UserExistChecker(connection, properties).userIsExist(login, password);
+        return new UserExistChecker(connection, properties)
+                .userIsExist(login, password);
     }
 }

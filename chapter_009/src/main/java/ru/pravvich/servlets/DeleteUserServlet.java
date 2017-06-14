@@ -1,7 +1,6 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +40,7 @@ public class DeleteUserServlet extends HttpServlet {
             answer = "Пользователя с таким id не может существовать";
         } else {
             answer = String.format("%s %s %s", "Пользователья с id =", id, "точно больше не существует.");
-            db.getDBScriptExecutor().deleteUser(new User(id));
+            //db.getDBScriptExecutor().deleteUser(new User(id));
         }
 
 

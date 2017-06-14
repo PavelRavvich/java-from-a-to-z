@@ -9,7 +9,7 @@ import java.io.IOException;
 import static java.lang.String.format;
 
 /**
- * Get home page index.jsp and navigation by support action.
+ * Get home page AdminMenu.jsp and navigation by support action.
  */
 public class HomePageServlet extends HttpServlet {
 
@@ -20,7 +20,7 @@ public class HomePageServlet extends HttpServlet {
         final String select = moveSelect(req);
 
         if (select.equals("")) {
-            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/AdminMenu.jsp").forward(req, resp);
         }
 
 

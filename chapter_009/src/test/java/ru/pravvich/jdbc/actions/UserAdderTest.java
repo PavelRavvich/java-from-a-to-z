@@ -26,4 +26,36 @@ public class UserAdderTest extends TestDatabase {
 
         Assert.assertTrue(result);
     }
+
+    @Test
+    public void whenPairLoginPasswordIsUniqueThenReturnTrue() {
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final UserAdder adder = new UserAdder(connection, originalScripts);
+
+        final boolean result = adder.addAndGetResult(user);
+
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void whenPairLoginAlreadyExistInDBPasswordThenReturnFalse() {
+
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final UserAdder adder = new UserAdder(connection, originalScripts);
+
+
+        adder.addAndGetResult(user);
+        final boolean result = adder.addAndGetResult(user);
+
+        Assert.assertFalse(result);
+
+    }
 }

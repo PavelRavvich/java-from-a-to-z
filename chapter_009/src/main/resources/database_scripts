@@ -37,3 +37,12 @@ exist=SELECT exists (select true FROM users WHERE login = (?) AND password = (?)
 
 #Check user exist by id.
 exist_id=SELECT exists (select true FROM users WHERE id = (?))
+
+
+add_and_get=with ins as (\
+    INSERT INTO users (id, username, login, password, email, create_date, success_level) \
+    VALUES (DEFAULT, (?), (?), (?), (?), now()::timestamp, (?)) \
+    on conflict on constraint user_unique do nothing \
+    returning id\
+)\
+select exists(select from ins) as success

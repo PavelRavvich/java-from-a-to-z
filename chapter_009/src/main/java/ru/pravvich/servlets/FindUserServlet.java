@@ -1,7 +1,6 @@
 package ru.pravvich.servlets;
 
 import ru.pravvich.jdbc.DBJoint;
-import ru.pravvich.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -36,14 +35,14 @@ public class FindUserServlet extends HttpServlet {
 
         final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
 
-        final User result = db.getDBScriptExecutor().getUser(Integer.parseInt(id));
+        //final User result = db.getDBScriptExecutor().getUser(Integer.parseInt(id));
 
-        if (result.getId() == 0) {
-            req.setAttribute("fail", "Такого пользователя не существует");
-            req.getRequestDispatcher("/WEB-INF/views/find.jsp").forward(req, resp);
-        }
+//        if (result.getId() == 0) {
+//            req.setAttribute("fail", "Такого пользователя не существует");
+//            req.getRequestDispatcher("/WEB-INF/views/find.jsp").forward(req, resp);
+//        }
 
-        req.setAttribute("user", result);
+        //req.setAttribute("user", result);
         req.getRequestDispatcher("/WEB-INF/views/user.jsp").forward(req, resp);
     }
 }

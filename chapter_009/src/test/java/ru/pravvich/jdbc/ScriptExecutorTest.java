@@ -21,9 +21,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user2 = new User(2, "test2","test2","test2","test2",
                 new Timestamp(System.currentTimeMillis()), "test2");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user1);
         executor.addUser(user2);
@@ -39,10 +41,12 @@ public class ScriptExecutorTest extends TestDatabase {
     @Test
     public void whenDatabaseIsEmptyThenReturnEmptyList() {
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
         //test.
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         final List<User> result = executor.getAllUsers();
 
@@ -54,9 +58,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(1, "test","test","test","test",
                 new Timestamp(System.currentTimeMillis()), "test");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
@@ -68,18 +74,22 @@ public class ScriptExecutorTest extends TestDatabase {
 
 
     @Test
-    public void whenGetUserByLoginAndPasswordCallThenUserWithSameLoginAndPasswordReturn() {
+    public void whenGetUserByLoginAndPasswordCallThenSameUserReturn() {
         final User user = new User(1, "name","login","password","test",
                 new Timestamp(System.currentTimeMillis()), "test");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
         //test.
-        final User result = executor.getUserByLoginPassword("login", "password");
+        final User result = executor
+                .getUserByLoginPassword("login", "password");
+
         Assert.assertThat(result.getName(), is("name"));
     }
 
@@ -90,9 +100,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(1, "test","test","test","test",
                 new Timestamp(System.currentTimeMillis()), "test");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
@@ -108,9 +120,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(1, "test1","test1","test1","test1",
                 new Timestamp(System.currentTimeMillis()), "test1");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
@@ -135,9 +149,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(1, "username","login","password","email",
                 new Timestamp(System.currentTimeMillis()), "test1");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
@@ -162,9 +178,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(1, "test","test","test","test",
                 new Timestamp(System.currentTimeMillis()), "test");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
@@ -178,9 +196,11 @@ public class ScriptExecutorTest extends TestDatabase {
     @Test
     public void whenUserNotExistInDatabaseByLoginPasswordThenReturnFalse() {
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         final boolean result = executor.userIsExist("test", "test");
 
@@ -194,9 +214,11 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(1, "test","test","test","test",
                 new Timestamp(System.currentTimeMillis()), "test");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
@@ -209,10 +231,11 @@ public class ScriptExecutorTest extends TestDatabase {
     @Test
     public void whenUserNotExistInDatabaseByIdThenReturnFalse() {
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         final boolean result = executor.userIsExist("test", "test");
 
@@ -225,15 +248,18 @@ public class ScriptExecutorTest extends TestDatabase {
         final User user = new User(0, "username","login","password","email",
                 new Timestamp(System.currentTimeMillis()), "test");
 
-        final PropertiesLoader originalScripts = new PropertiesLoader("database_scripts");
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
 
-        final ScriptExecutor executor = new ScriptExecutor(connection, originalScripts);
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
 
         executor.addUser(user);
 
         //test.
 
-        final User updatedUser = new User(0, "new_username","new_login","new_password","new_email",
+        final User updatedUser = new User(
+                0, "new_username","new_login", "new_password","new_email",
                 new Timestamp(System.currentTimeMillis()), "test");
 
 
@@ -249,6 +275,44 @@ public class ScriptExecutorTest extends TestDatabase {
 
         Assert.assertThat(before.getName(), is("username"));
         Assert.assertThat(after.getName(), is("new_username"));
+
+    }
+
+    @Test
+    public void whenPairLoginPasswordIsUniqueThenReturnTrue() {
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
+
+        final boolean result = executor.addUserAndGetSuccess(user);
+
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void whenPairLoginAlreadyExistInDBPasswordThenReturnFalse() {
+
+
+        final User user = new User(1, "test","test","test","test",
+                new Timestamp(System.currentTimeMillis()), "test");
+
+        final PropertiesLoader originalScripts =
+                new PropertiesLoader("database_scripts");
+
+        final ScriptExecutor executor =
+                new ScriptExecutor(connection, originalScripts);
+
+
+        executor.addUserAndGetSuccess(user);
+        final boolean result = executor.addUserAndGetSuccess(user);
+
+        Assert.assertFalse(result);
 
     }
 }
