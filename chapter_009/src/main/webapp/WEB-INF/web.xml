@@ -43,31 +43,20 @@
     <!--Homepage.-->
     <servlet>
         <servlet-name>HomePageServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.HomePageServlet</servlet-class>
+        <servlet-class>ru.pravvich.servlets.adminServlet.AdminHomePageServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>HomePageServlet</servlet-name>
         <url-pattern>/menu</url-pattern>
     </servlet-mapping>
-
-
-    <!--menu-->
-    <servlet>
-        <servlet-name>MenuSwitchServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.MenuSwitchServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>MenuSwitchServlet</servlet-name>
-        <url-pattern>/choice</url-pattern>
-    </servlet-mapping>
+    
 
 
     <!--Add user in database.-->
     <servlet>
         <servlet-name>AddUserServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.AddUserServlet</servlet-class>
+        <servlet-class>ru.pravvich.servlets.adminServlet.AddUserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -91,7 +80,7 @@
     <!--Delete user by id-->
     <servlet>
         <servlet-name>DeleteUserServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.DeleteUserServlet</servlet-class>
+        <servlet-class>ru.pravvich.servlets.adminServlet.DeleteUserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -103,12 +92,25 @@
     <!--Edition user-->
     <servlet>
         <servlet-name>EditUserServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.EditUserServlet</servlet-class>
+        <servlet-class>ru.pravvich.servlets.adminServlet.EditUserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>EditUserServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+
+
+    <!--Edit profile-->
+    <servlet>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.userServlet.EditProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <url-pattern>/edit_profile</url-pattern>
     </servlet-mapping>
 
 

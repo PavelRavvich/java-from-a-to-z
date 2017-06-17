@@ -49,7 +49,7 @@ public class SingleUserGetter extends Action {
                         result.getString("password"),
                         result.getString("email"),
                         result.getTimestamp("create_date"),
-                        result.getString("success_level"));
+                        result.getString("access"));
 
             }
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class SingleUserGetter extends Action {
                         password,
                         result.getString("email"),
                         result.getTimestamp("create_date"),
-                        result.getString("success_level"));
+                        result.getString("access"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

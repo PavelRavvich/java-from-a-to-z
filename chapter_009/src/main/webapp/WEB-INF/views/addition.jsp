@@ -16,7 +16,10 @@
 
         <input type="text" required placeholder="name" name="name"><br>
         <input type="text" required placeholder="login" name="login"><br>
+        <input type="text" required placeholder="password" name="password"><br>
         <input type="text" required placeholder="email" name="email"><br>
+        <label for="admin">admin </label><input type="radio" required value="admin" name="role" id="admin" />
+        <label for="user">user </label><input type="radio" required value="user" name="role" id="user" />
         <input type="submit" value="Добавить">
 
     </form>

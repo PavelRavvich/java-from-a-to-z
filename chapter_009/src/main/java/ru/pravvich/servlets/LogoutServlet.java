@@ -17,7 +17,8 @@ public class LogoutServlet extends HttpServlet {
         final HttpSession session = request.getSession();
 
         synchronized (session) {
-            session.removeAttribute("name");
+            session.removeAttribute("login");
+            session.removeAttribute("access");
         }
 
          response.sendRedirect(request.getContextPath());

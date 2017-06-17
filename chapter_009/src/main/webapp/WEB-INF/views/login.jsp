@@ -3,16 +3,40 @@
 <html>
 <head>
     <title>Вход</title>
+
+    <style type="text/css">
+        * {
+            background-color: #fdf4ff;
+        }
+
+        .button {
+            color: #ffffff;
+            background-color: #0076af;
+        }
+
+        .form {
+        padding: 50px;
+        position: fixed; top: 40%; left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
 
-    <form method="post" action="">
+    <div class="form">
 
-        <input type="text" required placeholder="name" name="name"><br>
-        <input type="password" required placeholder="email" name="email"><br>
-        <input type="submit" value="Войти">
+        <h1>Вход в систему</h1><br>
+        <form method="post" action="">
 
-    </form>
-    <c:out value="${warning}"/>
+            <input type="text" required placeholder="login" name="login"><br>
+            <input type="password" required placeholder="password" name="password"><br><br>
+            <input class="button" type="submit" value="Войти">
+
+        </form>
+        <c:out value="${warning}"/>
+
+    </div>
 </body>
 </html>

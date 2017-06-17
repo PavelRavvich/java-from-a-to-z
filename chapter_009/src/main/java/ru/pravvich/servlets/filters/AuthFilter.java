@@ -2,6 +2,7 @@ package ru.pravvich.servlets.filters;
 
 import ru.pravvich.jdbc.DBJoint;
 import ru.pravvich.jdbc.ScriptExecutor;
+import ru.pravvich.user.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,111 +12,169 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static java.util.Objects.nonNull;
+import static ru.pravvich.servlets.Messages.FIND_ERROR;
+import static ru.pravvich.servlets.Paths.*;
 
 /**
  * Acidification filter.
  */
 public class AuthFilter implements Filter {
 
+    private final static String password = "password";
+    private final static String access   =   "access";
+    private final static String admin    =    "admin";
+    private final static String login    =    "login";
+    private final static String user     =     "user";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+    public void doFilter(final ServletRequest request,
+                         final ServletResponse response,
+                         final FilterChain filterChain)
+
             throws IOException, ServletException {
 
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
+        final ScriptExecutor dBExecutor = getDBExecutor(req);
+
 
         final HttpSession session = req.getSession(false);
 
+        if (nonNull(session) && userExistIn(session)) {
 
-//        if (nonNull(session) && sessionContainUser(session)) {
-//
-//            req.getRequestDispatcher("/WEB-INF/views/AdminMenu.jsp")
-//                    .forward(req, res);
-//
-//            filterChain.doFilter(request, response);
-//
-//        } else if (req.getParameter("name") == null) {
-//
-//            moveToLoginPage(req, res);
-//
-//        } else if (userExistInDB(req, getDBExecutor(req))) {
-//
-//            moveToMenu(req, res);
-//
-//            filterChain.doFilter(request, response);
-//
-//        } else {
-//
-//            moveToLoginPage(req, res, "Нет такого пользователя");
-//
-//        }
-    }
+            final String success = getSessionAccess(session);
 
+            moveToMenu(req, res, success);
 
-    private void moveToLoginPage(final HttpServletRequest req,
-                                 final HttpServletResponse res,
-                                 final String ... massage)
+            filterChain.doFilter(request, response);
 
-            throws ServletException, IOException {
+        } else if (userExistInDB(req, dBExecutor)) {
 
-        if (massage.length == 1) {
-            req.setAttribute("warning", "Нет такого пользователя");
+            final String access = getAccess(req, dBExecutor);
+
+            final int id = getId(req, dBExecutor);
+
+            fillSessionAttributes(req, access, id);
+
+            moveToMenu(req, res, access);
+
+        } else {
+
+            moveToLoginPage(req, res);
         }
-
-        req.getRequestDispatcher("/WEB-INF/views/login.jsp")
-                .forward(req, res);
     }
 
+    private void moveToMenu(final HttpServletRequest req,
+                            final HttpServletResponse res,
+                            final String access)
 
-    /**
-     * Move user to menu.
-     */
-    private void moveToMenu(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        setSessionAttribute(req.getSession(), req.getParameter("name"));
+        if (access != null && access.equals(admin)) {
 
-        req.getRequestDispatcher("/WEB-INF/views/AdminMenu.jsp")
-                .forward(req, res);
+            req.getRequestDispatcher(ADMIN_MENU.get()).forward(req, res);
 
+        } else if (access != null && access.equals(user)) {
+
+            req.getRequestDispatcher(USER_MENU.get()).forward(req, res);
+
+        } else {
+
+            req.getRequestDispatcher(ERROR_ACCESS.get()).forward(req, res);
+        }
     }
 
-    /**
-     * Save name/key in session.
-     *
-     * @param session current session.
-     * @param name key which save in session for recognition of user.
-     */
-    private void setSessionAttribute(final HttpSession session, final String name) {
+    private void fillSessionAttributes(final HttpServletRequest req,
+                                       final String access,
+                                       final int id)
+
+            throws ServletException, IOException {
+
+        final HttpSession session = req.getSession();
+
         synchronized (session) {
-            session.setAttribute("name", name);
+            session.setAttribute(login, req.getParameter(login));
+            session.setAttribute("access", access);
+            session.setAttribute("id", id);
         }
     }
+
+    /**
+     * Get access from current session.
+     */
+    private String getSessionAccess(final HttpSession session) {
+        synchronized (session) {
+            return (String) session.getAttribute(access);
+        }
+    }
+
+    /**
+     * Recognition user.
+     *
+     * @param session currant session.
+     * @return true if session contain name and user recognition, else false.
+     */
+    private boolean userExistIn(final HttpSession session)
+            throws ServletException, IOException {
+
+        synchronized (session) {
+            return (nonNull(session.getAttribute(login)));
+        }
+    }
+
+    /**
+     * Move to login page if pare login & password not exist in database.
+     */
+    private void moveToLoginPage(final HttpServletRequest req,
+                                 final HttpServletResponse res)
+
+            throws ServletException, IOException {
+
+
+        if (req.getParameter(login) != null) {
+            req.setAttribute("warning",FIND_ERROR.get());
+        }
+
+        req.getRequestDispatcher(LOGIN.get()).forward(req, res);
+    }
+
+
 
     /**
      * Check in database exist user or not.
      *
      * @return true if user exist in DB, else false.
      */
-//    private boolean userExistInDB(HttpServletRequest request, ScriptExecutor scriptExecutor) {
-//
-//        final String name = request.getParameter("name");
-//        final String email = request.getParameter("email");
-//
-//        return scriptExecutor.userIsExist(new User(name, "stub_for_login", email));
-//    }
+    private boolean userExistInDB(final HttpServletRequest request,
+                                  final ScriptExecutor executor) {
+
+        final String log = request.getParameter(login);
+        final String pas = request.getParameter(password);
+
+        return executor.userIsExist(log, pas);
+    }
+
+    private String getAccess(final HttpServletRequest request,
+                             final ScriptExecutor executor) {
+
+        final String log = request.getParameter(login);
+        final String pas = request.getParameter(password);
+
+        return executor.getAccess(log, pas);
+
+    }
 
     /**
      * For work with database.
      *
      * @return database ScriptExecutor.
      */
-    private ScriptExecutor getDBExecutor(ServletRequest req) {
+    private ScriptExecutor getDBExecutor(final ServletRequest req) {
 
         final DBJoint db = (DBJoint) req.getServletContext().getAttribute("db");
 
@@ -130,18 +189,17 @@ public class AuthFilter implements Filter {
         return null;
     }
 
-    /**
-     * Recognition user.
-     *
-     * @param session currant session.
-     * @return true if session contain name and user recognition, else false.
-     */
-    private boolean sessionContainUser(final HttpSession session)
-            throws ServletException, IOException {
 
-        synchronized (session) {
-            return (nonNull(session.getAttribute("name")));
-        }
+    private int getId(final HttpServletRequest req,
+                      final ScriptExecutor executor) {
+
+
+        final String login = req.getParameter(AuthFilter.login);
+        final String password = req.getParameter(AuthFilter.password);
+
+        final User user = executor.getUserByLoginPassword(login, password);
+
+        return user.getId();
     }
 
     @Override

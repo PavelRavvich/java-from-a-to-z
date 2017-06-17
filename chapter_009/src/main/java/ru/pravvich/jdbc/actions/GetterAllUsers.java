@@ -52,7 +52,7 @@ public class GetterAllUsers extends Action {
                                 result.getString("password"),
                                 result.getString("email"),
                                 result.getTimestamp("create_date"),
-                                result.getString("success_level")
+                                result.getString("access")
                         );
 
                 users.add(user);

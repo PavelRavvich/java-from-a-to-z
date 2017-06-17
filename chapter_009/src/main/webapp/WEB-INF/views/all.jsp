@@ -16,18 +16,20 @@
     <h1>Список всех пользователей</h1>
 
 
-    <c:forEach var="users" items="${requestScope.allUsers}">
+    <c:forEach var="user" items="${requestScope.allUsers}">
         <ul>
 
-            <li>Id: <c:out value="${users.id}"/></li>
+            <li>Id: <c:out value="${user.id}"/></li>
 
-            <li>Name: <c:out value="${users.name}"/></li>
+            <li>Name: <c:out value="${user.name}"/></li>
 
-            <li>Login: <c:out value="${users.login}"/></li>
+            <li>Login: <c:out value="${user.login}"/></li>
 
-            <li>Email: <c:out value="${users.email}"/></li>
+            <li>Email: <c:out value="${user.email}"/></li>
 
-            <li>Create date: <c:out value="${users.createAccount}"/></li>
+            <li>Create date: <c:out value="${user.createAccount}"/></li>
+
+            <li>Role: <c:out value="${user.successLevel}"/></li>
 
         </ul><hr align="center" width="90%" size="5" color="#dddddd" />
 

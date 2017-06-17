@@ -66,6 +66,37 @@ public class User {
         this.createAccount = createAccount;
     }
 
+
+    public User(final String name,
+                final String login,
+                final String password,
+                final String email,
+                final String successLevel) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.successLevel = successLevel;
+    }
+
+    public User(final String name,
+                final String login,
+                final String password,
+                final String email) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setSuccessLevel(String successLevel) {
+        this.successLevel = successLevel;
+    }
+
     public String getPassword() {
         return password;
     }

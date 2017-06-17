@@ -17,7 +17,8 @@ public class SignInServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF8");
 
-        request.getRequestDispatcher("/WEB-INF/views/AdminMenu.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/AdminMenu.jsp")
+                .forward(request, response);
 
     }
 

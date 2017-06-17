@@ -10,18 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static ru.pravvich.servlets.Paths.ALL_USERS;
+
 /**
  * Controller for view all users.
  */
 public class GetAllUsersServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         doPost(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF8");
@@ -44,7 +48,8 @@ public class GetAllUsersServlet extends HttpServlet {
 
 
         request.setAttribute("allUsers", dbExecutor.getAllUsers());
-        request.getRequestDispatcher("/WEB-INF/views/all.jsp").forward(request, response);
+        request.getRequestDispatcher(ALL_USERS.get())
+                .forward(request, response);
 
     }
 

@@ -45,10 +45,10 @@ public class PropertiesLoader {
     }
 
     /**
-     * Get value.
+     * Get get.
      *
-     * @param key of value.
-     * @return value of Properties by key.
+     * @param key of get.
+     * @return get of Properties by key.
      */
     public String get(final String key) {
         return properties.getProperty(key);

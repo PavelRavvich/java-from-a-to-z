@@ -1,13 +1,13 @@
 CREATE DATABASE user_storage;
 
-CREATE TABLE test (
+CREATE TABLE users (
         id SERIAL UNIQUE NOT NULL,
         username TEXT NOT NULL,
         login TEXT NOT NULL,
         password TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         create_date Timestamp,
-        success_level CHARACTER(10) NOT NULL,
+        access CHARACTER(10) NOT NULL,
         CONSTRAINT primary_key PRIMARY KEY (id),
         CONSTRAINT user_unique UNIQUE (login, password)
 );
@@ -18,7 +18,7 @@ CREATE TABLE test (
 SELECT * FROM test WHERE id = 1;
 
 --get yser by username and password
-SELECT id, username, email, create_date, success_level FROM test WHERE login = 'my_login' AND password = 'my_password' LIMIT 1;
+SELECT id, username, email, create_date, access FROM test WHERE login = 'my_login' AND password = 'my_password' LIMIT 1;
 
 
 --get all users
@@ -29,19 +29,37 @@ DELETE FROM test WHERE id = 1;
 
 
 --add new user
-INSERT INTO test (id, username, login, password, email, create_date, success_level)
-VALUES (DEFAULT, 'pavel', 'my_login', 'my_password', 'my_email', now()::timestamp, 'user');
+INSERT INTO users (id, username, login, password, email, create_date, access)
+VALUES (DEFAULT, 'pavel', '2', '2', 'my_email2', now()::timestamp, 'user');
 
 
 
 --update old user
 UPDATE test
-SET  username = 'new_username', login = 'new_login', password = 'new_password', email = 'new_email'
+SET  username = 'new_username', login = 'new_login', password = 'new_password', email = 'new_email', access = 'admin'
 WHERE id = 1;
 
 
+
+--обновление с результатом true/false
+WITH updated AS (
+    UPDATE users
+    SET username = 'name', login = 'login', password = 'password', email = 'email', access = 'admin'
+    WHERE id = 7 AND NOT EXISTS (SELECT * FROM users WHERE login = 'login'  AND password = 'password')
+    RETURNING id)
+SELECT CAST (CASE
+                WHEN u.id IS NOT NULL
+                    THEN 1
+                ELSE 0
+             END AS BOOLEAN
+            ) AS result
+FROM (VALUES (0)) AS t(f)
+LEFT JOIN updated u ON (1=1);
+
+
+
 --get success level
-SELECT success_level FROM test WHERE login = 'new_login' AND password = 'new_password';
+SELECT access FROM test WHERE login = 'new_login' AND password = 'new_password';
 
 
 --user is exist return true or false
@@ -50,9 +68,13 @@ SELECT exists (select true FROM test WHERE login = 'new_login' AND password = 'n
 
 --добавление с возвратом получилось/нет = true/false
 with ins as (
-  INSERT INTO test (id, username, login, password, email, create_date, success_level)
+  INSERT INTO test (id, username, login, password, email, create_date, access)
   VALUES (DEFAULT, 'asd', 'asd', 'asd', 'asd', now()::timestamp, 'asd')
   on conflict on constraint user_unique do nothing
   returning id
 )
 select exists(select from ins) as success;
+
+
+--check level access
+SELECT success_level FROM users WHERE login = 'asd' AND password = 'asd' LIMIT 1;

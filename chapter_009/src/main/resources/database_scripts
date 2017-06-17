@@ -1,6 +1,6 @@
 #Add user in table users.
 add=\
-  INSERT INTO users (id, username, login, password, email, create_date, success_level)\
+  INSERT INTO users (id, username, login, password, email, create_date, access)\
   VALUES (DEFAULT, (?), (?), (?), (?), now()::timestamp, (?))
 
 
@@ -18,14 +18,30 @@ get_by_id=SELECT * FROM users WHERE id = (?)
 
 #Get user by login & password set
 get_by_login_password=\
- SELECT id, username, email, create_date, success_level FROM users \
+ SELECT id, username, email, create_date, access FROM users \
  WHERE login = (?) AND password = (?) LIMIT 1;
 
 
 #Update old user.
 update=UPDATE users \
-    SET  username = (?), login = (?), password = (?), email = (?) \
+    SET  username = (?), login = (?), password = (?), email = (?), access = (?) \
     WHERE id = (?)
+
+
+update_and_get=\
+WITH updated AS ( \
+    UPDATE users \
+    SET username = (?), login = (?), password = (?), email = (?), access = (?) \
+    WHERE id = (?) AND NOT EXISTS (SELECT * FROM users WHERE login = (?) AND password = (?)) \
+    RETURNING id) \
+SELECT CAST (CASE \
+            WHEN u.id IS NOT NULL \
+                THEN 1 \
+            ELSE 0 \
+        END AS BOOLEAN \
+    ) AS result \
+FROM (VALUES (0)) AS t(f) \
+LEFT JOIN updated u ON (1=1)
 
 
 #Get all users.
@@ -40,9 +56,12 @@ exist_id=SELECT exists (select true FROM users WHERE id = (?))
 
 
 add_and_get=with ins as (\
-    INSERT INTO users (id, username, login, password, email, create_date, success_level) \
+    INSERT INTO users (id, username, login, password, email, create_date, access) \
     VALUES (DEFAULT, (?), (?), (?), (?), now()::timestamp, (?)) \
     on conflict on constraint user_unique do nothing \
     returning id\
 )\
 select exists(select from ins) as success
+
+
+success_level=SELECT access FROM users WHERE login = (?) AND password = (?) LIMIT 1

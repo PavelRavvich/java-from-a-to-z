@@ -93,6 +93,14 @@ public class ScriptExecutor {
     }
 
     /**
+     * Same updateUser(final int id, final User user).
+     * Different: if update success true, else - false.
+     */
+    public boolean updateUserAndGet(final int id, final User user) {
+        return new UserUpdater(connection, properties).updateAndGet(id, user);
+    }
+
+    /**
      * Get List of all user which exists in database.
      */
     public List<User> getAllUsers() {
@@ -116,5 +124,15 @@ public class ScriptExecutor {
     public boolean userIsExist(final String login, final String password) {
         return new UserExistChecker(connection, properties)
                 .userIsExist(login, password);
+    }
+
+    /**
+     * Get access level for user.
+     *
+     * @return access level. If user not exist return key "not_found".
+     */
+    public String getAccess(final String login, final String password) {
+        return new AccessLevelGetter(connection, properties)
+                .getAccess(login, password);
     }
 }

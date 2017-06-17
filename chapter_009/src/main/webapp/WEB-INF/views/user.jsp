@@ -29,6 +29,8 @@
 
             <li>Create date: <%=user.getCreateAccount()%></li>
 
+            <li>Role: <%=user.getSuccessLevel()%></li>
+
         </ul><br />
 
     <form action="answer" method="post">
