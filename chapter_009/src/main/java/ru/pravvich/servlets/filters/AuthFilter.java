@@ -59,7 +59,7 @@ public class AuthFilter implements Filter {
 
             final int id = getId(req, dBExecutor);
 
-            fillSessionAttributes(req, access, id);
+            putSessionAttributes(req, access, id);
 
             moveToMenu(req, res, access);
 
@@ -69,6 +69,14 @@ public class AuthFilter implements Filter {
         }
     }
 
+    /**
+     * Move user to menu.
+     * If access 'admin' move to admin menu.
+     * If access 'user' move to user menu.
+     * Else move to ErrorPage.
+     *
+     * @param access level.
+     */
     private void moveToMenu(final HttpServletRequest req,
                             final HttpServletResponse res,
                             final String access)
@@ -89,9 +97,16 @@ public class AuthFilter implements Filter {
         }
     }
 
-    private void fillSessionAttributes(final HttpServletRequest req,
-                                       final String access,
-                                       final int id)
+    /**
+     * Put attributes in session.
+     * Put user's login and access level and id into session.
+     *
+     * @param access for put.
+     * @param id for put.
+     */
+    private void putSessionAttributes(final HttpServletRequest req,
+                                      final String access,
+                                      final int id)
 
             throws ServletException, IOException {
 
@@ -159,6 +174,11 @@ public class AuthFilter implements Filter {
         return executor.userIsExist(log, pas);
     }
 
+    /**
+     * Get access level from database by pair login and password.
+     *
+     * @return access level.
+     */
     private String getAccess(final HttpServletRequest request,
                              final ScriptExecutor executor) {
 
@@ -189,7 +209,9 @@ public class AuthFilter implements Filter {
         return null;
     }
 
-
+    /**
+     * Get id for user with pair login password from database.
+     */
     private int getId(final HttpServletRequest req,
                       final ScriptExecutor executor) {
 

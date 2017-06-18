@@ -1,7 +1,7 @@
 package ru.pravvich.servlets;
 
 /**
- * Created by pavel on 16.06.17.
+ * All text message for user.
  */
 public enum Messages {
     ERROR_EDIT("Такого пользователя не существует или пара login, password занята."),

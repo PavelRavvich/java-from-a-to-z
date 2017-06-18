@@ -1,4 +1,4 @@
-package ru.pravvich.servlets;
+package ru.pravvich.servlets.adminServlet;
 
 import ru.pravvich.jdbc.DBJoint;
 import ru.pravvich.jdbc.ScriptExecutor;
@@ -28,15 +28,18 @@ public class FindUserServlet extends HttpServlet {
 
         try {
 
-            findUser(req, resp);
+            findUserById(req, resp);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void findUser(final HttpServletRequest req,
-                          final HttpServletResponse resp)
+    /**
+     * Find user in database by id.
+     */
+    private void findUserById(final HttpServletRequest req,
+                              final HttpServletResponse resp)
             throws ServletException, IOException, SQLException {
 
         final int id = Integer.parseInt(req.getParameter("id"));

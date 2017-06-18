@@ -1,4 +1,4 @@
-package ru.pravvich.servlets;
+package ru.pravvich.servlets.adminServlet;
 
 import ru.pravvich.jdbc.DBJoint;
 import ru.pravvich.jdbc.ScriptExecutor;
@@ -32,22 +32,28 @@ public class GetAllUsersServlet extends HttpServlet {
 
         try {
 
-            final ScriptExecutor dbExecutor = getDBExecutor();
-            handledRequest(request, response, dbExecutor);
+            viewAllUsers(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void handledRequest(HttpServletRequest request,
-                                HttpServletResponse response,
-                                ScriptExecutor dbExecutor)
+    /**
+     * Send on view list all users.
+     */
+    private void viewAllUsers(HttpServletRequest request,
+                              HttpServletResponse response)
 
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
+
+
+
+        final ScriptExecutor dbExecutor = getDBExecutor();
 
 
         request.setAttribute("allUsers", dbExecutor.getAllUsers());
+
         request.getRequestDispatcher(ALL_USERS.get())
                 .forward(request, response);
 

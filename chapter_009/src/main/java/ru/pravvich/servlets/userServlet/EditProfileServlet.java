@@ -49,11 +49,11 @@ public class EditProfileServlet extends HttpServlet {
         final ScriptExecutor executor = getScriptExecutor(req);
 
 
-        final User newState = getNewState(req);
-        newState.setSuccessLevel("user");
+        final User forUpdate = getNewState(req);
+        forUpdate.setSuccessLevel("user");
 
-        final int id = getIdFromSession(req);
-        final boolean success = executor.updateUserAndGet(id, newState);
+        final int id = getUserIdFromSession(req);
+        final boolean success = executor.updateUserAndGet(id, forUpdate);
 
         if (success) {
 
@@ -77,7 +77,7 @@ public class EditProfileServlet extends HttpServlet {
         final String password = request.getParameter("password");
         final String email = request.getParameter("email");
 
-        if (parameterNonNull(name, login, password, email)) {
+        if (nonNull(name, login, password, email)) {
 
             return new User(name, login, password, email);
         } else {
@@ -95,7 +95,7 @@ public class EditProfileServlet extends HttpServlet {
         return db.getDBScriptExecutor();
     }
 
-    private boolean parameterNonNull(final String ... params) {
+    private boolean nonNull(final String ... params) {
         for (final String p : params) {
             if (p == null) return false;
         }
@@ -103,9 +103,9 @@ public class EditProfileServlet extends HttpServlet {
         return true;
     }
 
-    private int getIdFromSession(final HttpServletRequest request) {
+    private int getUserIdFromSession(final HttpServletRequest request) {
 
-        final HttpSession session = request.getSession();
+        final HttpSession session = request.getSession(false);
 
         synchronized (session) {
             return (int) session.getAttribute("id");

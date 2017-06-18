@@ -68,7 +68,7 @@
     <!--Find user by id-->
     <servlet>
         <servlet-name>FindUserServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.FindUserServlet</servlet-class>
+        <servlet-class>ru.pravvich.servlets.adminServlet.FindUserServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -101,6 +101,17 @@
     </servlet-mapping>
 
 
+    <!--User menu-->
+    <servlet>
+        <servlet-name>UserMenuServlet</servlet-name>
+        <servlet-class>ru.pravvich.servlets.userServlet.UserMenuServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserMenuServlet</servlet-name>
+        <url-pattern>/user_menu</url-pattern>
+    </servlet-mapping>
+
 
     <!--Edit profile-->
     <servlet>
@@ -129,7 +140,7 @@
     <!--Get all users which contains in database-->
     <servlet>
         <servlet-name>GetAllUsersServlet</servlet-name>
-        <servlet-class>ru.pravvich.servlets.GetAllUsersServlet</servlet-class>
+        <servlet-class>ru.pravvich.servlets.adminServlet.GetAllUsersServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

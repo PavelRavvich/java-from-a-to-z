@@ -32,6 +32,9 @@ public class DeleteUserServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Delete user from database.
+     */
     private void deleteUserById(final HttpServletRequest req,
                                 final HttpServletResponse resp)
             throws ServletException, IOException, SQLException {

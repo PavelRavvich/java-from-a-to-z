@@ -48,6 +48,9 @@ public class AnswerServlet extends HttpServlet {
         doGet(req, resp);
     }
 
+    /**
+     * Get access level for current session.
+     */
     private String getAccess(final HttpServletRequest req) {
 
         final HttpSession session = req.getSession(false);
