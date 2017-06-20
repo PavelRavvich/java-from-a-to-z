@@ -9,7 +9,7 @@ import java.io.IOException;
 import static ru.pravvich.servlets.Paths.EDIT_PROFILE;
 
 /**
- * Created by pavel on 18.06.17.
+ * User menu viewer.
  */
 public class UserMenuServlet extends HttpServlet {
 

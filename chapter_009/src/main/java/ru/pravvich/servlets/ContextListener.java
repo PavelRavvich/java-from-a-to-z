@@ -1,4 +1,7 @@
-package ru.pravvich.jdbc;
+package ru.pravvich.servlets;
+
+import ru.pravvich.jdbc.DBJoint;
+import ru.pravvich.jdbc.DBJointHandler;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -20,9 +23,16 @@ public class ContextListener implements ServletContextListener {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        final ServletContext servletContext = servletContextEvent.getServletContext();
 
-        servletContext.setAttribute("db", new DBJointHandler("database_scripts", "authentication_database"));
+
+        final ServletContext servletContext =
+                servletContextEvent.getServletContext();
+
+        final DBJoint joint = new DBJointHandler(
+                "database_scripts",
+                "authentication_database");
+
+        servletContext.setAttribute("db", joint);
 
     }
 

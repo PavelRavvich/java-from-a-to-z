@@ -11,15 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static ru.pravvich.servlets.Messages.EDIT_SUCCESS;
+import static ru.pravvich.servlets.Messages.ERR_UNIQUE_L_P;
+import static ru.pravvich.servlets.Paths.ANSWER;
+
 /**
  * Addition user to database from html form.
  */
 public class AddUserServlet extends HttpServlet {
-    /**
-     * Answers text for user about addition in database.
-     */
-    private static final String SUCCESS = "Пользователь успешно добавлен";
-    private static final String FAIL = "Такой пользователь уже существует";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -31,10 +30,10 @@ public class AddUserServlet extends HttpServlet {
 
             final boolean success = addUserInDatabase(req);
 
-            if (success) req.setAttribute("serverAnswer", SUCCESS);
-            else req.setAttribute("serverAnswer", FAIL);
+            if (success) req.setAttribute("serverAnswer", EDIT_SUCCESS.get());
+            else req.setAttribute("serverAnswer", ERR_UNIQUE_L_P.get());
 
-            req.getRequestDispatcher("/WEB-INF/views/answer.jsp")
+            req.getRequestDispatcher(ANSWER.get())
                     .forward(req, resp);
 
         } catch (SQLException e) {
@@ -51,7 +50,7 @@ public class AddUserServlet extends HttpServlet {
             throws SQLException {
 
         final User user = getUserFromRequest(req);
-        return getDatabaseExecutor().addUserAndGetSuccess(user);
+        return getDatabaseExecutor(req).addUserAndGetSuccess(user);
     }
 
     /**
@@ -72,8 +71,10 @@ public class AddUserServlet extends HttpServlet {
     /**
      * Get executor database requests.
      */
-    private ScriptExecutor getDatabaseExecutor() throws SQLException {
-        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+    private ScriptExecutor getDatabaseExecutor(final HttpServletRequest req)
+            throws SQLException {
+
+        final DBJoint db = (DBJoint) req.getServletContext().getAttribute("db");
         return db.getDBScriptExecutor();
     }
 }
