@@ -14,7 +14,7 @@ public class PropertiesLoaderTest {
     @Test
     public void whenKeyExistsThenReturnValue() {
         final PropertiesLoader loader = new PropertiesLoader("database_scripts");
-        final String result = loader.get("get");
+        final String result = loader.get("get_by_id");
         assertThat(result, is("SELECT * FROM users WHERE id = (?)"));
     }
 
