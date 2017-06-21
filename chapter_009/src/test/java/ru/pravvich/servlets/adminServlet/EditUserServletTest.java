@@ -16,35 +16,37 @@ import java.sql.SQLException;
 
 import static org.mockito.Mockito.*;
 import static ru.pravvich.servlets.Messages.EDIT_SUCCESS;
-import static ru.pravvich.servlets.Messages.ERR_UNIQUE_L_P;
+import static ru.pravvich.servlets.Messages.ERROR_EDIT;
 import static ru.pravvich.servlets.Paths.ANSWER;
+import static ru.pravvich.servlets.Paths.EDITION;
 
-public class AddUserServletTest {
+public class EditUserServletTest {
 
     @Test
-    public void whenUserAddThenDatabaseSuccessfully()
-            throws ServletException, IOException, SQLException {
+    public void whenUserSuccessfullyUpdated()
+            throws SQLException, ServletException, IOException {
 
-        final AddUserServlet servlet = new AddUserServlet();
         User user = new User("name", "login", "password", "email", "admin");
 
         //mock http.
         HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getParameter("name")).thenReturn("name");
-        when(request.getParameter("login")).thenReturn("login");
-        when(request.getParameter("password")).thenReturn("password");
-        when(request.getParameter("email")).thenReturn("email");
-        when(request.getParameter("role")).thenReturn("admin");
 
-        RequestDispatcher dispatcher = mock(RequestDispatcher.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getParameter("id")).thenReturn("1");
+        when(request.getParameter("name")).thenReturn(user.getName());
+        when(request.getParameter("login")).thenReturn(user.getLogin());
+        when(request.getParameter("password")).thenReturn(user.getPassword());
+        when(request.getParameter("email")).thenReturn(user.getEmail());
+        when(request.getParameter("role")).thenReturn(user.getSuccessLevel());
+
+
         when(request.getRequestDispatcher(ANSWER.get()))
-                .thenReturn(dispatcher);
+                .thenReturn(mock(RequestDispatcher.class));
 
         //mock database.
         ScriptExecutor executor = mock(ScriptExecutor.class);
 
-        when(executor.addUserAndGetSuccess(user)).thenReturn(true);
+        when(executor.updateUserAndGet(1, user)).thenReturn(true);
 
         DBJoint joint = mock(DBJointHandler.class);
         when(joint.getDBScriptExecutor()).thenReturn(executor);
@@ -53,32 +55,40 @@ public class AddUserServletTest {
         when(request.getServletContext()).thenReturn(context);
         when(context.getAttribute("db")).thenReturn(joint);
 
+
+        final EditUserServlet servlet = new EditUserServlet();
         servlet.doPost(request, response);
+
 
         verify(request).getRequestDispatcher(ANSWER.get());
         verify(request).setAttribute("serverAnswer", EDIT_SUCCESS.get());
     }
 
-
     @Test
-    public void whenAddInDatabaseOsFail()
-            throws SQLException, ServletException, IOException {
+    public void whenEditionFail()
+            throws ServletException, IOException, SQLException {
 
-        final AddUserServlet servlet = new AddUserServlet();
         User user = new User("name", "login", "password", "email", "admin");
 
         //mock http.
         HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
 
-        RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        when(request.getRequestDispatcher(ANSWER.get()))
-                .thenReturn(dispatcher);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(request.getParameter("id")).thenReturn("1");
+        when(request.getParameter("name")).thenReturn(user.getName());
+        when(request.getParameter("login")).thenReturn(user.getLogin());
+        when(request.getParameter("password")).thenReturn(user.getPassword());
+        when(request.getParameter("email")).thenReturn(user.getEmail());
+        when(request.getParameter("role")).thenReturn(user.getSuccessLevel());
+
+
+        when(request.getRequestDispatcher(EDITION.get()))
+                .thenReturn(mock(RequestDispatcher.class));
 
         //mock database.
         ScriptExecutor executor = mock(ScriptExecutor.class);
 
-
+        when(executor.updateUserAndGet(1, user)).thenReturn(false);
 
         DBJoint joint = mock(DBJointHandler.class);
         when(joint.getDBScriptExecutor()).thenReturn(executor);
@@ -87,9 +97,12 @@ public class AddUserServletTest {
         when(request.getServletContext()).thenReturn(context);
         when(context.getAttribute("db")).thenReturn(joint);
 
+
+        final EditUserServlet servlet = new EditUserServlet();
         servlet.doPost(request, response);
 
-        verify(request).getRequestDispatcher(ANSWER.get());
-        verify(request).setAttribute("serverAnswer", ERR_UNIQUE_L_P.get());
+
+        verify(request).getRequestDispatcher(EDITION.get());
+        verify(request).setAttribute("warning", ERROR_EDIT.get());
     }
 }

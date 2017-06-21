@@ -45,7 +45,7 @@ public class EditUserServlet extends HttpServlet {
 
         final int id = Integer.parseInt(req.getParameter("id"));
 
-        final ScriptExecutor executor = getExecutor();
+        final ScriptExecutor executor = getExecutor(req);
 
         final User user = getUser(req);
 
@@ -59,7 +59,8 @@ public class EditUserServlet extends HttpServlet {
 
         req.setAttribute(attribute, answer);
 
-        req.getRequestDispatcher(path).forward(req, resp);
+        req.getRequestDispatcher(path)
+                .forward(req, resp);
     }
 
     /**
@@ -79,9 +80,10 @@ public class EditUserServlet extends HttpServlet {
     /**
      * Get database ScriptExecutor from ServletContext.
      */
-    private ScriptExecutor getExecutor() throws SQLException {
+    private ScriptExecutor getExecutor(final HttpServletRequest req)
+            throws SQLException {
 
-        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+        final DBJoint db = (DBJoint) req.getServletContext().getAttribute("db");
 
         return db.getDBScriptExecutor();
     }

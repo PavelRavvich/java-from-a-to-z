@@ -148,4 +148,32 @@ public class User {
     public void setCreateAccount(Timestamp createAccount) {
         this.createAccount = createAccount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (!name.equals(user.name)) return false;
+        if (!login.equals(user.login)) return false;
+        if (!email.equals(user.email)) return false;
+        if (!password.equals(user.password)) return false;
+        return successLevel.equals(user.successLevel);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + login.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + createAccount.hashCode();
+        result = 31 * result + successLevel.hashCode();
+        return result;
+    }
 }

@@ -41,7 +41,7 @@ public class DeleteUserServlet extends HttpServlet {
 
         final int id = Integer.parseInt(req.getParameter("id"));
 
-        final ScriptExecutor executor = getExecutor();
+        final ScriptExecutor executor = getExecutor(req);
 
 
 
@@ -60,8 +60,10 @@ public class DeleteUserServlet extends HttpServlet {
         req.getRequestDispatcher(ANSWER.get()).forward(req, resp);
     }
 
-    private ScriptExecutor getExecutor() throws SQLException {
-        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+    private ScriptExecutor getExecutor(final HttpServletRequest req)
+            throws SQLException {
+
+        final DBJoint db = (DBJoint) req.getServletContext().getAttribute("db");
         return db.getDBScriptExecutor();
     }
 }

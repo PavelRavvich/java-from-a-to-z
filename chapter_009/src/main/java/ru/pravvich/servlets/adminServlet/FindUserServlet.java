@@ -44,14 +44,15 @@ public class FindUserServlet extends HttpServlet {
 
         final int id = Integer.parseInt(req.getParameter("id"));
 
-        final User result = getScriptExecutor().getUserById(id);
+        final User result = getScriptExecutor(req).getUserById(id);
 
         if (result.getId() == 0) {
 
             req.setAttribute("fail", FIND_ERROR.get());
 
-            req.getRequestDispatcher(FIND.get())
-                    .forward(req, resp);
+            req.getRequestDispatcher(FIND.get()).forward(req, resp);
+
+            return;
         }
 
         req.setAttribute("user", result);
@@ -61,8 +62,10 @@ public class FindUserServlet extends HttpServlet {
     /**
      * Get ScriptExecutor for work with database.
      */
-    private ScriptExecutor getScriptExecutor() throws SQLException {
-        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+    private ScriptExecutor getScriptExecutor(final HttpServletRequest req)
+            throws SQLException {
+
+        final DBJoint db = (DBJoint) req.getServletContext().getAttribute("db");
         return db.getDBScriptExecutor();
     }
 }

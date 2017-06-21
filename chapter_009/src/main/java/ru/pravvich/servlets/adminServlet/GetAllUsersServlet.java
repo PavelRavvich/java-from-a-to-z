@@ -42,14 +42,13 @@ public class GetAllUsersServlet extends HttpServlet {
     /**
      * Send on view list all users.
      */
-    private void viewAllUsers(HttpServletRequest request,
-                              HttpServletResponse response)
+    private void viewAllUsers(final HttpServletRequest request,
+                              final HttpServletResponse response)
 
             throws ServletException, IOException, SQLException {
 
 
-
-        final ScriptExecutor dbExecutor = getDBExecutor();
+        final ScriptExecutor dbExecutor = getDBExecutor(request);
 
 
         request.setAttribute("allUsers", dbExecutor.getAllUsers());
@@ -59,12 +58,12 @@ public class GetAllUsersServlet extends HttpServlet {
 
     }
 
-    private ScriptExecutor getDBExecutor() throws SQLException {
+    private ScriptExecutor getDBExecutor(final HttpServletRequest request)
+            throws SQLException {
 
-        final DBJoint db = (DBJoint) getServletContext().getAttribute("db");
+        final DBJoint db = (DBJoint) request
+                .getServletContext().getAttribute("db");
 
         return db.getDBScriptExecutor();
-
     }
-
 }

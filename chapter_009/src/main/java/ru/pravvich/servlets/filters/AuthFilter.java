@@ -152,7 +152,7 @@ public class AuthFilter implements Filter {
 
 
         if (req.getParameter(login) != null) {
-            req.setAttribute("warning",FIND_ERROR.get());
+            req.setAttribute("warning", FIND_ERROR.get());
         }
 
         req.getRequestDispatcher(LOGIN.get()).forward(req, res);

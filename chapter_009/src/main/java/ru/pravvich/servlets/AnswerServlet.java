@@ -26,12 +26,16 @@ public class AnswerServlet extends HttpServlet {
         if (access.equals("admin")) {
 
             req.getRequestDispatcher(ADMIN_MENU.get()).forward(req, resp);
+
+            return;
         }
 
 
         if (access.equals("user")) {
 
             req.getRequestDispatcher(USER_MENU.get()).forward(req, resp);
+
+            return;
         }
 
 

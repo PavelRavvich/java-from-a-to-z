@@ -21,13 +21,13 @@ public class AdminHomePageServlet extends HttpServlet {
         final String select = moveSelect(req);
 
         if (select.equals("")) {
-            req.getRequestDispatcher(ADMIN_MENU.get())
-                    .forward(req, resp);
+            req.getRequestDispatcher(ADMIN_MENU.get()).forward(req, resp);
+            return;
         }
 
 
         if (select.equals("all")) {
-            getServletContext().getRequestDispatcher("/getall")
+            req.getRequestDispatcher("/getall")
                     .forward(req,resp);
         } else {
             req.getRequestDispatcher(format("/WEB-INF/views/%s.jsp", select))
@@ -44,7 +44,7 @@ public class AdminHomePageServlet extends HttpServlet {
 
         final String[] acts = req.getParameterValues("act");
 
-        if (acts == null) return "";
+        if (acts == null || acts.length < 1) return "";
 
         for (final String act : acts) {
 

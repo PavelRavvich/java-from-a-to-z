@@ -7,14 +7,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Set in servlet context database join.
  */
 @WebListener
 public class ContextListener implements ServletContextListener {
+
+    private DBJoint joint;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -28,9 +28,8 @@ public class ContextListener implements ServletContextListener {
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();
 
-        final DBJoint joint = new DBJointHandler(
-                "database_scripts",
-                "authentication_database");
+        joint = new DBJointHandler(
+                "database_scripts", "authentication_database");
 
         servletContext.setAttribute("db", joint);
 
@@ -39,16 +38,7 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
-        final Connection db = (Connection) servletContextEvent
-                .getServletContext().getAttribute("db");
-
-        try {
-
-            db.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        joint.closeConnection();
 
     }
 }
